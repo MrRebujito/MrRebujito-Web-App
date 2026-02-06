@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SolicitudLicencia } from '../model/solicitudLicencia';
+import { SolicitudLicencia } from '../model/solicitud-licencia';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
