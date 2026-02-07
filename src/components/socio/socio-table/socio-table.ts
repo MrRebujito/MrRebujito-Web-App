@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Socio } from '../../../model/socio';
@@ -14,6 +14,7 @@ import { SocioService } from '../../../service/socio-service';
 export class SocioTable implements OnInit {
   // Array de socios que alimentará la tabla
   socios: Socio[] = [];
+  cdr = inject(ChangeDetectorRef);
 
   constructor(private socioService: SocioService) {}
 
@@ -25,6 +26,7 @@ export class SocioTable implements OnInit {
     this.socioService.getAllSocios().subscribe({
       next: (data) => {
         this.socios = data;
+        this.cdr.detectChanges;
       },
       error: (err) => {
         console.error('Error al obtener los socios:', err);
