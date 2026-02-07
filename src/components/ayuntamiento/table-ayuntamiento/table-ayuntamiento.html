@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Listado de Ayuntamientos</h2>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Dirección</th>
+          <th scope="col">Contacto</th>
+          <th scope="col">Nº de licencias</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of ayuntamientos">
+          <td>{{ a.id }}</td>
+          <td>{{ a.nombre }}</td>
+          <td>{{ a.direccion }}</td>
+          <td>
+            <div><i class="bi bi-envelope"></i> {{ a.correo }}</div>
+            <div><i class="bi bi-telephone"></i> {{ a.telefono }}</div>
+          </td>
+          <td class="text-center">{{ a.licenciaMax }}</td>
+          <td class="text-center align-middle">
+            <button class="btn btn-info btn-sm" [routerLink]="['/ayuntamientos/', a.id]">
+              <i class="bi bi-eye">Ver</i>
+            </button>
+          </td>
+        </tr>
+        <!-- por si todavía no hay ninguno registrado -->
+        <tr *ngIf="ayuntamientos.length === 0">
+          <td colspan="6" class="text-center">No hay ayuntamientos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
