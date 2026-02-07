@@ -1,0 +1,25 @@
+<div class="container mt-4" *ngIf="ayuntamiento">
+  <div class="card shadow-sm">
+    <div class="text-center mt-3">
+      <img
+        [src]="ayuntamiento.foto"
+        alt="Imagen del ayuntamiento"
+        class="img-fluid rounded"
+        style="max-width: 300px"
+      />
+    </div>
+
+    <div class="col-md-8">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>ID:</strong> {{ ayuntamiento.id }}</li>
+        <li class="list-group-item"><strong>Nombre:</strong> {{ ayuntamiento.nombre }}</li>
+        <li class="list-group-item"><strong>Dirección:</strong> {{ ayuntamiento.direccion }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ ayuntamiento.correo }}</li>
+        <li class="list-group-item"><strong>Teléfono:</strong> {{ ayuntamiento.telefono }}</li>
+        <li class="list-group-item">
+          <strong>Licencias máximas:</strong> {{ ayuntamiento.licenciaMax }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

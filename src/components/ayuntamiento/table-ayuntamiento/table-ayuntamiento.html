@@ -10,6 +10,7 @@
           <th scope="col">Dirección</th>
           <th scope="col">Contacto</th>
           <th scope="col">Nº de licencias</th>
+          <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +23,11 @@
             <div><i class="bi bi-telephone"></i> {{ a.telefono }}</div>
           </td>
           <td class="text-center">{{ a.licenciaMax }}</td>
+          <td class="text-center align-middle">
+            <button class="btn btn-info btn-sm" [routerLink]="['/ayuntamientos/', a.id]">
+              <i class="bi bi-eye">Ver</i>
+            </button>
+          </td>
         </tr>
         <!-- por si todavía no hay ninguno registrado -->
         <tr *ngIf="ayuntamientos.length === 0">
