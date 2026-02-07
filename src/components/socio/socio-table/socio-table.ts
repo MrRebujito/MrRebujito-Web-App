@@ -26,7 +26,7 @@ export class SocioTable implements OnInit {
     this.socioService.getAllSocios().subscribe({
       next: (data) => {
         this.socios = data;
-        this.cdr.detectChanges;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al obtener los socios:', err);
