@@ -34,6 +34,9 @@ export class TableAyuntamiento implements OnInit {
       error(err) {
         console.error("Error al cargar los ayuntamientos: ", err);
       },
-    })
-  }
+    })}
+
+    esAdmin(): boolean {
+      return sessionStorage.getItem('rol') === 'ADMIN';
+    }
   }

@@ -1,12 +1,13 @@
 <div class="container mt-4" *ngIf="ayuntamiento">
+  <div class="mb-4 animate-back">
+    <button class="btn btn-volver" routerLink="/ayuntamientos">
+      <i class="bi bi-arrow-left"></i> Volver
+    </button>
+  </div>
+
   <div class="card shadow-sm">
-    <div class="text-center mt-3">
-      <img
-        [src]="ayuntamiento.foto"
-        alt="Imagen del ayuntamiento"
-        class="img-fluid rounded"
-        style="max-width: 300px"
-      />
+    <div class="image-wrapper text-center mt-3 mt-lg-0">
+      <img [src]="ayuntamiento.foto" alt="Imagen del ayuntamiento" class="img-fluid rounded" />
     </div>
 
     <div class="col-md-8">

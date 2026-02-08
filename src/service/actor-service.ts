@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Actor } from '../model/actor';
+import { ActorLogin } from '../model/actor-login';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,17 @@ export class ActorService {
   constructor(private http: HttpClient) { }
 
   login(actorLogin: ActorLogin): Observable<string> {
+    // IMPORTANTE: responseType: 'text' porque el backend devuelve el token como string plano
     return this.http.post(this.urlLogin, actorLogin, { responseType: 'text' });
   }
 
   actorLogin(): Observable<Actor> {
-    return this.http.get<Actor>(this.urlActorLogin);
+    // Recuperamos el token y lo enviamos en la cabecera para que funcione el nuevo endpoint
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<Actor>(this.urlActorLogin, { headers: headers });
   }
 }

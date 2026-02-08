@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Ayuntamiento } from '../../../model/ayuntamiento';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AyuntamientoService } from '../../../service/ayuntamiento-service';
 
 @Component({
   selector: 'app-detail-ayuntamiento',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './detail-ayuntamiento.html',
   styleUrl: './detail-ayuntamiento.css',
 })

@@ -1,22 +1,19 @@
 /* =========================================
-   MR. REBUJITO - TABLE AYUNTAMIENTO THEME
+   MR. REBUJITO - TABLE AYUNTAMIENTO THEME (FINAL)
    ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
 
 :host {
   /* --- TOKENS --- */
-  --mr-primary: #e38b64;
-  --mr-secondary: #9bbf9c;
-  --mr-accent: #3b6b76;
-  --mr-bg-light: #f2ebd9;
-  --mr-text-main: #2c3e50;
+  --mr-primary: #e38b64; /* Naranja Principal */
+  --mr-secondary: #9bbf9c; /* Verde Suave */
+  --mr-accent: #3b6b76; /* Azul Petróleo */
+  --mr-bg-light: #f2ebd9; /* Crema */
+  --mr-text-main: #2c3e50; /* Texto Oscuro */
 
   display: block;
-
-  /* ALTURA AJUSTADA (aprobada por usuario) */
   min-height: calc(100vh - 70px);
-
   padding-top: 2rem;
   padding-bottom: 0;
   position: relative;
@@ -27,12 +24,10 @@
     url('/assets-webp/icono_logo_sin_fondo.webp'),
     linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
 
-  /* POSICIÓN: El logo pegado completamente abajo a la derecha */
   background-position:
     center center,
     right -20px bottom 0px,
     center center;
-
   background-size: cover, 500px, cover;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -45,22 +40,22 @@
 .container {
   position: relative;
   z-index: 1;
-
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
-
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(44, 62, 80, 0.1);
   padding: 2.5rem;
-
   margin-top: 1rem;
   margin-bottom: 3rem;
-
   border: 1px solid rgba(227, 139, 100, 0.2);
+
+  /* ANIMACIÓN DE ENTRADA (Slide Up) */
+  animation: slideUpFade 0.7s ease-out forwards;
+  opacity: 0;
 }
 
 /* =========================================
-   ENCABEZADO
+   ENCABEZADO CON BARRA ANIMADA
    ========================================= */
 
 h2 {
@@ -71,9 +66,26 @@ h2 {
   letter-spacing: 0.5px;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 3px solid var(--mr-primary);
+  position: relative; /* Necesario para posicionar la barra animada */
   display: flex;
   align-items: center;
+
+  /* Quitamos el border-bottom estático para usar el animado */
+  border-bottom: none;
+}
+
+/* La barra animada debajo del título */
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px; /* Un poco más gruesa para que se vea el efecto */
+  background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
+  background-size: 200% auto;
+  border-radius: 2px;
+  animation: gradientMove 3s linear infinite;
 }
 
 h2::before {
@@ -82,11 +94,14 @@ h2::before {
   width: 60px;
   height: 60px;
   margin-right: 1.5rem;
-  /* CAMBIO: Icono específico para Ayuntamientos */
   background-image: url('/assets-webp/ayuntamiento.webp');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+
+  /* ANIMACIÓN DEL ICONO (Flotando) */
+  animation: floatIcon 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 /* =========================================
@@ -100,6 +115,27 @@ h2::before {
   border-radius: 6px;
   padding: 0.6rem 1.2rem;
   transition: all 0.2s;
+
+  /* Para centrar el + y la imagen */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* BOTÓN "NUEVO" (Naranja Corporativo) */
+.btn-success {
+  background-color: var(--mr-primary) !important;
+  border-color: var(--mr-primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(227, 139, 100, 0.3);
+}
+
+.btn-success:hover {
+  background-color: #d27a53 !important;
+  border-color: #d27a53 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
 }
 
 .btn-primary {
@@ -110,17 +146,6 @@ h2::before {
 .btn-primary:hover {
   background-color: #d27a53;
   border-color: #d27a53;
-}
-
-.btn-secondary {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: var(--mr-accent);
-  border: 2px solid var(--mr-accent);
-}
-
-.btn-secondary:hover {
-  background-color: var(--mr-accent);
-  color: #fff;
 }
 
 /* =========================================
@@ -151,41 +176,24 @@ h2::before {
   border-bottom: 1px solid #eee;
 }
 
+.table tbody tr {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Efecto hover en la fila */
 .table tbody tr:hover {
   background-color: rgba(155, 191, 156, 0.15);
+  transform: scale(1.01);
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* =========================================
-   BADGES & ACCIONES
+   ACCIONES (Botones pequeños)
    ========================================= */
-
-.badge {
-  padding: 0.6em 1em;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.75rem;
-}
-
-.badge.bg-warning,
-.badge.text-bg-warning {
-  background-color: #fff3cd !important;
-  color: #856404 !important;
-  border: 1px solid #ffeeba;
-}
-
-.badge.bg-success,
-.badge.text-bg-success {
-  background-color: #e8f5e9 !important;
-  color: #2e7d32 !important;
-  border: 1px solid var(--mr-secondary);
-}
-
-.badge.bg-danger,
-.badge.text-bg-danger {
-  background-color: #f8d7da !important;
-  color: #721c24 !important;
-  border: 1px solid #f5c6cb;
-}
 
 .btn-sm {
   width: 34px;
@@ -208,8 +216,39 @@ h2::before {
   border: none;
   color: white;
 }
-.btn-danger {
-  background-color: #dc3545;
-  border: none;
-  color: white;
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIcon {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ayuntamiento } from '../model/ayuntamiento';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,7 +20,8 @@ export class AyuntamientoService {
   }
 
   saveAyuntamiento(ayuntamiento: Ayuntamiento): Observable<string> {
-    return this.http.post(this.url, ayuntamiento, {responseType: 'text'})
+    const headers = { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    return this.http.post(this.url, ayuntamiento, { headers: headers, responseType: 'text'})
   }
 
   updateAyuntamiento(id: number, ayuntamiento: Ayuntamiento): Observable<String> {

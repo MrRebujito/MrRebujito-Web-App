@@ -1,0 +1,101 @@
+<div class="container mt-4" *ngIf="esAdmin(); else forbidden">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">{{ id ? 'Modificar' : 'Registrar Nuevo' }} Ayuntamiento</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="formularioAyuntamiento" (ngSubmit)="onSubmit()">
+        <h5 class="border-bottom pb-2 mb-3">Datos Identificativos</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nombre Institucional *</label>
+            <input
+              type="text"
+              formControlName="nombre"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  formularioAyuntamiento.get('nombre')?.invalid &&
+                  formularioAyuntamiento.get('nombre')?.touched,
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nombre de Usuario *</label>
+            <input type="text" formControlName="username" class="form-control" />
+          </div>
+        </div>
+
+        <div class="row" *ngIf="!id">
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Contraseña de Acceso *</label>
+            <input type="password" formControlName="password" class="form-control" />
+          </div>
+        </div>
+
+        <h5 class="border-bottom pb-2 mb-3 mt-3">Configuración y Contacto</h5>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Límite de Licencias *</label>
+            <input type="number" formControlName="licenciaMax" class="form-control" />
+            <small class="text-muted">Máximo de licencias que puede otorgar</small>
+          </div>
+          <div class="col-md-8 mb-3">
+            <label class="form-label">Correo Electrónico *</label>
+            <input type="email" formControlName="correo" class="form-control" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Teléfono (Opcional)</label>
+            <input type="text" formControlName="telefono" class="form-control" />
+          </div>
+          <div class="col-md-8 mb-3">
+            <label class="form-label">Dirección (Opcional)</label>
+            <input type="text" formControlName="direccion" class="form-control" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label class="form-label">URL de Fotografía (Opcional)</label>
+            <input
+              type="text"
+              formControlName="foto"
+              class="form-control"
+              placeholder="http://..."
+            />
+            <small class="text-muted">Se permiten enlaces externos (Pinterest, Flickr, etc.)</small>
+          </div>
+        </div>
+
+        <div class="text-end mt-4 border-top pt-3">
+          <button type="button" class="btn btn-outline-secondary me-2" routerLink="/ayuntamientos">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="formularioAyuntamiento.invalid">
+            {{ id ? 'Guardar Cambios' : 'Finalizar Registro' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #forbidden>
+  <div class="container mt-5 text-center">
+    <div class="py-5 shadow card" style="border-radius: 28px; background: rgba(255, 255, 255, 0.9)">
+      <h1 style="font-size: 6rem; color: #e63946; font-weight: 900">403</h1>
+      <h2 style="font-family: 'Merriweather', serif; color: #3b6b76; letter-spacing: 2px">
+        No puedes entrar corazón mío!
+      </h2>
+      <p class="text-muted fs-5">
+        No tienes los permisos necesarios para acceder a los ayuntamientos.
+      </p>
+      <div class="mt-4">
+        <button class="btn btn-primary px-5" routerLink="/ayuntamientos">Volver al Listado</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

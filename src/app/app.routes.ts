@@ -8,6 +8,8 @@ import { SocioForm } from '../components/socio/socio-form/socio-form';
 import { DetailSolicitudLicencia } from '../components/solicitud-licencia/detail-solicitud-licencia/detail-solicitud-licencia';
 import { Login } from '../components/actor-login/login';
 
+
+
 export const routes: Routes = [
 
   // Ruta del login
@@ -19,12 +21,18 @@ export const routes: Routes = [
 
   // Rutas de ayuntamiento
   { path: 'ayuntamientos', component: TableAyuntamiento },
+  { path: 'ayuntamientos/form', component: FormAyuntamiento },
+  { path: 'ayuntamientos/form/:id', component: FormAyuntamiento },
   { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
+
 
   //Socio
   { path: 'socios', component: SocioTable},
   { path: 'socios/nuevo', component: SocioForm },
   { path: 'socios/editar/:id', component: SocioForm },
   { path: 'socios/:id', component: SocioDetail}
+  { path: 'socios/:id', component: SocioDetail},
 
+  // Rutas de socio
+  { path: 'socios', component: SocioTable}
 ];
