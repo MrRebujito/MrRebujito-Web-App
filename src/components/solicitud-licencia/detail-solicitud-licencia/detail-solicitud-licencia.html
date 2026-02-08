@@ -18,13 +18,7 @@
         <div class="col-md-6">
           <p><strong>ID:</strong> {{ solicitudLicencia.id }}</p>
           <p><strong>Estado:</strong> 
-            <span [ngClass]="{
-              'badge bg-warning': solicitudLicencia.estadoLicencia === 0,
-              'badge bg-success': solicitudLicencia.estadoLicencia === 1,
-              'badge bg-danger': solicitudLicencia.estadoLicencia === 2
-            }">
               {{ getEstadoTexto(solicitudLicencia.estadoLicencia) }}
-            </span>
           </p>
         </div>
         
