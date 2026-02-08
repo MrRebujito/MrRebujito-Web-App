@@ -1,99 +1,249 @@
-/* Estilos personalizados para la tabla de solicitudes */
+/* =========================================
+   MR. REBUJITO - BACKGROUND FIXED & FULL HEIGHT
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
+
+:host {
+  /* --- TOKENS --- */
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
+  --mr-text-main: #2c3e50;
+
+  display: block;
+
+  /* CAMBIO CLAVE: Ajustamos la altura para que llegue abajo del todo.
+     Restamos solo aprox la altura del Navbar (~70px) para asegurar que 
+     el fondo cubra todo el espacio hasta el footer. */
+  min-height: calc(100vh - 70px);
+
+  padding-top: 2rem;
+  padding-bottom: 0; /* CAMBIO: 0 padding abajo para que el color toque la línea */
+  position: relative;
+
+  /* --- FONDO --- */
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
+    url('/assets-webp/icono_logo_sin_fondo.webp'),
+    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+
+  /* POSICIÓN: El logo pegado completamente abajo a la derecha */
+  background-position:
+    center center,
+    right -20px bottom 0px,
+    /* Pegado a la línea del footer */ center center;
+
+  background-size: cover, 500px, cover;
+
+  background-repeat: no-repeat;
+
+  /* EL LOGO SE MUEVE CON EL PAPEL (QUIETO EN SU SITIO) */
+  background-attachment: scroll;
+}
+
+/* =========================================
+   CONTENEDOR
+   ========================================= */
+
+.container {
+  position: relative;
+  z-index: 1;
+
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(44, 62, 80, 0.1);
+  padding: 2.5rem;
+
+  margin-top: 1rem;
+  /* Margen abajo para que la tabla no se pegue visualmente al footer,
+     pero el fondo sí llegará hasta abajo */
+  margin-bottom: 3rem;
+
+  border: 1px solid rgba(227, 139, 100, 0.2);
+}
+
+/* =========================================
+   ENCABEZADO
+   ========================================= */
+
+h2 {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--mr-primary);
+  display: flex;
+  align-items: center;
+}
+
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin-right: 1.5rem;
+  background-image: url('/assets-webp/solicitud_licencia.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* =========================================
+   FILTROS
+   ========================================= */
+
+.form-label {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.form-select {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 0.6rem;
+  background-color: #fff;
+}
+
+.form-select:focus {
+  border-color: var(--mr-primary);
+  box-shadow: 0 0 0 3px rgba(227, 139, 100, 0.2);
+  outline: none;
+}
+
+.d-flex.align-items-end {
+  padding-bottom: 2px;
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+
+.btn {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--mr-primary);
+  border-color: var(--mr-primary);
+}
+
+.btn-primary:hover {
+  background-color: #d27a53;
+  border-color: #d27a53;
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: var(--mr-accent);
+  border: 2px solid var(--mr-accent);
+}
+
+.btn-secondary:hover {
+  background-color: var(--mr-accent);
+  color: #fff;
+}
+
+/* =========================================
+   TABLA
+   ========================================= */
 
 .table-responsive {
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.table {
-  margin-bottom: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+  background: white;
 }
 
 .table thead th {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.875rem;
-  letter-spacing: 0.5px;
+  background-color: var(--mr-accent);
+  color: white;
+  font-family: 'Merriweather', serif;
+  font-weight: 400;
+  border: none;
+  padding: 1rem;
 }
 
-.table tbody tr {
-  transition: background-color 0.2s ease;
+.table tbody td {
+  vertical-align: middle;
+  padding: 1rem;
+  color: var(--mr-text-main);
+  border-bottom: 1px solid #eee;
 }
 
 .table tbody tr:hover {
-  background-color: rgba(0, 123, 255, 0.05);
+  background-color: rgba(155, 191, 156, 0.15);
 }
 
+/* =========================================
+   BADGES & ACCIONES
+   ========================================= */
+
 .badge {
-  padding: 0.5em 0.75em;
-  font-size: 0.875rem;
-  font-weight: 500;
+  padding: 0.6em 1em;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.badge.bg-warning,
+.badge.text-bg-warning {
+  background-color: #fff3cd !important;
+  color: #856404 !important;
+  border: 1px solid #ffeeba;
+}
+
+.badge.bg-success,
+.badge.text-bg-success {
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important;
+  border: 1px solid var(--mr-secondary);
+}
+
+.badge.bg-danger,
+.badge.text-bg-danger {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+  border: 1px solid #f5c6cb;
 }
 
 .btn-sm {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  border-radius: 4px;
 }
 
-.btn-sm i {
-  font-size: 1rem;
+.btn-info {
+  background-color: var(--mr-accent);
+  border: none;
+  color: white;
 }
-
-/* Estilos para los filtros */
-.form-label {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #495057;
+.btn-warning {
+  background-color: var(--mr-primary);
+  border: none;
+  color: white;
 }
-
-.form-select {
-  border-radius: 6px;
-  border: 1px solid #ced4da;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-select:focus {
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-/* Espaciado y alineación */
-.d-flex.align-items-end {
-  gap: 0.5rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .col-md-4 {
-    margin-bottom: 1rem;
-  }
-  
-  .d-flex.align-items-end {
-    align-items: stretch !important;
-  }
-  
-  .d-flex.align-items-end button {
-    width: 100%;
-  }
-}
-
-/* Estado visual de carga */
-.table tbody tr.loading {
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-/* Animación suave para la tabla */
-.table tbody {
-  animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: white;
 }
