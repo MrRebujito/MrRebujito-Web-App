@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
+
+:host {
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
+  --mr-text-main: #2c3e50;
+
+  display: block;
+  min-height: calc(100vh - 70px);
+  padding-top: 2rem;
+  padding-bottom: 0;
+  position: relative;
+
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
+    url('/assets-webp/icono_logo_sin_fondo.webp'),
+    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+
+  background-position:
+    center center,
+    right -20px bottom 0px,
+    center center;
+
+  background-size: cover, 500px, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(44, 62, 80, 0.1);
+  padding: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(227, 139, 100, 0.2);
+}
+
+h2 {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--mr-primary);
+  display: flex;
+  align-items: center;
+}
+
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin-right: 1.5rem;
+  background-image: url('/assets-webp/caseta.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.btn {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.2s;
+}
+
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+  background: white;
+}
+
+.table thead th {
+  background-color: var(--mr-accent);
+  color: white;
+  font-family: 'Merriweather', serif;
+  font-weight: 400;
+  border: none;
+  padding: 1rem;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  padding: 1rem;
+  color: var(--mr-text-main);
+  border-bottom: 1px solid #eee;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(155, 191, 156, 0.15);
+}
+
+.badge {
+  padding: 0.6em 1em;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.btn-sm {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  border-radius: 4px;
+}
