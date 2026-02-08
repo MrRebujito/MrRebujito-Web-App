@@ -32,7 +32,7 @@
             </ng-template>
           </p>
           <p><strong>Licencias máx.:</strong> 
-            <span *ngIf="solicitudLicencia.ayuntamiento?.licenciaMax; else noLicencia">
+            <span *ngIf="solicitudLicencia.ayuntamiento.licenciaMax; else noLicencia">
               {{ solicitudLicencia.ayuntamiento.licenciaMax }}
             </span>
             <ng-template #noLicencia>
