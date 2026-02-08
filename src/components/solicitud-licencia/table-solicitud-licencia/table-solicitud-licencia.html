@@ -54,7 +54,10 @@
           </td>
           <td>{{ getNombreAyuntamiento(solicitud) }}</td>
           <td>
-            <button class="btn btn-sm btn-info me-1" title="Ver detalles">
+            <button 
+              class="btn btn-sm btn-info me-1" 
+              title="Ver detalles"
+              [routerLink]="['/solicitudes', solicitud.id]">
               <i class="bi bi-eye"></i>
             </button>
             <button class="btn btn-sm btn-warning me-1" title="Editar">

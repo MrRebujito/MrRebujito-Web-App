@@ -1,5 +1,5 @@
 export enum EstadoLicencia {
-    PENDIENTE,
-	APROBADA,
-	RECHAZADA
+    PENDIENTE = 'PENDIENTE',
+    APROBADA = 'APROBADA',
+    RECHAZADA = 'RECHAZADA'
 }

@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <button class="btn btn-outline-secondary mb-3" (click)="volverAtras()">
+    ← Volver
+  </button>
+
+  <div *ngIf="!solicitudLicencia" class="text-center py-5">
+    <div class="spinner-border" role="status"></div>
+    <p class="mt-2">Cargando...</p>
+  </div>
+
+  <div *ngIf="solicitudLicencia" class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Solicitud #{{ solicitudLicencia.id }}</h5>
+    </div>
+    
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>ID:</strong> {{ solicitudLicencia.id }}</p>
+          <p><strong>Estado:</strong> 
+              {{ getEstadoTexto(solicitudLicencia.estadoLicencia) }}
+          </p>
+        </div>
+        
+        <div class="col-md-6">
+          <p><strong>Ayuntamiento:</strong> 
+            <span *ngIf="solicitudLicencia.ayuntamiento; else noAyuntamiento">
+              {{ solicitudLicencia.ayuntamiento.nombre }}
+            </span>
+            <ng-template #noAyuntamiento>
+              <span class="text-danger">No disponible</span>
+            </ng-template>
+          </p>
+          <p><strong>Licencias máx.:</strong> 
+            <span *ngIf="solicitudLicencia.ayuntamiento.licenciaMax; else noLicencia">
+              {{ solicitudLicencia.ayuntamiento.licenciaMax }}
+            </span>
+            <ng-template #noLicencia>
+              <span class="text-muted">N/A</span>
+            </ng-template>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
