@@ -7,6 +7,7 @@ import { SocioDetail } from '../components/socio/socio-detail/socio-detail';
 import { SocioForm } from '../components/socio/socio-form/socio-form';
 import { DetailSolicitudLicencia } from '../components/solicitud-licencia/detail-solicitud-licencia/detail-solicitud-licencia';
 import { Login } from '../components/actor-login/login';
+import { FormAyuntamiento } from '../components/ayuntamiento/form-ayuntamiento/form-ayuntamiento';
 
 
 
@@ -30,7 +31,6 @@ export const routes: Routes = [
   { path: 'socios', component: SocioTable},
   { path: 'socios/nuevo', component: SocioForm },
   { path: 'socios/editar/:id', component: SocioForm },
-  { path: 'socios/:id', component: SocioDetail}
   { path: 'socios/:id', component: SocioDetail},
 
   // Rutas de socio
