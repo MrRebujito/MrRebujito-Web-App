@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { SolicitudLicenciaService } from '../../../service/solicitud-licencia-service';
 import { SolicitudLicencia } from '../../../model/solicitud-licencia';
 import { EstadoLicencia } from '../../../model/estado-licencia';
-import { Ayuntamiento } from '../../../model/ayuntamiento';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-table-solicitud-licencia',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './table-solicitud-licencia.html',
   styleUrl: './table-solicitud-licencia.css',
 })

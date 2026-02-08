@@ -3,9 +3,17 @@ import { TableSolicitudLicencia } from '../components/solicitud-licencia/table-s
 import { TableAyuntamiento } from '../components/ayuntamiento/table-ayuntamiento/table-ayuntamiento';
 import { DetailAyuntamiento } from '../components/ayuntamiento/detail-ayuntamiento/detail-ayuntamiento';
 import { SocioTable } from '../components/socio/socio-table/socio-table';
+import { DetailSolicitudLicencia } from '../components/solicitud-licencia/detail-solicitud-licencia/detail-solicitud-licencia';
+import { Login } from '../components/actor-login/login';
 
 export const routes: Routes = [
+
+  // Ruta del login
+  { path: 'login', component: Login },
+
+  // Rutas de solicitudLicencia
   { path: 'solicitudes', component: TableSolicitudLicencia },
+  { path: 'solicitudes/:id', component: DetailSolicitudLicencia },
 
   // Rutas de ayuntamiento
   { path: 'ayuntamientos', component: TableAyuntamiento },
