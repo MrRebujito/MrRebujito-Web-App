@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+:root {
+  --mr-blue: #3b6b76; /* Ajustado según el análisis visual del brand kit */
+  --mr-blue-dark: #003362;
+  --mr-accent: #e63946; /* Rojo feria para detalles */
+  --mr-white: #ffffff;
+  --mr-glass: rgba(0, 70, 133, 0.95);
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Mejora global de botones estilo Bootstrap */
+.btn-primary {
+  background-color: var(--mr-blue);
+  border-color: var(--mr-blue);
+}
+.btn-primary:hover {
+  background-color: var(--mr-blue-dark);
+}
