@@ -1,0 +1,195 @@
+/* =========================================
+   MR. REBUJITO - LOGIN "GALA FINAL" (ANCHURA AMPLIADA)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500&display=swap');
+
+:host {
+  /* --- TOKENS --- */
+  --mr-primary: #e38b64;
+  --mr-accent: #e63946;
+  --mr-blue: #3b6b76;
+  --mr-blue-dark: #003362;
+  --mr-bg-light: #f2ebd9;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 70px);
+  position: relative;
+
+  /* FONDO CORPORATIVO UNIFICADO */
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.92), rgba(242, 235, 217, 0.92)),
+    url('/assets-webp/icono_logo_sin_fondo.webp'),
+    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+  background-position:
+    center center,
+    right -30px bottom -30px,
+    center center;
+  background-size: cover, 600px, cover;
+  background-repeat: no-repeat;
+}
+
+/* =========================================
+   LA TARJETA (MÁS ANCHA Y ROBUSTA)
+   ========================================= */
+
+.card {
+  border: none !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(15px);
+  border-radius: 28px !important; /* Bordes un poco más suaves */
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 0 25px rgba(227, 139, 100, 0.12) !important;
+
+  /* CAMBIO CLAVE: Incremento de anchura */
+  padding: 3rem;
+  width: 100%;
+  max-width: 750px;
+
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+/* =========================================
+   CABECERA CON FLAMENCA A LA IZQUIERDA
+   ========================================= */
+
+h3 {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-blue);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.8rem; /* Ligeramente mayor para acompañar la anchura */
+  margin-bottom: 3rem;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 25px; /* Más espacio entre icono y texto */
+
+  position: relative;
+  padding-bottom: 20px;
+}
+
+/* LA FLAMENCA (Animación suave) */
+h3::before {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: 75px; /* Icono un poco más grande */
+  height: 75px;
+  background-image: url('/assets-webp/flamenca.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.12));
+  animation: sway 3.5s ease-in-out infinite;
+}
+
+/* LA BARRA ANIMADA (Divisor dinámico) */
+h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px; /* Barra un poco más gruesa */
+
+  background: linear-gradient(
+    90deg,
+    var(--mr-primary) 0%,
+    var(--mr-accent) 50%,
+    var(--mr-primary) 100%
+  );
+  background-size: 200% auto;
+  border-radius: 3px;
+  animation: gradientMove 3s linear infinite;
+}
+
+/* =========================================
+   FORMULARIO MEJORADO
+   ========================================= */
+
+.form-label {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-blue);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+  display: block;
+  text-align: left;
+}
+
+.form-control {
+  border: 1.5px solid rgba(59, 107, 118, 0.15) !important;
+  background: #ffffff !important;
+  border-radius: 14px !important;
+  padding: 1rem 1.25rem !important; /* Inputs más grandes */
+  font-size: 1.05rem;
+  transition: all 0.3s ease !important;
+}
+
+.form-control:focus {
+  border-color: var(--mr-primary) !important;
+  box-shadow: 0 5px 20px rgba(227, 139, 100, 0.18) !important;
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, var(--mr-blue) 0%, var(--mr-blue-dark) 100%) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 1.2rem !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 25px rgba(59, 107, 118, 0.3) !important;
+  transition: all 0.4s ease !important;
+  width: 100%;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(59, 107, 118, 0.45) !important;
+  filter: brightness(1.15);
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(5deg) translateY(-5px);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
