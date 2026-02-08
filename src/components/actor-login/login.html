@@ -1,12 +1,13 @@
 <div class="container my-5 d-flex justify-content-center">
-  <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+  <div *ngIf="loginError" class="alert alert-danger">
+    {{ loginError }}
+  </div>
+
+  <div class="col-12 col-sm-10 col-md-10 col-lg-5">
     <div class="card shadow-sm">
       <div class="card-body p-4">
-        <h3 class="text-center mb-4">INICIAR SESIÓN</h3>
+        <h3>INICIAR SESIÓN</h3>
 
-        <div *ngIf="loginError" class="alert alert-danger text-center">
-          {{ loginError }}
-        </div>
         <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label for="username" class="form-label">Usuario</label>
@@ -41,6 +42,7 @@
               <small>La contraseña es obligatoria</small>
             </div>
           </div>
+
           <div class="d-grid">
             <button type="submit" class="btn btn-primary" [disabled]="formLogin.invalid">
               Entrar
