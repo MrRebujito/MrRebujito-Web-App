@@ -21,12 +21,12 @@ export class SocioService {
     return this.http.get<Socio>(`${this.apiUrl}/${id}`);
   }
 
-  saveSocio(socio: Socio): Observable<Socio> {
-    return this.http.post<Socio>(this.apiUrl, socio);
+  saveSocio(socio: Socio): Observable<string> {
+    return this.http.post(this.apiUrl, socio, { responseType: 'text' });
   }
 
-  updateSocio(id: number, socio: Socio): Observable<Socio> {
-    return this.http.put<Socio>(`${this.apiUrl}/${id}`, socio);
+  updateSocio(id: number, socio: Socio): Observable<string> {
+    return this.http.put(this.apiUrl, socio, { responseType: 'text' });
   }
 
   deleteSocio(id: number): Observable<void> {
