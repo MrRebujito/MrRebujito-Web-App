@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SolicitudLicencia } from '../model/solicitud-licencia';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,17 @@ export class SolicitudLicenciaService {
 
   constructor(private http: HttpClient) { }
 
+  // Método PRIVADO para obtener headers con token (como en ayuntamiento-service)
+  private getAuthHeaders(): HttpHeaders {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      return new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+    }
+    return new HttpHeaders();
+  }
+
   getAllSolicitudLicencia(): Observable<SolicitudLicencia[]> {
     return this.http.get<SolicitudLicencia[]>(this.url);
   }
@@ -19,15 +30,23 @@ export class SolicitudLicenciaService {
     return this.http.get<SolicitudLicencia>(`${this.url}/${id}`);
   }
 
-  saveSolicitudLicencia(noticia: SolicitudLicencia): Observable<string> {
-    return this.http.post(this.url, noticia, { responseType: 'text' });
+  saveSolicitudConAyuntamientoId(ayuntamientoId: number): Observable<any> {
+    return this.http.post(`${this.url}/crear-con-ayuntamiento/${ayuntamientoId}`, {});
   }
 
-  updateSolicitudLicencia(id: number, noticia: SolicitudLicencia): Observable<string> {
-    return this.http.put(`${this.url}/${id}`, noticia, { responseType: 'text' });
+  // Método original modificado para usar headers
+  saveSolicitudLicencia(solicitud: SolicitudLicencia): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.url, solicitud, { headers });
   }
 
-  deleteSolicitudLicencia(id: number): Observable<string> {
-    return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
+  updateSolicitudLicencia(id: number, solicitud: SolicitudLicencia): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.put<any>(`${this.url}/${id}`, solicitud, { headers });
+  }
+
+  deleteSolicitudLicencia(id: number): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.delete<any>(`${this.url}/${id}`, { headers });
   }
 }
