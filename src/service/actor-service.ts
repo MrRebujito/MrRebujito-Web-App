@@ -27,4 +27,11 @@ export class ActorService {
 
     return this.http.get<Actor>(this.urlActorLogin, { headers: headers });
   }
+
+  getCurrentActor(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+    });
+    return this.http.get(`${this.urlActorLogin}`, { headers });
+  }
 }
