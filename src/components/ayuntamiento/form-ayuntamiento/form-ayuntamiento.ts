@@ -16,7 +16,9 @@ export class FormAyuntamiento implements OnInit {
   formularioAyuntamiento!: FormGroup;
   ayuntamiento!: Ayuntamiento;
   id!: number;
-  urlPattern = /^(https?:\/\/)[^\s$.?#].[^\s]*$/
+  urlPattern = /^(https?:\/\/)[^\s$.?#].[^\s]*$/;
+  emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  telefonoPattern = /^[6-9][0-9]{8}$/;
   esPropioPerfil: boolean = false;
 
   constructor(
@@ -68,10 +70,10 @@ export class FormAyuntamiento implements OnInit {
       username: ['', Validators.required],
       password: ['', this.id ? [] : [Validators.required, Validators.minLength(6)]],
       licenciaMax: [1, [Validators.required, Validators.min(1)]], 
-      correo: ['', [Validators.required, Validators.email]], 
-      telefono: [''], 
+      correo: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      telefono: ['', [Validators.pattern(this.telefonoPattern)]], 
       direccion: [''],
-      foto: [''] 
+      foto: ['', [Validators.pattern(this.urlPattern)]] 
     });
   }
 

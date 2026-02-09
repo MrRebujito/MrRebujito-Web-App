@@ -7,6 +7,7 @@ import { AyuntamientoService } from '../../../service/ayuntamiento-service';
 @Component({
   selector: 'app-detail-ayuntamiento',
   imports: [CommonModule, RouterLink],
+  standalone: true,
   templateUrl: './detail-ayuntamiento.html',
   styleUrl: './detail-ayuntamiento.css',
 })
