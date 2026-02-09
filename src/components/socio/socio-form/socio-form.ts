@@ -14,8 +14,8 @@ import { Socio } from '../../../model/socio';
 })
 export class SocioForm implements OnInit {
   formularioSocio: FormGroup;
-  socio: Socio = {} as Socio;
-  id: number | null = null;
+  socio!: Socio;
+  id!: number;
   cdr = inject(ChangeDetectorRef);
 
   constructor(
@@ -24,68 +24,65 @@ export class SocioForm implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
+    // Definimos el formulario con todo
     this.formularioSocio = this.formBuilder.group({
       nombre: ['', Validators.required],
       primerApellido: ['', Validators.required],
       segundoApellido: [''],
-      correo: ['', [Validators.required, Validators.email]],
-      // Corregido: El patrón ahora permite empezar por 6-9 seguido de 8 números
+      correo: ['', [Validators.required, Validators.pattern('^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$')]],
       telefono: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{8}$')]],
-      foto: ['', [Validators.pattern('https?://.+')]], // Validación simple de URL
+      foto: ['', [Validators.pattern('https?://.+')]],
       direccion: [''],
       username: ['', Validators.required],
-      password: ['', this.id == null ? [Validators.required, Validators.minLength(6)] : []]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   ngOnInit(): void {
-    const idParam = this.activatedRoute.snapshot.params['id'];
+    //Obtenemos el ID de la ruta
+    this.id = this.activatedRoute.snapshot.params['id'];
+    console.log(this.id);
 
-    if (idParam && !isNaN(Number(idParam))) {
-      this.id = Number(idParam);
+    if (this.id != null) {
+      //Si hay ID, estamos editando. 
+      // ELIMINAMOS el control password del formulario.
+      this.formularioSocio.removeControl('password');
 
-      this.socioService.getSocio(this.id).subscribe({
-        next: (data: Socio) => {
-          this.socio = data;
-          this.formularioSocio.patchValue(this.socio);
+      this.socioService.getSocio(this.id).subscribe(
+        data => { 
+          this.formularioSocio.patchValue(data);
           this.cdr.detectChanges();
         },
-        error: (error) => {
-          console.error("Error al recuperar el socio:", error);
-        }
-      });
-    } else {
-      this.id = null;
-      console.log("Modo registro: No se busca ningún socio.");
+        error => { console.log(error); }
+      );
     }
   }
 
-  onSubmit(): void {
-    if (this.formularioSocio.valid) {
-      const datosSocio = this.formularioSocio.value;
+  onSubmit() {
+    this.socio = this.formularioSocio.value;
 
+    if (this.formularioSocio.valid) {
       if (this.id == null) {
-        this.socioService.saveSocio(datosSocio).subscribe({
-          next: () => {
+        // MODO REGISTRO
+        this.socioService.saveSocio(this.socio).subscribe({
+          next: (data) => {
             alert("Socio registrado correctamente");
             this.router.navigate(['/socios']);
           },
-          error: (error) => {
-            console.error("Error al crear socio:", error);
-            alert("Error al registrar: Compruebe los datos o el nombre de usuario.");
-          }
+          error: (error) => { console.log(error); }
         });
       } else {
-        // En la edición, pasamos el ID que tenemos guardado
-        this.socioService.updateSocio(this.id, datosSocio).subscribe({
-          next: () => {
-            alert("Datos actualizados correctamente");
+        // MODO ACTUALIZACIÓN
+        // Añadimos el ID al objeto socio antes de enviar
+        this.socio.id = this.id;
+
+        this.socioService.updateSocio(this.socio).subscribe(
+          data => {
+            alert("Socio actualizado correctamente");
             this.router.navigate(['/socios']);
           },
-          error: (error) => {
-            console.error("Error al actualizar socio:", error);
-          }
-        });
+          error => { console.log(error); }
+        );
       }
     }
   }

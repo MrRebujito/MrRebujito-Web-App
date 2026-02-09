@@ -31,14 +31,14 @@
             <label class="form-label">Correo Electrónico *</label>
             <input type="email" formControlName="correo" class="form-control"
                    [class.is-invalid]="esInvalido('correo')">
-            <div class="invalid-feedback">Debe introducir un email válido.</div>
+            <div class="invalid-feedback">Introduzca un correo válido (ej: usuario@dominio.com).</div>
           </div>
 
           <div class="col-md-6 mb-3">
             <label class="form-label">Teléfono * (9 dígitos)</label>
             <input type="text" formControlName="telefono" class="form-control"
                    [class.is-invalid]="esInvalido('telefono')">
-            <div class="invalid-feedback">Debe empezar por 6, 7, 8 o 9 y tener 9 números.</div>
+            <div class="invalid-feedback">Debe empezar por 6-9 y tener 9 números.</div>
           </div>
         </div>
 
@@ -46,8 +46,8 @@
           <div class="col-md-12 mb-3">
             <label class="form-label">URL de la Foto (Opcional)</label>
             <input type="text" formControlName="foto" class="form-control"
-                   [class.is-invalid]="esInvalido('foto')" placeholder="https://ejemplo.com/mi-foto.jpg">
-            <div class="invalid-feedback">Debe ser una URL válida (http/https).</div>
+                   [class.is-invalid]="esInvalido('foto')" placeholder="https://ejemplo.com/foto.jpg">
+            <div class="invalid-feedback">Debe ser una URL válida.</div>
           </div>
         </div>
 
@@ -76,7 +76,6 @@
             {{ id == null ? 'Registrar Socio' : 'Guardar Cambios' }}
           </button>
         </div>
-
       </form>
     </div>
   </div>

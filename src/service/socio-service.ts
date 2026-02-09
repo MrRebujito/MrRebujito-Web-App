@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Socio } from '../model/socio';
-
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ export class SocioService {
 
   constructor(private http: HttpClient) { }
 
-  // CRUD Completo
   getAllSocios(): Observable<Socio[]> {
     return this.http.get<Socio[]>(this.apiUrl);
   }
@@ -25,11 +23,27 @@ export class SocioService {
     return this.http.post(this.apiUrl, socio, { responseType: 'text' });
   }
 
-  updateSocio(id: number, socio: Socio): Observable<string> {
-    return this.http.put(this.apiUrl, socio, { responseType: 'text' });
+  updateSocio(socio: Socio): Observable<string> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put(this.apiUrl, socio, { 
+      headers: headers, 
+      responseType: 'text' 
+    });
   }
 
-  deleteSocio(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteSocio(): Observable<string> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.delete(this.apiUrl, { 
+      headers: headers, 
+      responseType: 'text' 
+    });
   }
 }

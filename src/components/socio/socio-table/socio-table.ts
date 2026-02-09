@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { Socio } from '../../../model/socio';
 import { SocioService } from '../../../service/socio-service';
 
@@ -12,9 +12,9 @@ import { SocioService } from '../../../service/socio-service';
   styleUrl: './socio-table.css',
 })
 export class SocioTable implements OnInit {
-  // Array de socios que alimentará la tabla
   socios: Socio[] = [];
   cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   constructor(private socioService: SocioService) {}
 
@@ -34,14 +34,19 @@ export class SocioTable implements OnInit {
     });
   }
 
-
-  eliminarSocio(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este socio?')) {
-      this.socioService.deleteSocio(id).subscribe({
-        next: () => {
-          this.socios = this.socios.filter(s => s.id !== id);
+  eliminarMiCuenta(): void { 
+    if (confirm('¿Estás seguro de que deseas eliminar TU cuenta? Esta acción no se puede deshacer.')) {
+      this.socioService.deleteSocio().subscribe({
+        next: (mensaje) => {
+          alert(mensaje);
+          
+          localStorage.removeItem('token'); 
+          this.router.navigate(['/login']);
         },
-        error: (err) => console.error('Error al eliminar:', err)
+        error: (err) => {
+          console.error('Error al eliminar:', err);
+          alert("No se pudo eliminar la cuenta. Verifica que estás logueado.");
+        }
       });
     }
   }
