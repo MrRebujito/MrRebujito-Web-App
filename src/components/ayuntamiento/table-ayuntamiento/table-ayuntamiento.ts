@@ -36,6 +36,20 @@ export class TableAyuntamiento implements OnInit {
       },
     })}
 
+    borrar(id: number): void {
+      if (confirm("Estás seguro de que quieres eliminar este ayuntamiento?")) {
+        this.ayuntamientoService.deleteAyuntamiento(id).subscribe({
+          next: () => {
+            // si va bien borra el ayuntamiento y los recarga
+            this.cargarAyuntamientos();
+          },
+          error: (error) => {
+            console.error("Error al borrar el ayuntamiento", error)
+          }
+        })
+      }
+    }
+
     esAdmin(): boolean {
       return sessionStorage.getItem('rol') === 'ADMIN';
     }
