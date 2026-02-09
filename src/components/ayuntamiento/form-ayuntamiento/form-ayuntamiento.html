@@ -1,7 +1,10 @@
-<div class="container mt-4" *ngIf="esAdmin(); else forbidden">
+<div class="container mt-4" *ngIf="esAdmin() || esAyuntamiento(); else forbidden">
   <div class="card shadow">
     <div class="card-header bg-primary text-white">
-      <h3 class="mb-0">{{ id ? 'Modificar' : 'Registrar Nuevo' }} Ayuntamiento</h3>
+      <h3 class="mb-0">
+        {{ id ? 'Editar perfil' : 'Registrar Ayuntamiento' }}
+        Ayuntamiento
+      </h3>
     </div>
     <div class="card-body">
       <form [formGroup]="formularioAyuntamiento" (ngSubmit)="onSubmit()">
@@ -19,17 +22,55 @@
                   formularioAyuntamiento.get('nombre')?.touched,
               }"
             />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                formularioAyuntamiento.get('nombre')?.invalid &&
+                formularioAyuntamiento.get('nombre')?.touched
+              "
+            >
+              <small *ngIf="formularioAyuntamiento.get('nombre')?.errors?.['required']"
+                >El nombre es obligatorio</small
+              >
+              <small *ngIf="formularioAyuntamiento.get('nombre')?.errors?.['minlength']"
+                >Mínimo 3 caracteres</small
+              >
+            </div>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Nombre de Usuario *</label>
-            <input type="text" formControlName="username" class="form-control" />
+            <input
+              type="text"
+              formControlName="username"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  formularioAyuntamiento.get('username')?.invalid &&
+                  formularioAyuntamiento.get('username')?.touched,
+              }"
+            />
+            <div class="invalid-feedback">
+              <small>El nombre de usuario es obligatorio</small>
+            </div>
           </div>
         </div>
 
         <div class="row" *ngIf="!id">
           <div class="col-md-12 mb-3">
             <label class="form-label">Contraseña de Acceso *</label>
-            <input type="password" formControlName="password" class="form-control" />
+            <input
+              type="password"
+              formControlName="password"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  formularioAyuntamiento.get('password')?.invalid &&
+                  formularioAyuntamiento.get('password')?.touched,
+              }"
+            />
+            <div class="invalid-feedback">
+              <small>La contraseña debe tener al menos 6 caracteres</small>
+            </div>
           </div>
         </div>
 
@@ -37,19 +78,61 @@
         <div class="row">
           <div class="col-md-4 mb-3">
             <label class="form-label">Límite de Licencias *</label>
-            <input type="number" formControlName="licenciaMax" class="form-control" />
+            <input
+              type="number"
+              formControlName="licenciaMax"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  formularioAyuntamiento.get('licenciaMax')?.invalid &&
+                  formularioAyuntamiento.get('licenciaMax')?.touched,
+              }"
+            />
             <small class="text-muted">Máximo de licencias que puede otorgar</small>
+            <div class="invalid-feedback">
+              <small>Debe ser al menos 1</small>
+            </div>
           </div>
           <div class="col-md-8 mb-3">
             <label class="form-label">Correo Electrónico *</label>
-            <input type="email" formControlName="correo" class="form-control" />
+            <input
+              type="email"
+              formControlName="correo"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  formularioAyuntamiento.get('correo')?.invalid &&
+                  formularioAyuntamiento.get('correo')?.touched,
+              }"
+            />
+            <div class="invalid-feedback">
+              <small *ngIf="formularioAyuntamiento.get('correo')?.errors?.['required']"
+                >El correo es obligatorio</small
+              >
+              <small *ngIf="formularioAyuntamiento.get('correo')?.errors?.['pattern']"
+                >Formato de correo inválido</small
+              >
+            </div>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-4 mb-3">
             <label class="form-label">Teléfono (Opcional)</label>
-            <input type="text" formControlName="telefono" class="form-control" />
+            <input
+              type="text"
+              formControlName="telefono"
+              class="form-control"
+              placeholder="Ej: 612345678"
+              [ngClass]="{
+                'is-invalid':
+                  formularioAyuntamiento.get('telefono')?.invalid &&
+                  formularioAyuntamiento.get('telefono')?.touched,
+              }"
+            />
+            <div class="invalid-feedback">
+              <small>Debe empezar por 6-9 y tener 9 dígitos</small>
+            </div>
           </div>
           <div class="col-md-8 mb-3">
             <label class="form-label">Dirección (Opcional)</label>
@@ -64,9 +147,17 @@
               type="text"
               formControlName="foto"
               class="form-control"
-              placeholder="http://..."
+              placeholder="https://ejemplo.com/imagen.jpg"
+              [ngClass]="{
+                'is-invalid':
+                  formularioAyuntamiento.get('foto')?.invalid &&
+                  formularioAyuntamiento.get('foto')?.touched,
+              }"
             />
             <small class="text-muted">Se permiten enlaces externos (Pinterest, Flickr, etc.)</small>
+            <div class="invalid-feedback">
+              <small>Debe ser una URL válida que empiece con http:// o https://</small>
+            </div>
           </div>
         </div>
 
@@ -74,8 +165,25 @@
           <button type="button" class="btn btn-outline-secondary me-2" routerLink="/ayuntamientos">
             Cancelar
           </button>
+
+          <!-- boton borrar (solo si es su propio perfil) -->
+          <button
+            type="button"
+            class="btn btn-danger me-2"
+            *ngIf="id && esPropioPerfil && esAyuntamiento()"
+            (click)="borrarPerfil()"
+          >
+            <i class="bi bi-trash"></i> Eliminar este ayuntamiento
+          </button>
+
           <button type="submit" class="btn btn-primary" [disabled]="formularioAyuntamiento.invalid">
-            {{ id ? 'Guardar Cambios' : 'Finalizar Registro' }}
+            {{
+              id && esPropioPerfil
+                ? 'Guardar Cambios'
+                : id
+                  ? 'Guardar Cambios'
+                  : 'Finalizar Registro'
+            }}
           </button>
         </div>
       </form>
