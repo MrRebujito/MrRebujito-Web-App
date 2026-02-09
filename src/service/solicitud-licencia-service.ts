@@ -11,7 +11,6 @@ export class SolicitudLicenciaService {
 
   constructor(private http: HttpClient) { }
 
-  // Método PRIVADO para obtener headers con token (como en ayuntamiento-service)
   private getAuthHeaders(): HttpHeaders {
     const token = sessionStorage.getItem('token');
     if (token) {
@@ -34,7 +33,6 @@ export class SolicitudLicenciaService {
     return this.http.post(`${this.url}/crear-con-ayuntamiento/${ayuntamientoId}`, {});
   }
 
-  // Método original modificado para usar headers
   saveSolicitudLicencia(solicitud: SolicitudLicencia): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.post<any>(this.url, solicitud, { headers });
