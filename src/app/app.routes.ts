@@ -9,11 +9,17 @@ import { DetailSolicitudLicencia } from '../components/solicitud-licencia/detail
 import { Login } from '../components/actor-login/login';
 import { FormAyuntamiento } from '../components/ayuntamiento/form-ayuntamiento/form-ayuntamiento';
 import { AuthGuard } from '../service/auth-guard';
+import { RoleGuard } from '../service/role-guard';
+import { AdminTable } from '../components/administrador/admin-table/admin-table';
+import { AdminForm } from '../components/administrador/admin-form/admin-form';
 
 export const routes: Routes = [
 
   // Rutas públicas
   { path: '', redirectTo: '/solicitudes', pathMatch: 'full' },
+
+  // Ruta del login
+  { path: 'login', component: Login },
 
   // Rutas protegidas
   //socio
@@ -29,16 +35,25 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
 
-  /* Ruta para perfil de admin (necesitarás crear este componente)
+  // Rutas de administrador (solo ADMIN)
   {
-    path: 'admin/perfil',
-    component: AdminProfileComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['ADMIN'] } // Guard específico por rol
-  },*/
-
-  // Ruta del login
-  { path: 'login', component: Login },
+    path: 'administradores',
+    component: AdminTable,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'administradores/nuevo',
+    component: AdminForm,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'administradores/editar/:id',
+    component: AdminForm,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
 
   // Rutas de solicitudLicencia
   { path: 'solicitudes', component: TableSolicitudLicencia },
@@ -49,7 +64,6 @@ export const routes: Routes = [
   { path: 'ayuntamientos/form', component: FormAyuntamiento },
   { path: 'ayuntamientos/form/:id', component: FormAyuntamiento },
   { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
-
 
   //Socio
   { path: 'socios', component: SocioTable },

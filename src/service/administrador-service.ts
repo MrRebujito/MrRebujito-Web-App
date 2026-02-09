@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Administrador } from '../model/administrador';
 
@@ -11,6 +11,15 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
+  // CRUD Completo
+  getAllAdministradores(): Observable<Administrador[]> {
+    return this.http.get<Administrador[]>(this.url);
+  }
+
+  getAdministrador(id: number): Observable<Administrador> {
+    return this.http.get<Administrador>(`${this.url}/${id}`);
+  }
+
   saveAdministrador(administrador: Administrador): Observable<string> {
     return this.http.post(this.url, administrador, { responseType: 'text' });
   }
@@ -19,8 +28,8 @@ export class AdminService {
     return this.http.put(this.url, administrador, { responseType: 'text' });
   }
 
-  deleteAdministrador(): Observable<void> {
-    return this.http.delete<void>(this.url);
+  deleteAdministrador(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
   }
 
   // Métodos de gestión de usuarios (banear/desbanear)
