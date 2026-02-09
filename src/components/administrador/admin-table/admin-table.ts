@@ -15,7 +15,7 @@ export class AdminTable implements OnInit {
   administradores: Administrador[] = [];
   cdr = inject(ChangeDetectorRef);
 
-  constructor(private adminService: AdminService) {}
+  constructor(public adminService: AdminService) {}
 
   ngOnInit(): void {
     this.cargarAdministradores();

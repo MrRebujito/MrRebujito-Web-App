@@ -22,7 +22,7 @@ export class AdminForm implements OnInit {
     private formBuilder: FormBuilder,
     private adminService: AdminService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    public router: Router
   ) {
     this.formularioAdmin = this.formBuilder.group({
       nombre: ['', Validators.required],
