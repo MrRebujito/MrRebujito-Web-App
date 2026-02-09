@@ -67,11 +67,11 @@ export class FormAyuntamiento implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       username: ['', Validators.required],
       password: ['', this.id ? [] : [Validators.required, Validators.minLength(6)]],
-      licenciaMax: [0, [Validators.required, Validators.min(1)]],
-      correo: ['', Validators.required],
-      telefono: ['', Validators.required],
+      licenciaMax: [1, [Validators.required, Validators.min(1)]], 
+      correo: ['', [Validators.required, Validators.email]], 
+      telefono: [''], 
       direccion: [''],
-      foto: ['', [Validators.pattern(this.urlPattern)]]
+      foto: [''] 
     });
   }
 
