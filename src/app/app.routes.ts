@@ -12,11 +12,12 @@ import { AuthGuard } from '../service/auth-guard';
 import { RoleGuard } from '../service/role-guard';
 import { AdminTable } from '../components/administrador/admin-table/admin-table';
 import { AdminForm } from '../components/administrador/admin-form/admin-form';
+import { HomeComponent } from '../components/home/home';
 
 export const routes: Routes = [
 
   // Rutas públicas
-  { path: '', redirectTo: '/solicitudes', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
 
   // Ruta del login
   { path: 'login', component: Login },
