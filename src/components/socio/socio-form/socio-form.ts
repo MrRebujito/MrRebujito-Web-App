@@ -14,7 +14,7 @@ import { Socio } from '../../../model/socio';
 })
 export class SocioForm implements OnInit {
   formularioSocio: FormGroup;
-  socio: Socio = {} as Socio;
+  socio!: Socio;
   id: number | null = null;
   cdr = inject(ChangeDetectorRef);
 
@@ -76,6 +76,7 @@ export class SocioForm implements OnInit {
           }
         });
       } else {
+        datosSocio.id = this.id;
         // En la edición, pasamos el ID que tenemos guardado
         this.socioService.updateSocio(this.id, datosSocio).subscribe({
           next: () => {
