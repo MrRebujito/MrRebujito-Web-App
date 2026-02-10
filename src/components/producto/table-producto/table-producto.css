@@ -1,0 +1,254 @@
+/* =========================================
+   MR. REBUJITO - TABLE AYUNTAMIENTO THEME (FINAL)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
+
+:host {
+  /* --- TOKENS --- */
+  --mr-primary: #e38b64; /* Naranja Principal */
+  --mr-secondary: #9bbf9c; /* Verde Suave */
+  --mr-accent: #3b6b76; /* Azul Petróleo */
+  --mr-bg-light: #f2ebd9; /* Crema */
+  --mr-text-main: #2c3e50; /* Texto Oscuro */
+
+  display: block;
+  min-height: calc(100vh - 70px);
+  padding-top: 2rem;
+  padding-bottom: 0;
+  position: relative;
+
+  /* --- FONDO --- */
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
+    url('/assets-webp/icono_logo_sin_fondo.webp'),
+    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+
+  background-position:
+    center center,
+    right -20px bottom 0px,
+    center center;
+  background-size: cover, 500px, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+/* =========================================
+   CONTENEDOR
+   ========================================= */
+
+.container {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(44, 62, 80, 0.1);
+  padding: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(227, 139, 100, 0.2);
+
+  /* ANIMACIÓN DE ENTRADA (Slide Up) */
+  animation: slideUpFade 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+/* =========================================
+   ENCABEZADO CON BARRA ANIMADA
+   ========================================= */
+
+h2 {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  position: relative; /* Necesario para posicionar la barra animada */
+  display: flex;
+  align-items: center;
+
+  /* Quitamos el border-bottom estático para usar el animado */
+  border-bottom: none;
+}
+
+/* La barra animada debajo del título */
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px; /* Un poco más gruesa para que se vea el efecto */
+  background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
+  background-size: 200% auto;
+  border-radius: 2px;
+  animation: gradientMove 3s linear infinite;
+}
+
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin-right: 1.5rem;
+  background-image: url('/assets-webp/ayuntamiento.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  /* ANIMACIÓN DEL ICONO (Flotando) */
+  animation: floatIcon 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+
+.btn {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.2s;
+
+  /* Para centrar el + y la imagen */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* BOTÓN "NUEVO" (Naranja Corporativo) */
+.btn-success {
+  background-color: var(--mr-primary) !important;
+  border-color: var(--mr-primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(227, 139, 100, 0.3);
+}
+
+.btn-success:hover {
+  background-color: #d27a53 !important;
+  border-color: #d27a53 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
+}
+
+.btn-primary {
+  background-color: var(--mr-primary);
+  border-color: var(--mr-primary);
+}
+
+.btn-primary:hover {
+  background-color: #d27a53;
+  border-color: #d27a53;
+}
+
+/* =========================================
+   TABLA
+   ========================================= */
+
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+  background: white;
+}
+
+.table thead th {
+  background-color: var(--mr-accent);
+  color: white;
+  font-family: 'Merriweather', serif;
+  font-weight: 400;
+  border: none;
+  padding: 1rem;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  padding: 1rem;
+  color: var(--mr-text-main);
+  border-bottom: 1px solid #eee;
+}
+
+.table tbody tr {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Efecto hover en la fila */
+.table tbody tr:hover {
+  background-color: rgba(155, 191, 156, 0.15);
+  transform: scale(1.01);
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   ACCIONES (Botones pequeños)
+   ========================================= */
+
+.btn-sm {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+
+.btn-info {
+  background-color: var(--mr-accent);
+  border: none;
+  color: white;
+}
+.btn-warning {
+  background-color: var(--mr-primary);
+  border: none;
+  color: white;
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIcon {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

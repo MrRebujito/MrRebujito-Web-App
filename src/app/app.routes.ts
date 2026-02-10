@@ -13,6 +13,7 @@ import { RoleGuard } from '../service/role-guard';
 import { AdminTable } from '../components/administrador/admin-table/admin-table';
 import { AdminForm } from '../components/administrador/admin-form/admin-form';
 import { HomeComponent } from '../components/home/home';
+import { TableProducto } from '../components/producto/table-producto/table-producto';
 
 export const routes: Routes = [
 
@@ -73,5 +74,7 @@ export const routes: Routes = [
   { path: 'socios/:id', component: SocioDetail },
 
   // Rutas de socio
-  { path: 'socios', component: SocioTable }
+  { path: 'socios', component: SocioTable },
+
+    { path: 'productos', component: TableProducto }
 ];

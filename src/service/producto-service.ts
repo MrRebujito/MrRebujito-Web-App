@@ -23,7 +23,8 @@ export class ProductoService {
   }
 
   getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.url);
+    const headers = this.getAuthHeaders(); 
+    return this.http.get<Producto[]>(this.url, { headers: headers });
   }
 
   getProductoById(id: number): Observable<Producto> {
