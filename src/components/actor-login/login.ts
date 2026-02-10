@@ -35,7 +35,7 @@ export class Login {
         data => {
           sessionStorage.setItem("token", data);
           this.cargarUsuarioLogueado()
-          this.router.navigate(['/noticia']).then(() => {
+          this.router.navigate(['']).then(() => {
             window.location.reload();
           });
         },

@@ -12,8 +12,8 @@ import { Ayuntamiento } from '../../../model/ayuntamiento';
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    RouterLink, 
-    RouterLinkActive, 
+    RouterLink,
+    RouterLinkActive,
     CommonModule
   ],
   templateUrl: './navbar.html',
@@ -32,7 +32,7 @@ export class Navbar implements OnInit {
     private socioService: SocioService,
     private ayuntamientoService: AyuntamientoService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadUserInfo();
@@ -41,14 +41,14 @@ export class Navbar implements OnInit {
   loadUserInfo(): void {
     const storedUsername = sessionStorage.getItem('username');
     const storedRol = sessionStorage.getItem('rol');
-    
+
     if (storedUsername) {
       this.username = storedUsername;
     }
     if (storedRol) {
       this.rol = storedRol;
     }
-    
+
     if (this.isLoggedIn()) {
       this.getCurrentActorInfo();
     }
@@ -60,7 +60,7 @@ export class Navbar implements OnInit {
         this.actor = actor;
         this.rol = actor.rol;
         sessionStorage.setItem('rol', actor.rol);
-        
+
         // Obtener ID específico según el rol
         if (actor.rol === 'SOCIO') {
           this.getSocioIdByUsername(actor.username);
@@ -84,7 +84,7 @@ export class Navbar implements OnInit {
       sessionStorage.setItem('socioId', this.socioId!.toString());
       return;
     }
-    
+
     // Buscar en la lista de socios
     this.socioService.getAllSocios().subscribe({
       next: (socios: Socio[]) => {
@@ -109,7 +109,7 @@ export class Navbar implements OnInit {
       sessionStorage.setItem('ayuntamientoId', this.ayuntamientoId!.toString());
       return;
     }
-    
+
     // Buscar en la lista de ayuntamientos usando getAyuntamientos()
     this.ayuntamientoService.getAyuntamientos().subscribe({
       next: (ayuntamientos: Ayuntamiento[]) => {
@@ -119,7 +119,6 @@ export class Navbar implements OnInit {
           sessionStorage.setItem('ayuntamientoId', ayuntamiento.id.toString());
         } else {
           console.warn('No se encontró ayuntamiento para el username:', username);
-          // Intentar buscar de otra manera si es necesario
         }
       },
       error: (error) => {
@@ -142,6 +141,33 @@ export class Navbar implements OnInit {
     return this.username || 'Usuario';
   }
 
+  // ==================== MÉTODOS PARA VERIFICAR ROLES ====================
+  isAdmin(): boolean {
+    return this.rol === 'ADMIN';
+  }
+
+  isAyuntamiento(): boolean {
+    return this.rol === 'AYUNTAMIENTO';
+  }
+
+  isCaseta(): boolean {
+    return this.rol === 'CASETA';
+  }
+
+  isSocio(): boolean {
+    return this.rol === 'SOCIO';
+  }
+
+  getRolDisplay(): string {
+    const roles: { [key: string]: string } = {
+      'ADMIN': 'Administrador',
+      'AYUNTAMIENTO': 'Ayuntamiento',
+      'CASETA': 'Caseta',
+      'SOCIO': 'Socio'
+    };
+    return roles[this.rol] || 'Usuario';
+  }
+
   goToProfile(): void {
     if (!this.isLoggedIn()) {
       this.router.navigate(['/login']);
@@ -151,23 +177,22 @@ export class Navbar implements OnInit {
     // Redirección según el rol
     switch (this.rol) {
       case 'ADMIN':
-        // Para admin, puedes redirigir a una página de administración
-        // o crear un componente AdminProfileComponent
-        this.router.navigate(['/solicitudes']); // Redirige a dashboard por ahora
+        // Para admin, redirige a administradores
+        this.router.navigate(['/administradores']);
         break;
-        
+
       case 'AYUNTAMIENTO':
         this.navigateToAyuntamientoProfile();
         break;
-        
+
       case 'SOCIO':
         this.navigateToSocioProfile();
         break;
-        
+
       case 'CASETA':
         this.navigateToCasetaProfile();
         break;
-        
+
       default:
         this.router.navigate(['/login']);
     }
@@ -175,7 +200,7 @@ export class Navbar implements OnInit {
 
   private navigateToAyuntamientoProfile(): void {
     const ayuntamientoId = sessionStorage.getItem('ayuntamientoId');
-    
+
     if (ayuntamientoId) {
       // Ruta correcta según tu app.routes.ts: /ayuntamientos/form/:id
       this.router.navigate(['/ayuntamientos/form', ayuntamientoId]);
@@ -187,7 +212,7 @@ export class Navbar implements OnInit {
 
   private navigateToSocioProfile(): void {
     const socioId = sessionStorage.getItem('socioId');
-    
+
     if (socioId) {
       // Ruta correcta según tu app.routes.ts: /socios/editar/:id
       this.router.navigate(['/socios/editar', socioId]);
@@ -198,10 +223,10 @@ export class Navbar implements OnInit {
 
   private navigateToCasetaProfile(): void {
     const casetaId = sessionStorage.getItem('casetaId');
-    
+
     if (casetaId) {
-      // Ajusta la ruta según tengas para casetas
-      this.router.navigate(['/casetas/edit', casetaId]);
+      // Ruta: /casetas/editar/:id
+      this.router.navigate(['/casetas/editar', casetaId]);
     } else {
       this.router.navigate(['/casetas']);
     }
@@ -266,14 +291,14 @@ export class Navbar implements OnInit {
     sessionStorage.removeItem('socioId');
     sessionStorage.removeItem('ayuntamientoId');
     sessionStorage.removeItem('casetaId');
-    
+
     // Limpiar propiedades del componente
     this.username = '';
     this.rol = '';
     this.socioId = null;
     this.ayuntamientoId = null;
     this.actor = null;
-    
+
     // Redirigir a login y recargar
     this.router.navigate(['/login']).then(() => {
       window.location.reload();
