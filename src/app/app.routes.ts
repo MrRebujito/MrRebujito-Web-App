@@ -15,6 +15,7 @@ import { AdminForm } from '../components/administrador/admin-form/admin-form';
 import { HomeComponent } from '../components/home/home';
 import { TableProducto } from '../components/producto/table-producto/table-producto';
 import { DetailProducto } from '../components/producto/detail-producto/detail-producto';
+import { FormProducto } from '../components/producto/form-producto/form-producto';
 
 export const routes: Routes = [
 
@@ -78,5 +79,10 @@ export const routes: Routes = [
   { path: 'socios', component: SocioTable },
 
     { path: 'productos', component: TableProducto },
-    { path: 'producto/detail/:id', component: DetailProducto }
+    { path: 'producto/detail/:id', component: DetailProducto },
+    // 3. Ruta CREAR (sin ID)
+  { path: 'producto/create', component: FormProducto },
+
+  // 4. Ruta EDITAR (con ID) -> Usa el mismo componente
+  { path: 'producto/edit/:id', component: FormProducto }
 ];

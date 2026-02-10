@@ -1,48 +1,40 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Producto } from '../model/producto'; 
+import { Producto } from '../model/producto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
 
-  private url = "http://localhost:8080/producto";
+  // Ajusta el puerto si tu backend no está en el 8080
+  private apiUrl = 'http://localhost:8080/producto'; 
 
   constructor(private http: HttpClient) { }
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      return new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      });
-    }
-    return new HttpHeaders();
-  }
-
+  // 1. Obtener todos (para la Tabla)
   getProductos(): Observable<Producto[]> {
-    const headers = this.getAuthHeaders(); 
-    return this.http.get<Producto[]>(this.url, { headers: headers });
+    return this.http.get<Producto[]>(this.apiUrl);
   }
 
+  // 2. Obtener uno por ID (para el Detalle y Editar)
   getProductoById(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.url}/${id}`);
+    return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
-  saveProducto(producto: Producto): Observable<string> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(this.url, producto, { headers: headers, responseType: 'text' });
+  // 3. Crear nuevo (FALTABA ESTE)
+  createProducto(producto: Producto): Observable<Producto> {
+    return this.http.post<Producto>(this.apiUrl, producto);
   }
 
-  updateProducto(id: number, producto: Producto): Observable<string> {
-    const headers = this.getAuthHeaders();
-    return this.http.put(`${this.url}/${id}`, producto, { headers: headers, responseType: 'text' });
+  // 4. Actualizar existente (FALTABA ESTE)
+  updateProducto(id: number, producto: Producto): Observable<Producto> {
+    return this.http.put<Producto>(`${this.apiUrl}/${id}`, producto);
   }
 
-  deleteProducto(id: number): Observable<string> {
-    const headers = this.getAuthHeaders();
-    return this.http.delete(`${this.url}/${id}`, { headers: headers, responseType: 'text' });
+  // 5. Borrar (para la Tabla)
+  deleteProducto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
