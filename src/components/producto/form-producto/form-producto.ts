@@ -33,16 +33,24 @@ export class FormProducto implements OnInit {
     // Verificar si viene una ID en la URL (Modo Edición)
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
     if (idParam) {
-      this.id = +idParam; // El + convierte string a número
+      this.id = +idParam;
       this.cargarDatos(this.id);
     }
   }
 
-  // Inicializamos el formulario con validaciones
+  // Inicializamos el formulario con las validaciones pedidas
   initForm(): void {
     this.formularioProducto = this.formBuilder.group({
+      // 1. Nombre Requerido
       nombre: ['', [Validators.required, Validators.minLength(3)]],
+      
+      // 2. Precio > 0 (mínimo 0.01)
       precio: [null, [Validators.required, Validators.min(0.01)]],
+      
+      // 3. Stock >= 0 (mínimo 0)
+      stock: [0, [Validators.required, Validators.min(0)]],
+      
+      // Tipo requerido
       tipoAlimento: ['COMIDA', [Validators.required]]
     });
   }
@@ -54,6 +62,7 @@ export class FormProducto implements OnInit {
         this.formularioProducto.patchValue({
           nombre: producto.nombre,
           precio: producto.precio,
+          stock: producto.stock, // Cargamos el stock
           tipoAlimento: producto.tipoAlimento
         });
       },
@@ -66,24 +75,23 @@ export class FormProducto implements OnInit {
   }
 
   onSubmit(): void {
-    // 1. Si el formulario no es válido, marcamos todo en rojo y paramos
+    // Si el formulario no es válido, marcamos todo en rojo y paramos
     if (this.formularioProducto.invalid) {
       this.formularioProducto.markAllAsTouched(); 
       return;
     }
 
-    // 2. Preparar objeto
+    // Preparar objeto
     const producto: Producto = this.formularioProducto.value;
 
-    // 3. Lógica de Guardado
+    // Lógica de Guardado
     if (this.id) {
       // --- MODO EDICIÓN (PUT) ---
       this.productoService.updateProducto(this.id, producto).subscribe({
         next: () => {
-          // Volver a la lista tras éxito
           this.router.navigate(['/productos']);
         },
-        error: (err: any) => { // Solución al error de tipado
+        error: (err: any) => {
           console.error('Error actualizando:', err);
           alert('Hubo un error al actualizar el producto.');
         }
@@ -92,10 +100,9 @@ export class FormProducto implements OnInit {
       // --- MODO CREACIÓN (POST) ---
       this.productoService.createProducto(producto).subscribe({
         next: () => {
-          // Volver a la lista tras éxito
           this.router.navigate(['/productos']);
         },
-        error: (err: any) => { // Solución al error de tipado
+        error: (err: any) => {
           console.error('Error creando:', err);
           alert('Hubo un error al crear el producto.');
         }

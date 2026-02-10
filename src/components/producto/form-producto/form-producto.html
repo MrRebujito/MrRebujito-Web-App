@@ -12,27 +12,27 @@
     <div class="card-body p-4">
       <form [formGroup]="formularioProducto" (ngSubmit)="onSubmit()">
         
-        <h5 class="border-bottom pb-2 mb-4 text-muted">Información General</h5>
+        <h5 class="border-bottom pb-2 mb-4 text-muted">Información del Producto</h5>
         
+        <div class="mb-4">
+          <label class="form-label fw-bold">Nombre del Producto *</label>
+          <input
+            type="text"
+            formControlName="nombre"
+            class="form-control form-control-lg"
+            placeholder="Ej: Plato de Jamón"
+            [ngClass]="{
+              'is-invalid': formularioProducto.get('nombre')?.invalid && formularioProducto.get('nombre')?.touched
+            }"
+          />
+          <div class="invalid-feedback">
+            El nombre es obligatorio y debe tener al menos 3 letras.
+          </div>
+        </div>
+
         <div class="row">
           
-          <div class="col-md-6 mb-3">
-            <label class="form-label fw-bold">Nombre del Producto *</label>
-            <input
-              type="text"
-              formControlName="nombre"
-              class="form-control form-control-lg"
-              placeholder="Ej: Plato de Jamón"
-              [ngClass]="{
-                'is-invalid': formularioProducto.get('nombre')?.invalid && formularioProducto.get('nombre')?.touched
-              }"
-            />
-            <div class="invalid-feedback">
-              El nombre es obligatorio y debe tener al menos 3 caracteres.
-            </div>
-          </div>
-
-          <div class="col-md-3 mb-3">
+          <div class="col-md-4 mb-3">
             <label class="form-label fw-bold">Precio (€) *</label>
             <div class="input-group">
               <input
@@ -48,12 +48,29 @@
               />
               <span class="input-group-text">€</span>
               <div class="invalid-feedback">
-                Introduce un precio válido mayor a 0.
+                El precio debe ser mayor a 0.
               </div>
             </div>
           </div>
 
-          <div class="col-md-3 mb-3">
+          <div class="col-md-4 mb-3">
+            <label class="form-label fw-bold">Stock *</label>
+            <input
+              type="number"
+              min="0"
+              formControlName="stock"
+              class="form-control form-control-lg"
+              placeholder="0"
+              [ngClass]="{
+                'is-invalid': formularioProducto.get('stock')?.invalid && formularioProducto.get('stock')?.touched
+              }"
+            />
+            <div class="invalid-feedback">
+              El stock no puede ser negativo.
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
             <label class="form-label fw-bold">Categoría *</label>
             <select
               formControlName="tipoAlimento"
