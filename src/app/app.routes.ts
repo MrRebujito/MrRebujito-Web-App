@@ -89,7 +89,7 @@ export const routes: Routes = [
   { path: 'producto/create', component: FormProducto },
 
   // 4. Ruta EDITAR (con ID) -> Usa el mismo componente
-  { path: 'producto/edit/:id', component: FormProducto }
+  { path: 'producto/edit/:id', component: FormProducto },
   // Registrar ayuntamientos (SOLO ADMIN según requisitos)
   {
     path: 'ayuntamientos/form',
