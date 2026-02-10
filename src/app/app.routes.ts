@@ -13,6 +13,9 @@ import { RoleGuard } from '../service/role-guard';
 import { AdminTable } from '../components/administrador/admin-table/admin-table';
 import { AdminForm } from '../components/administrador/admin-form/admin-form';
 import { HomeComponent } from '../components/home/home';
+import { TableProducto } from '../components/producto/table-producto/table-producto';
+import { DetailProducto } from '../components/producto/detail-producto/detail-producto';
+import { FormProducto } from '../components/producto/form-producto/form-producto';
 import { CasetaTable } from '../components/caseta/caseta-table/caseta-table';
 import { CasetaDetail } from '../components/caseta/caseta-detail/caseta-detail';
 import { CasetaForm } from '../components/caseta/caseta-form/caseta-form';
@@ -60,6 +63,33 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['ADMIN'] }
   },
+
+  // Rutas de solicitudLicencia
+  { path: 'solicitudes', component: TableSolicitudLicencia },
+  { path: 'solicitudes/:id', component: DetailSolicitudLicencia },
+
+  // Rutas de ayuntamiento
+  { path: 'ayuntamientos', component: TableAyuntamiento },
+  { path: 'ayuntamientos/form', component: FormAyuntamiento },
+  { path: 'ayuntamientos/form/:id', component: FormAyuntamiento },
+  { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
+
+  //Socio
+  { path: 'socios', component: SocioTable },
+  { path: 'socios/nuevo', component: SocioForm },
+  { path: 'socios/editar/:id', component: SocioForm },
+  { path: 'socios/:id', component: SocioDetail },
+
+  // Rutas de socio
+  { path: 'socios', component: SocioTable },
+
+    { path: 'productos', component: TableProducto },
+    { path: 'producto/detail/:id', component: DetailProducto },
+    // 3. Ruta CREAR (sin ID)
+  { path: 'producto/create', component: FormProducto },
+
+  // 4. Ruta EDITAR (con ID) -> Usa el mismo componente
+  { path: 'producto/edit/:id', component: FormProducto }
   // Registrar ayuntamientos (SOLO ADMIN según requisitos)
   {
     path: 'ayuntamientos/form',

@@ -1,0 +1,142 @@
+<div class="container mt-5">
+  
+  <div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+      <h2 class="titulo-seccion">Gestión de Productos</h2>
+    </div>
+    <div class="col-md-4 text-end">
+      <button class="btn btn-success" (click)="crearProducto()">
+        <i class="bi bi-plus-circle me-2"></i>Nuevo Producto
+      </button>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4 filter-card">
+    <div class="card-body">
+      <div class="row g-3">
+        
+        <div class="col-md-5">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-search text-muted"></i>
+            </span>
+            <input type="text" 
+                   class="form-control border-start-0 ps-0" 
+                   placeholder="Buscar por nombre..." 
+                   [(ngModel)]="filtroNombre"
+                   (input)="aplicarFiltros()">
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <select class="form-select" 
+                  [(ngModel)]="filtroTipo" 
+                  (change)="aplicarFiltros()">
+            <option value="">Todas las Categorías</option>
+            <option value="COMIDA">Comida</option>
+            <option value="BEBIDA">Bebida</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <div class="input-group">
+            <span class="input-group-text">Max €</span>
+            <input type="number" 
+                   class="form-control" 
+                   placeholder="Precio..." 
+                   [(ngModel)]="filtroPrecio"
+                   (input)="aplicarFiltros()">
+          </div>
+        </div>
+
+        <div class="col-md-1 d-grid">
+          <button class="btn btn-outline-secondary" 
+                  (click)="limpiarFiltros()"
+                  title="Limpiar filtros">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped mb-0 align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col" class="text-center">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col" class="text-center">Stock</th> <th scope="col" class="text-center">Tipo</th>
+              <th scope="col" class="text-end">Precio</th>
+              <th scope="col" class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr *ngFor="let producto of productosFiltrados">
+              <td class="text-center fw-bold text-muted small">{{ producto.id }}</td>
+              <td class="fw-medium">{{ producto.nombre }}</td>
+              
+              <td class="text-center">
+                <span class="badge" 
+                      [ngClass]="{
+                        'bg-danger': producto.stock === 0,
+                        'bg-warning text-dark': producto.stock > 0 && producto.stock < 10,
+                        'bg-success': producto.stock >= 10
+                      }">
+                  {{ producto.stock }} u.
+                </span>
+              </td>
+
+              <td class="text-center">
+                <span class="badge" 
+                      [ngClass]="{
+                        'bg-success': producto.tipoAlimento === 'COMIDA',
+                        'bg-info text-dark': producto.tipoAlimento === 'BEBIDA'
+                      }">
+                  {{ producto.tipoAlimento }}
+                </span>
+              </td>
+              <td class="text-end fw-bold text-primary">{{ producto.precio | number:'1.2-2' }} €</td>
+              
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  
+                  <button class="btn btn-sm btn-view" 
+                          [routerLink]="['/producto/detail', producto.id]" 
+                          title="Ver Detalle">
+                    <i class="bi bi-eye-fill"></i>
+                  </button>
+
+                  <button class="btn btn-sm btn-info" 
+                          [routerLink]="['/producto/edit', producto.id]" 
+                          title="Editar">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  
+                  <button class="btn btn-sm btn-warning" 
+                          (click)="borrarProducto(producto.id)" 
+                          title="Eliminar">
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+
+                </div>
+              </td>
+            </tr>
+
+            <tr *ngIf="productosFiltrados.length === 0">
+              <td colspan="6" class="text-center py-5 text-muted">
+                <i class="bi bi-search display-4 d-block mb-3 opacity-50"></i>
+                No se encontraron productos con estos filtros.
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

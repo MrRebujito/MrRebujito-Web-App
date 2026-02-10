@@ -1,0 +1,169 @@
+/* =========================================
+   MR. REBUJITO - TABLE PRODUCTO THEME (FINAL + FILTROS)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
+
+:host {
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
+  --mr-text-main: #2c3e50;
+
+  display: block;
+  min-height: calc(100vh - 70px);
+  padding-top: 2rem;
+  padding-bottom: 0;
+  position: relative;
+
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
+    url('/assets-webp/icono_logo_sin_fondo.webp'),
+    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+
+  background-position: center center, right -20px bottom 0px, center center;
+  background-size: cover, 500px, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+/* =========================================
+   CONTENEDOR & FILTROS
+   ========================================= */
+
+.container {
+  position: relative;
+  z-index: 1;
+  animation: slideUpFade 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+/* Tarjeta de Filtros */
+.filter-card {
+  border: none;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(5px);
+  border-left: 5px solid var(--mr-accent); /* Detalle visual elegante */
+}
+
+.input-group-text {
+  color: var(--mr-accent);
+  font-weight: 500;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--mr-primary);
+  box-shadow: 0 0 0 0.25rem rgba(227, 139, 100, 0.25);
+}
+
+/* =========================================
+   ENCABEZADO
+   ========================================= */
+
+h2 {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0;
+  position: relative; 
+  display: inline-block;
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+
+.btn {
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-success {
+  background-color: var(--mr-primary) !important;
+  border-color: var(--mr-primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(227, 139, 100, 0.3);
+}
+
+.btn-success:hover {
+  background-color: #d27a53 !important;
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   TABLA
+   ========================================= */
+
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+}
+
+.table-responsive {
+  background: white;
+}
+
+.table thead th {
+  background-color: var(--mr-accent);
+  color: white;
+  font-family: 'Merriweather', serif;
+  font-weight: 400;
+  border: none;
+  padding: 1rem;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  padding: 1rem;
+  color: var(--mr-text-main);
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table tbody tr {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(155, 191, 156, 0.15);
+  transform: scale(1.005);
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Acciones */
+.btn-sm {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+
+.btn-info { background-color: var(--mr-accent); border: none; color: white; }
+.btn-warning { background-color: var(--mr-primary); border: none; color: white; }
+.btn-view { background-color: var(--mr-secondary); border: none; color: white; }
+
+.btn-view:hover, .btn-info:hover, .btn-warning:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
