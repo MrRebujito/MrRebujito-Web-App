@@ -1,69 +1,85 @@
 /* =========================================
-   MR. REBUJITO - TABLE SOLICITUDES (PREMIUM FINAL)
+   MR. REBUJITO - TABLE SOLICITUDES (THEME ANIMATED)
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
 
 :host {
   /* --- TOKENS --- */
-  --mr-primary: #e38b64; /* Naranja Teja */
-  --mr-secondary: #9bbf9c; /* Verde */
-  --mr-accent: #3b6b76; /* Azul Petróleo */
-  --mr-bg-light: #f2ebd9; /* Crema */
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
   --mr-text-main: #2c3e50;
-  --mr-glass: rgba(255, 255, 255, 0.92);
 
   display: block;
   min-height: calc(100vh - 70px);
   padding-top: 2rem;
-  padding-bottom: 3rem;
   position: relative;
 
-  /* --- FONDO ANIMADO --- */
-  background-image:
-    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
-    url('/assets-webp/icono_logo_sin_fondo.webp'),
-    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+  /* --- FONDO DE LUNARES FERIA (COLORES CORPORATIVOS) --- */
+  background-color: var(--mr-bg-light);
+  background-image: 
+    /* Capa de suavizado */
+    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
+    /* Lunares Primarios (Naranja) */
+    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    /* Lunares Secundarios (Verde) */
+    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
 
+  background-size:
+    cover,
+    80px 80px,
+    80px 80px;
   background-position:
-    center center,
-    right -20px bottom 0px,
-    center center;
-  background-size: cover, 500px, cover;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
+    0 0,
+    0 0,
+    40px 40px;
+  background-repeat: repeat;
+
+  /* Animación de los lunares */
+  animation: backgroundScroll 100s linear infinite;
 }
 
 /* =========================================
-   CONTENEDOR (Glassmorphism)
+   CONTENEDOR CON PUNTILLA
    ========================================= */
+
 .container {
   position: relative;
   z-index: 10;
-
-  background-color: var(--mr-glass);
+  background-color: white;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
-  border-radius: 16px;
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.1),
-    0 5px 15px rgba(0, 0, 0, 0.05);
-
-  padding: 2.5rem;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
   margin-top: 1rem;
-  margin-bottom: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: none;
 
-  /* Animación Entrada */
-  animation: slideUpFade 0.7s ease-out forwards;
-  opacity: 0;
-  transform: translateY(30px);
+  animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* La Puntilla (Efecto encaje troquelado) */
+.container::before {
+  content: '';
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  background-color: white;
+  mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  -webkit-mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  mask-size: 24px 48px;
+  -webkit-mask-size: 24px 48px;
 }
 
 /* =========================================
-   ENCABEZADO CON BARRA ANIMADA & FOTO
+   ENCABEZADO CON BARRA ANIMADA
    ========================================= */
+
 h2 {
   font-family: 'Merriweather', serif;
   color: var(--mr-accent);
@@ -78,7 +94,6 @@ h2 {
   border-bottom: none;
 }
 
-/* Barra animada inferior */
 h2::after {
   content: '';
   position: absolute;
@@ -92,78 +107,54 @@ h2::after {
   animation: gradientMove 3s linear infinite;
 }
 
-/* IMAGEN DE LA SOLICITUD (Corregido) */
 h2::before {
   content: '';
   display: inline-block;
   width: 60px;
   height: 60px;
   margin-right: 1.5rem;
-  /* Aquí cargamos tu imagen webp */
+  /* Icono de Solicitud */
   background-image: url('/assets-webp/solicitud_licencia.webp');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-
-  /* Animación Flotante */
-  animation: floatIcon 4s ease-in-out infinite;
+  animation: floatIcon 3.5s ease-in-out infinite;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 /* =========================================
-   FILTROS (Selects y Labels)
+   BOTONES Y FILTROS
    ========================================= */
-.form-label {
-  font-family: 'Merriweather', serif;
-  color: var(--mr-accent);
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
-}
 
-.form-select {
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 2px solid rgba(59, 107, 118, 0.1);
-  border-radius: 10px;
-  padding: 0.7rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.form-select:focus {
-  border-color: var(--mr-primary);
-  box-shadow: 0 0 0 4px rgba(227, 139, 100, 0.2);
-  background-color: #fff;
-}
-
-/* Botones de Filtro */
 .btn {
-  border-radius: 10px;
-  padding: 0.7rem 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: all 0.2s;
+  border-radius: 10px;
+  padding: 0.7rem 1.5rem;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
 }
 
-/* Botón Filtrar (Primary - Naranja) */
+/* Botón Naranja (Primary / Success) */
 .btn-primary {
   background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
   border: none !important;
-  box-shadow: 0 4px 6px rgba(227, 139, 100, 0.3);
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(227, 139, 100, 0.3);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
+  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.4);
+  filter: brightness(1.1);
 }
 
-/* Botón Limpiar (Secondary - Outline Accent) */
 .btn-secondary {
-  background-color: transparent !important;
+  background: transparent !important;
   border: 2px solid var(--mr-accent) !important;
   color: var(--mr-accent) !important;
 }
@@ -171,19 +162,31 @@ h2::before {
 .btn-secondary:hover {
   background-color: var(--mr-accent) !important;
   color: white !important;
-  transform: translateY(-2px);
+}
+
+.form-label {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.form-select {
+  border-radius: 10px;
+  border: 2px solid rgba(59, 107, 118, 0.1);
+  padding: 0.6rem;
 }
 
 /* =========================================
    TABLA
    ========================================= */
+
 .table-responsive {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  margin-top: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
   background: white;
-  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .table thead th {
@@ -194,7 +197,6 @@ h2::before {
   border: none;
   padding: 1.2rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
   font-size: 0.85rem;
 }
 
@@ -202,58 +204,24 @@ h2::before {
   vertical-align: middle;
   padding: 1.2rem;
   color: var(--mr-text-main);
-  border-bottom: 1px solid #f0f0f0;
-}
-
-/* Efecto Hover Fila (Levantamiento) */
-.table tbody tr {
-  transition: all 0.25s ease-out;
+  border-bottom: 1px solid #eee;
 }
 
 .table tbody tr:hover {
-  background-color: #fff !important;
-  transform: scale(1.01) translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  z-index: 5;
-  position: relative;
-  border-radius: 8px;
+  background-color: rgba(155, 191, 156, 0.1);
+  transform: scale(1.005);
+  transition: all 0.2s ease;
 }
 
-/* =========================================
-   BADGES (Estados)
-   ========================================= */
+/* Badges de Estado */
 .badge {
   padding: 0.6em 1em;
   border-radius: 30px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-weight: 700;
   font-size: 0.75rem;
 }
 
-.bg-success {
-  /* Aprobada */
-  background-color: #e8f5e9 !important;
-  color: #2e7d32 !important;
-  border: 1px solid #c8e6c9;
-}
-
-.bg-warning {
-  /* Pendiente */
-  background-color: #fff3e0 !important;
-  color: #e65100 !important;
-  border: 1px solid #ffe0b2;
-}
-
-.bg-danger {
-  /* Rechazada */
-  background-color: #ffebee !important;
-  color: #c62828 !important;
-  border: 1px solid #ffcdd2;
-}
-
-/* =========================================
-   BOTONES DE ACCIÓN (Tabla)
-   ========================================= */
+/* Acciones */
 .btn-sm {
   width: 36px;
   height: 36px;
@@ -262,42 +230,65 @@ h2::before {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  margin: 0 3px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.btn-info {
-  background-color: var(--mr-accent) !important;
+/* =========================================
+   MODAL ESPECTACULAR
+   ========================================= */
+
+.modal-content {
   border: none !important;
-  color: white !important;
+  border-radius: 30px !important;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2) !important;
 }
 
-.btn-warning {
-  background-color: var(--mr-primary) !important;
-  border: none !important;
-  color: white !important;
+.modal-header {
+  background: linear-gradient(135deg, var(--mr-accent) 0%, #1a3238 100%) !important;
+  padding: 2rem 3rem !important;
+  border-bottom: none !important;
 }
 
-.btn-danger {
-  background-color: #e74c3c !important;
-  border: none !important;
-}
-
-.btn-sm:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-}
-
-/* Texto informativo inferior */
-.text-muted {
+.modal-title {
   font-family: 'Merriweather', serif;
-  font-style: italic;
-  font-size: 0.9rem;
+  color: white !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.modal-body {
+  padding: 3rem !important;
+}
+
+/* Footer del Modal - Cancelar Izquierda / Crear Derecha */
+.modal-footer {
+  border-top: none !important;
+  padding: 0 3rem 3rem !important;
+  display: flex;
+  justify-content: space-between; /* CLAVE: Botones a los extremos */
+  align-items: center;
 }
 
 /* =========================================
    ANIMACIONES
    ========================================= */
+
+@keyframes backgroundScroll {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      40px 40px;
+  }
+  100% {
+    background-position:
+      0 1000px,
+      0 1000px,
+      40px 1040px;
+  }
+}
+
 @keyframes slideUpFade {
   from {
     opacity: 0;
@@ -309,23 +300,21 @@ h2::before {
   }
 }
 
+@keyframes floatIcon {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(3deg);
+  }
+}
+
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;
   }
   100% {
     background-position: 100% 50%;
-  }
-}
-
-@keyframes floatIcon {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-5px) rotate(3deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
   }
 }

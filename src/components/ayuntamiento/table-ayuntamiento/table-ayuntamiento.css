@@ -1,36 +1,44 @@
 /* =========================================
-   MR. REBUJITO - TABLE AYUNTAMIENTO THEME (FINAL)
+   MR. REBUJITO - TABLE AYUNTAMIENTO THEME (FINAL ANIMATED)
    ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
 
 :host {
   /* --- TOKENS --- */
-  --mr-primary: #e38b64; /* Naranja Principal */
-  --mr-secondary: #9bbf9c; /* Verde Suave */
-  --mr-accent: #3b6b76; /* Azul Petróleo */
-  --mr-bg-light: #f2ebd9; /* Crema */
-  --mr-text-main: #2c3e50; /* Texto Oscuro */
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
+  --mr-text-main: #2c3e50;
 
   display: block;
   min-height: calc(100vh - 70px);
   padding-top: 2rem;
-  padding-bottom: 0;
   position: relative;
 
-  /* --- FONDO --- */
-  background-image:
-    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
-    url('/assets-webp/icono_logo_sin_fondo.webp'),
-    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+  /* --- FONDO DE LUNARES FERIA (COLORES CORPORATIVOS) --- */
+  background-color: var(--mr-bg-light);
+  background-image: 
+    /* Capa de suavizado */
+    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
+    /* Lunares Primarios (Naranja) */
+    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    /* Lunares Secundarios (Verde) */
+    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
 
+  background-size:
+    cover,
+    80px 80px,
+    80px 80px;
   background-position:
-    center center,
-    right -20px bottom 0px,
-    center center;
-  background-size: cover, 500px, cover;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
+    0 0,
+    0 0,
+    40px 40px;
+  background-repeat: repeat;
+
+  /* La animación que te ha gustado */
+  animation: backgroundScroll 100s linear infinite;
 }
 
 /* =========================================
@@ -39,19 +47,33 @@
 
 .container {
   position: relative;
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(44, 62, 80, 0.1);
-  padding: 2.5rem;
-  margin-top: 1rem;
-  margin-bottom: 3rem;
-  border: 1px solid rgba(227, 139, 100, 0.2);
+  z-index: 10;
+  background-color: white;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
-  /* ANIMACIÓN DE ENTRADA (Slide Up) */
-  animation: slideUpFade 0.7s ease-out forwards;
-  opacity: 0;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  margin-top: 1rem;
+  border: none;
+
+  animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* La Puntilla (Efecto encaje troquelado) */
+.container::before {
+  content: '';
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  background-color: white;
+  mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  -webkit-mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  mask-size: 24px 48px;
+  -webkit-mask-size: 24px 48px;
 }
 
 /* =========================================
@@ -66,22 +88,19 @@ h2 {
   letter-spacing: 0.5px;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  position: relative; /* Necesario para posicionar la barra animada */
+  position: relative;
   display: flex;
   align-items: center;
-
-  /* Quitamos el border-bottom estático para usar el animado */
   border-bottom: none;
 }
 
-/* La barra animada debajo del título */
 h2::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px; /* Un poco más gruesa para que se vea el efecto */
+  height: 4px;
   background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
   background-size: 200% auto;
   border-radius: 2px;
@@ -98,8 +117,6 @@ h2::before {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-
-  /* ANIMACIÓN DEL ICONO (Flotando) */
   animation: floatIcon 3.5s ease-in-out infinite;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
@@ -115,15 +132,12 @@ h2::before {
   border-radius: 6px;
   padding: 0.6rem 1.2rem;
   transition: all 0.2s;
-
-  /* Para centrar el + y la imagen */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 }
 
-/* BOTÓN "NUEVO" (Naranja Corporativo) */
 .btn-success {
   background-color: var(--mr-primary) !important;
   border-color: var(--mr-primary) !important;
@@ -136,16 +150,6 @@ h2::before {
   border-color: #d27a53 !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
-}
-
-.btn-primary {
-  background-color: var(--mr-primary);
-  border-color: var(--mr-primary);
-}
-
-.btn-primary:hover {
-  background-color: #d27a53;
-  border-color: #d27a53;
 }
 
 /* =========================================
@@ -182,7 +186,6 @@ h2::before {
     background-color 0.2s ease;
 }
 
-/* Efecto hover en la fila */
 .table tbody tr:hover {
   background-color: rgba(155, 191, 156, 0.15);
   transform: scale(1.01);
@@ -221,6 +224,22 @@ h2::before {
    ANIMACIONES
    ========================================= */
 
+/* Animación de los lunares: Mueve las capas de gradiente suavemente */
+@keyframes backgroundScroll {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      40px 40px;
+  }
+  100% {
+    background-position:
+      0 1000px,
+      0 1000px,
+      40px 1040px;
+  }
+}
+
 @keyframes slideUpFade {
   from {
     opacity: 0;
@@ -233,14 +252,12 @@ h2::before {
 }
 
 @keyframes floatIcon {
-  0% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
     transform: translateY(-6px) rotate(3deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
   }
 }
 

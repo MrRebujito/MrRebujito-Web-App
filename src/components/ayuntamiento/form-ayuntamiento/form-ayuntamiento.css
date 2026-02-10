@@ -1,245 +1,183 @@
 /* =========================================
-   MR. REBUJITO - FORM AYUNTAMIENTO (PREMIUM)
+   MR. REBUJITO - FORM AYUNTAMIENTO (PURE ELEGANCE)
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
 
 :host {
-  /* --- TOKENS --- */
-  --mr-primary: #e38b64; /* Naranja Teja */
-  --mr-secondary: #9bbf9c; /* Verde */
-  --mr-accent: #3b6b76; /* Azul Petróleo */
-  --mr-bg-light: #f2ebd9; /* Crema */
-  --mr-text-main: #2c3e50;
-  --mr-glass: rgba(255, 255, 255, 0.92); /* Cristal opaco */
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
 
   display: block;
-  min-height: calc(100vh - 70px);
-  padding-top: 2rem;
-  padding-bottom: 3rem;
+  min-height: 100vh;
+  padding: 2rem 1rem 5rem;
   position: relative;
 
-  /* --- FONDO ANIMADO --- */
+  /* FONDO DE LUNARES ANIMADOS */
+  background-color: var(--mr-bg-light);
   background-image:
-    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
-    url('/assets-webp/icono_logo_sin_fondo.webp'),
-    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
-
+    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
+    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
+  background-size:
+    cover,
+    80px 80px,
+    80px 80px;
   background-position:
-    center center,
-    right -20px bottom 0px,
-    center center;
-  background-size: cover, 500px, cover;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
+    0 0,
+    0 0,
+    40px 40px;
+  animation: backgroundScroll 100s linear infinite;
 }
 
 /* =========================================
-   CONTENEDOR & TARJETA (GLASS)
+   CONTENEDOR (SIN HUECOS Y ESQUINAS LIMPIAS)
    ========================================= */
 .container {
-  /* Animación de entrada espectacular */
-  animation: slideUpFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-.card {
-  border: 1px solid rgba(255, 255, 255, 0.6) !important;
-  background-color: var(--mr-glass) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px !important;
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.1),
-    0 5px 15px rgba(0, 0, 0, 0.05) !important;
-  overflow: hidden; /* Para que el header no se salga de las esquinas */
+  max-width: 950px;
+  background: #ffffff;
+  border-radius: 40px;
+  padding: 0; /* ELIMINA EL HUECO BLANCO SUPERIOR */
+  box-shadow: 0 30px 60px -12px rgba(59, 107, 118, 0.25);
+  overflow: hidden; /* CORTA EL HEADER PARA AJUSTARLO A LAS ESQUINAS REDONDEADAS */
+  border: none;
+  animation: entranceUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 /* =========================================
-   HEADER DEL FORMULARIO
+   CABECERA AZUL INTEGRAL (SIN PUNTILLAS)
    ========================================= */
 .card-header {
-  /* Degradado Naranja Premium */
-  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
-  border-bottom: none;
-  padding: 1.5rem 2.5rem;
+  background: linear-gradient(135deg, var(--mr-accent) 0%, #1f3a40 100%) !important;
+  padding: 3rem !important; /* Ajustado para un look más equilibrado sin encaje */
   position: relative;
+  border: none !important;
+  display: flex;
+  justify-content: center;
 }
 
-/* El título */
+/* TÍTULO Y LOGO */
 .card-header h3 {
   font-family: 'Merriweather', serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 1.5rem;
-  margin: 0;
+  font-weight: 900;
   color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  gap: 20px;
+  z-index: 2;
+  margin: 0;
 }
 
-/* Icono del ayuntamiento en blanco puro antes del texto */
+/* LOGO AYUNTAMIENTO MANTENIDO */
 .card-header h3::before {
   content: '';
-  display: block;
-  width: 40px;
-  height: 40px;
-  background-image: url('/assets-webp/ayuntamiento.webp');
+  width: 60px;
+  height: 60px;
+  background: url('/assets-webp/ayuntamiento.webp') no-repeat center;
   background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: brightness(0) invert(1); /* Lo vuelve blanco */
-  animation: floatIcon 4s ease-in-out infinite; /* Se mueve suavemente */
+  filter: brightness(0) invert(1);
+  animation: floatLogo 4s ease-in-out infinite;
 }
 
 /* =========================================
    CUERPO DEL FORMULARIO
    ========================================= */
 .card-body {
-  padding: 2.5rem;
+  padding: 3rem 4rem 4rem;
 }
 
-/* Títulos de sección (Datos Identificativos, etc.) */
 h5.border-bottom {
   font-family: 'Merriweather', serif;
-  color: var(--mr-primary); /* Color naranja para los subtítulos */
-  border-bottom: 2px solid rgba(227, 139, 100, 0.2) !important;
-  padding-bottom: 0.8rem !important;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
+  color: var(--mr-primary);
+  border-bottom: 3px solid rgba(227, 139, 100, 0.1) !important;
+  padding-bottom: 1rem !important;
+  margin-bottom: 2rem;
+  font-weight: 800;
 }
 
-/* Etiquetas */
 .form-label {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--mr-accent);
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Inputs */
 .form-control {
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 2px solid rgba(59, 107, 118, 0.1);
-  border-radius: 12px;
-  padding: 0.8rem 1rem;
-  font-size: 1rem;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 2px solid #f0f2f4 !important;
+  border-radius: 15px !important;
+  padding: 0.8rem 1.2rem !important;
+  transition: all 0.3s ease !important;
+  background-color: #fbfbfb !important;
 }
 
-/* Efecto Focus en Inputs (Se levantan y borde naranja) */
 .form-control:focus {
-  background-color: #fff;
-  border-color: var(--mr-primary);
-  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.15);
+  background-color: #ffffff !important;
+  border-color: var(--mr-primary) !important;
+  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.1) !important;
   transform: translateY(-2px);
 }
 
-.form-control.is-invalid {
-  border-color: #dc3545;
-  background-image: none;
-  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.1);
-}
-
-/* Texto de ayuda */
-.text-muted {
-  font-size: 0.8rem;
-  color: #7f8c8d !important;
-  margin-top: 5px;
-  display: block;
-}
-
 /* =========================================
-   BOTONES DE ACCIÓN
+   BOTONES
    ========================================= */
 .btn {
-  border-radius: 10px;
-  padding: 0.9rem 2rem;
-  font-weight: 700;
+  border-radius: 25px;
+  padding: 1rem 2.5rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-size: 0.9rem;
+  transition: all 0.3s ease;
 }
 
-/* Botón Guardar (Naranja Brillante) */
 .btn-primary {
-  background: linear-gradient(135deg, var(--mr-primary) 0%, #c96f48 100%) !important;
+  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
   border: none !important;
-  box-shadow: 0 4px 15px rgba(227, 139, 100, 0.4);
+  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.2);
 }
 
 .btn-primary:hover:not(:disabled) {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(227, 139, 100, 0.6);
-  filter: brightness(1.1);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(227, 139, 100, 0.3);
 }
 
-.btn-primary:disabled {
-  background: #bdc3c7 !important;
-  transform: none;
-  box-shadow: none;
+/* ANIMACIONES */
+@keyframes backgroundScroll {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      40px 40px;
+  }
+  100% {
+    background-position:
+      0 1000px,
+      0 1000px,
+      40px 1040px;
+  }
 }
 
-/* Botón Cancelar (Outline elegante) */
-.btn-outline-secondary {
-  border: 2px solid var(--mr-accent);
-  color: var(--mr-accent);
-  background: transparent;
+@keyframes floatLogo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
-.btn-outline-secondary:hover {
-  background-color: var(--mr-accent);
-  color: white;
-  transform: translateY(-4px);
-  box-shadow: 0 4px 15px rgba(59, 107, 118, 0.25);
-}
-
-/* =========================================
-   PÁGINA 403 (FORBIDDEN)
-   ========================================= */
-ng-template#forbidden .card {
-  text-align: center;
-  border: none;
-  background: rgba(255, 255, 255, 0.95) !important;
-  padding: 3rem;
-}
-
-ng-template#forbidden h1 {
-  text-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
-}
-
-/* =========================================
-   ANIMACIONES
-   ========================================= */
-@keyframes slideUpFade {
+@keyframes entranceUp {
   from {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes floatIcon {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-3px) rotate(5deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
   }
 }
