@@ -14,33 +14,34 @@ import { AdminTable } from '../components/administrador/admin-table/admin-table'
 import { AdminForm } from '../components/administrador/admin-form/admin-form';
 import { HomeComponent } from '../components/home/home';
 import { CasetaTable } from '../components/caseta/caseta-table/caseta-table';
+import { CasetaDetail } from '../components/caseta/caseta-detail/caseta-detail';
+import { CasetaForm } from '../components/caseta/caseta-form/caseta-form';
+import { CasetaSocios } from '../components/caseta/caseta-socios/caseta-socios';
 
 export const routes: Routes = [
 
-  // Rutas públicas
+  // ==================== RUTAS PÚBLICAS ====================
   { path: '', component: HomeComponent },
-
-  // Ruta del login
   { path: 'login', component: Login },
 
-  // Rutas de caseta
-  { path: 'casetas', component: CasetaTable},
+  // CASETAS - Listar y ver detalles (PÚBLICO según requisitos)
+  { path: 'casetas', component: CasetaTable },
+  { path: 'casetas/:id', component: CasetaDetail },
 
-  // Rutas protegidas
-  //socio
-  {
-    path: 'socios/editar/:id',
-    component: SocioForm,
-    canActivate: [AuthGuard]
-  },
-  //ayuntamiento
-  {
-    path: 'socios/form/:id',
-    component: SocioForm,
-    canActivate: [AuthGuard]
-  },
+  // AYUNTAMIENTOS - Listar (PÚBLICO según requisitos)
+  { path: 'ayuntamientos', component: TableAyuntamiento },
+  { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
 
-  // Rutas de administrador (solo ADMIN)
+  // SOCIOS - Listar (PÚBLICO)
+  { path: 'socios', component: SocioTable },
+  { path: 'socios/:id', component: SocioDetail },
+
+  // ==================== RUTAS DE REGISTRO ====================
+  // Registrarse como CASETA o SOCIO (PÚBLICO según requisitos)
+  { path: 'casetas/nuevo', component: CasetaForm },
+  { path: 'socios/nuevo', component: SocioForm },
+
+  // ==================== RUTAS DE ADMINISTRADOR (SOLO ADMIN) ====================
   {
     path: 'administradores',
     component: AdminTable,
@@ -59,23 +60,55 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['ADMIN'] }
   },
+  // Registrar ayuntamientos (SOLO ADMIN según requisitos)
+  {
+    path: 'ayuntamientos/form',
+    component: FormAyuntamiento,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'ayuntamientos/form/:id',
+    component: FormAyuntamiento,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN', 'AYUNTAMIENTO'] } // Admin puede editar cualquiera, Ayuntamiento solo el suyo
+  },
 
-  // Rutas de solicitudLicencia
-  { path: 'solicitudes', component: TableSolicitudLicencia },
-  { path: 'solicitudes/:id', component: DetailSolicitudLicencia },
+  // ==================== RUTAS DE CASETA ====================
+  {
+    path: 'casetas/editar/:id',
+    component: CasetaForm,
+    canActivate: [RoleGuard],
+    data: { roles: ['CASETA'] }
+  },
+  // Gestionar socios de caseta (SOLO CASETA según requisitos)
+  {
+    path: 'casetas/:id/socios',
+    component: CasetaSocios,
+    canActivate: [RoleGuard],
+    data: { roles: ['CASETA'] }
+  },
 
-  // Rutas de ayuntamiento
-  { path: 'ayuntamientos', component: TableAyuntamiento },
-  { path: 'ayuntamientos/form', component: FormAyuntamiento },
-  { path: 'ayuntamientos/form/:id', component: FormAyuntamiento },
-  { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
+  // ==================== RUTAS DE SOCIO ====================
+  // Editar perfil propio (SOLO el SOCIO autenticado)
+  {
+    path: 'socios/editar/:id',
+    component: SocioForm,
+    canActivate: [RoleGuard],
+    data: { roles: ['SOCIO'] }
+  },
 
-  //Socio
-  { path: 'socios', component: SocioTable },
-  { path: 'socios/nuevo', component: SocioForm },
-  { path: 'socios/editar/:id', component: SocioForm },
-  { path: 'socios/:id', component: SocioDetail },
-
-  // Rutas de socio
-  { path: 'socios', component: SocioTable }
+  // ==================== RUTAS DE SOLICITUDES DE LICENCIA ====================
+  // Listar solicitudes (Accesible para CASETA y AYUNTAMIENTO)
+  {
+    path: 'solicitudes',
+    component: TableSolicitudLicencia,
+    canActivate: [AuthGuard]
+  },
+  // Ver detalle de solicitud
+  {
+    path: 'solicitudes/:id',
+    component: DetailSolicitudLicencia,
+    canActivate: [AuthGuard]
+  }
 ];

@@ -1,14 +1,14 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CasetaService } from '../../../service/caseta-service';
 import { Caseta } from '../../../model/caseta';
 
 @Component({
   selector: 'app-caseta-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './caseta-form.html',
   styleUrls: [],
 })
@@ -32,8 +32,9 @@ export class CasetaForm implements OnInit {
       foto: ['', [Validators.pattern('https?://.+')]],
       direccion: [''],
       username: ['', Validators.required],
-      password: ['', this.id == null ? [Validators.required, Validators.minLength(6)] : []],
+      password: ['', [Validators.minLength(6)]],
 
+      // Campos específicos de Caseta
       razonS: ['', Validators.required],
       aforo: ['', [Validators.required, Validators.min(1)]],
       publica: [true],
@@ -49,7 +50,23 @@ export class CasetaForm implements OnInit {
       this.casetaService.getCaseta(this.id).subscribe({
         next: (data: Caseta) => {
           this.caseta = data;
-          this.formularioCaseta.patchValue(this.caseta);
+          
+          // Patch solo de campos que existen
+          const patchData: any = {
+            nombre: data.nombre || '',
+            correo: data.correo || '',
+            telefono: data.telefono || '',
+            foto: data.foto || '',
+            direccion: data.direccion || '',
+            username: (data as any).username || '',
+            razonS: (data as any).razonS || '',
+            aforo: data.aforo || '',
+            publica: data.publica !== undefined ? data.publica : true,
+          };
+          
+          // NO incluir campos eliminados
+          this.formularioCaseta.patchValue(patchData);
+          
           // En edición, la contraseña no es obligatoria
           this.formularioCaseta.get('password')?.clearValidators();
           this.formularioCaseta.get('password')?.updateValueAndValidity();
@@ -68,7 +85,7 @@ export class CasetaForm implements OnInit {
   onSubmit(): void {
     if (this.formularioCaseta.valid) {
       const datosCaseta = this.formularioCaseta.value;
-
+      
       if (this.id == null) {
         // CREAR nueva caseta
         this.casetaService.saveCaseta(datosCaseta).subscribe({
