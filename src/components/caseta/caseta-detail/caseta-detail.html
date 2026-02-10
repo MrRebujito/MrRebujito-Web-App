@@ -1,17 +1,13 @@
 <div class="container mt-4" *ngIf="caseta && caseta.id">
   <div class="card shadow-sm">
-    
+
     <!-- Imagen de la caseta -->
     <div class="text-center mt-3">
-      <img
-        [src]="caseta.foto || 'https://via.placeholder.com/300x200?text=Sin+Imagen'"
-        alt="Imagen de la caseta"
-        class="img-fluid rounded"
-        style="max-width: 400px; height: 300px; object-fit: cover;"
-      />
+      <img [src]="caseta.foto || 'https://via.placeholder.com/300x200?text=Sin+Imagen'" alt="Imagen de la caseta"
+        class="img-fluid rounded" style="max-width: 400px; height: 300px; object-fit: cover;" />
     </div>
 
-    <div class="col-md-8 mx-auto mb-3"> 
+    <div class="col-md-8 mx-auto mb-3">
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><strong>ID:</strong> {{ caseta.id }}</li>
         <li class="list-group-item" *ngIf="caseta.numero">
@@ -23,13 +19,13 @@
         </li>
         <li class="list-group-item"><strong>Aforo:</strong> {{ caseta.aforo }} personas</li>
         <li class="list-group-item">
-          <strong>Estado:</strong> 
+          <strong>Estado:</strong>
           <span [class]="'badge ' + getBadgeClass(caseta.estado)">
             {{ caseta.estado || 'Sin estado' }}
           </span>
         </li>
         <li class="list-group-item">
-          <strong>Tipo:</strong> 
+          <strong>Tipo:</strong>
           <span class="badge" [ngClass]="caseta.publica ? 'bg-primary' : 'bg-secondary'">
             {{ caseta.publica ? 'Pública' : 'Privada' }}
           </span>
@@ -40,7 +36,7 @@
           <strong>Socios:</strong> {{ caseta.socios.length }}
         </li>
       </ul>
-      
+
       <!-- Botones de acción -->
       <div class="text-center mt-4">
         <button class="btn btn-outline-secondary btn-sm me-2" routerLink="/casetas">
@@ -54,6 +50,10 @@
         </button>
       </div>
     </div>
+    <!-- Después de los datos de la caseta -->
+    <app-caseta-mapa *ngIf="caseta.latitud && caseta.longitud" [latitud]="caseta.latitud" [longitud]="caseta.longitud"
+      [nombre]="caseta.nombre">
+    </app-caseta-mapa>
 
   </div>
 </div>

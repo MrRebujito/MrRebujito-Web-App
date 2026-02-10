@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CasetaService } from '../../../service/caseta-service';
 import { Caseta, EstadoCaseta } from '../../../model/caseta';
+import { CasetaValidators } from '../../../validators/caseta-validators';
 
 @Component({
   selector: 'app-caseta-form',
@@ -17,7 +18,7 @@ export class CasetaForm implements OnInit {
   caseta: Caseta = {} as Caseta;
   id: number | null = null;
   cdr = inject(ChangeDetectorRef);
-  
+
   // Estados disponibles para el select
   estados = Object.values(EstadoCaseta);
 
@@ -36,11 +37,15 @@ export class CasetaForm implements OnInit {
       direccion: [''],
       username: ['', Validators.required],
       password: ['', this.id == null ? [Validators.required, Validators.minLength(6)] : []],
-      
+
       razonS: ['', Validators.required],
       aforo: ['', [Validators.required, Validators.min(1)]],
       publica: [true],
-      numero: ['', [Validators.required, Validators.min(1)]],
+      // En caseta-form.ts, en el constructor:
+      numero: ['',
+        [Validators.required, Validators.min(1)],
+        [CasetaValidators.numeroUnico(this.casetaService, this.id || undefined)]
+      ],
       ubicacion: ['', Validators.required],
       estado: [EstadoCaseta.DISPONIBLE, Validators.required],
       latitud: [''],
