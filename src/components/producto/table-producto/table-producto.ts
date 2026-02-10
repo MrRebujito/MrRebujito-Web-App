@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
 import { Router, RouterLink } from '@angular/router';
 import { ProductoService } from '../../../service/producto-service';
 import { Producto } from '../../../model/producto';
@@ -7,18 +8,24 @@ import { Producto } from '../../../model/producto';
 @Component({
   selector: 'app-table-producto',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './table-producto.html',
   styleUrls: ['./table-producto.css']
 })
 export class TableProducto implements OnInit {
 
+  // Todos los datos del servidor
   productos: Producto[] = [];
-  // Inyectamos el detector de cambios manualmente como en tu ejemplo de Ayuntamiento
-  cdr = inject(ChangeDetectorRef);
+  // Los datos que realmente mostramos tras filtrar
+  productosFiltrados: Producto[] = [];
   
-  // Variables de sesión por si necesitas filtrar permisos
+  cdr = inject(ChangeDetectorRef);
   rol: string | null = null;
+
+  // Variables para los filtros
+  filtroNombre: string = '';
+  filtroTipo: string = '';
+  filtroPrecio: number | null = null;
 
   constructor(
     private productoService: ProductoService,
@@ -26,10 +33,7 @@ export class TableProducto implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1. Obtener rol de sesión al inicio
     this.rol = sessionStorage.getItem('rol');
-    
-    // 2. Cargar datos
     this.cargarProductos();
   }
 
@@ -37,7 +41,7 @@ export class TableProducto implements OnInit {
     this.productoService.getProductos().subscribe({
       next: (data) => {
         this.productos = data;
-        // Forzamos la detección de cambios para evitar el "flicker" o bucles raros
+        this.productosFiltrados = data; // Al inicio mostramos todos
         this.cdr.detectChanges(); 
       },
       error: (err) => {
@@ -45,6 +49,35 @@ export class TableProducto implements OnInit {
       }
     });
   }
+
+  // --- LÓGICA DE FILTRADO ---
+  aplicarFiltros(): void {
+    this.productosFiltrados = this.productos.filter(producto => {
+      
+      // 1. Filtro por Nombre (protegemos con || '' por si viene null)
+      const nombreProducto = (producto.nombre || '').toLowerCase();
+      const filtroNombreMin = this.filtroNombre.toLowerCase();
+      const coincideNombre = nombreProducto.includes(filtroNombreMin);
+
+      // 2. Filtro por Tipo (si está vacío, acepta todos)
+      const coincideTipo = this.filtroTipo === '' || producto.tipoAlimento === this.filtroTipo;
+
+      // 3. Filtro por Precio Máximo (FIX: Usamos ?? 0 para evitar el error de undefined)
+      const precioProducto = producto.precio ?? 0;
+      const coincidePrecio = this.filtroPrecio === null || precioProducto <= this.filtroPrecio;
+
+      return coincideNombre && coincideTipo && coincidePrecio;
+    });
+  }
+
+  limpiarFiltros(): void {
+    this.filtroNombre = '';
+    this.filtroTipo = '';
+    this.filtroPrecio = null;
+    this.aplicarFiltros(); // Restablece la lista
+  }
+
+  // --- ACCIONES CRUD ---
 
   crearProducto(): void {
     this.router.navigate(['/producto/create']);
@@ -57,26 +90,13 @@ export class TableProducto implements OnInit {
 
     this.productoService.deleteProducto(id).subscribe({
       next: () => {
-        // No usamos alert() si no quieres, pero aquí seguimos tu patrón
-        // alert("Producto eliminado correctamente"); 
+        // Recargamos datos del servidor
         this.cargarProductos();
       },
       error: (error) => {
-        console.error("Error al borrar el producto", error);
+        console.error("Error al borrar", error);
         alert("No se pudo eliminar el producto.");
       }
     });
-  }
-
-  // --- Helpers de Permisos (Estilo Ayuntamiento) ---
-
-  esAdmin(): boolean {
-    return this.rol === 'ADMIN';
-  }
-
-  // Ejemplo: Si quisieras restringir botones según rol
-  puedeEditar(): boolean {
-    // Aquí defines tu lógica. Por ahora devolvemos true si está logueado
-    return this.rol !== null;
   }
 }
