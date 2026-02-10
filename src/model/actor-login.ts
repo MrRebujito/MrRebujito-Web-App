@@ -1,4 +1,4 @@
-class ActorLogin {
+export class ActorLogin {
     username!: string;
     password!: string;
 }

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top mr-navbar-custom">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center" routerLink="/solicitudes">
-      <img src="assets-webp/logo_principal.webp" alt="MrRebujito" height="60" class="mr-logo" />
+    <a class="navbar-brand d-flex align-items-center" routerLink="/" title="Volver al Real">
+      <img src="assets-webp/logo_principal.webp" alt="MrRebujito" height="50" class="mr-logo" />
     </a>
 
     <button
@@ -14,7 +14,17 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navMrRebujito">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/solicitudes" routerLinkActive="active">Licencias</a>
         </li>
@@ -26,10 +36,57 @@
             >Ayuntamientos</a
           >
         </li>
-        <li class="nav-item ms-lg-4">
-          <a class="btn btn-nav-action rounded-pill px-4 shadow-sm" routerLink="/login">
-            <i class="bi bi-person-badge me-2"></i>Admin
+
+        <li class="nav-item">
+          <a class="nav-link text-warning" routerLink="/administradores" routerLinkActive="active">
+            <i class="bi bi-shield-lock me-1"></i> Admin
           </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" *ngIf="!isLoggedIn()">
+          <a class="btn btn-nav-action rounded-pill px-4 shadow-sm" routerLink="/login">
+            <i class="bi bi-person-badge me-2"></i>Acceso
+          </a>
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+          <div class="d-flex align-items-center">
+            <span class="text-light me-3 fw-bold d-none d-lg-block">
+              Hola, {{ getUsername() }}
+            </span>
+            <div class="d-flex gap-2">
+              <a
+                class="btn btn-outline-light btn-sm rounded-circle"
+                (click)="goToProfile()"
+                title="Mi Perfil"
+                style="
+                  width: 38px;
+                  height: 38px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <i class="bi bi-person-fill"></i>
+              </a>
+              <a
+                class="btn btn-outline-danger btn-sm rounded-circle"
+                (click)="logout()"
+                title="Salir"
+                style="
+                  width: 38px;
+                  height: 38px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <i class="bi bi-power"></i>
+              </a>
+            </div>
+          </div>
         </li>
       </ul>
     </div>

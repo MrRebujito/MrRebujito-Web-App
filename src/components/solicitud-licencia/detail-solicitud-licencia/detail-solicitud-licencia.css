@@ -1,0 +1,221 @@
+/* =========================================
+   MR. REBUJITO - DETAIL SOLICITUD (PREMIUM)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500;700&display=swap');
+
+:host {
+  /* --- TOKENS --- */
+  --mr-primary: #e38b64; /* Naranja Teja */
+  --mr-secondary: #9bbf9c; /* Verde */
+  --mr-accent: #3b6b76; /* Azul Petróleo */
+  --mr-bg-light: #f2ebd9; /* Crema */
+  --mr-text-main: #2c3e50;
+  --mr-glass: rgba(255, 255, 255, 0.92);
+
+  display: block;
+  min-height: calc(100vh - 70px);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  position: relative;
+
+  /* --- FONDO ANIMADO --- */
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
+    url('/assets-webp/icono_logo_sin_fondo.webp'),
+    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+
+  background-position:
+    center center,
+    right -20px bottom 0px,
+    center center;
+  background-size: cover, 500px, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+/* =========================================
+   CONTENEDOR DE ENTRADA
+   ========================================= */
+.container {
+  position: relative;
+  z-index: 10;
+  animation: slideUpFade 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* =========================================
+   BOTÓN "VOLVER"
+   ========================================= */
+/* Sobrescribimos btn-outline-secondary */
+.btn-outline-secondary {
+  border: 2px solid var(--mr-primary) !important;
+  color: var(--mr-primary) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--mr-primary) !important;
+  color: white !important;
+  transform: translateX(-5px); /* Efecto movimiento atrás */
+  box-shadow: 0 4px 15px rgba(227, 139, 100, 0.4);
+}
+
+/* =========================================
+   TARJETA (CARD) - GLASSMORPHISM
+   ========================================= */
+.card {
+  background-color: var(--mr-glass) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  border-radius: 20px !important;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.1),
+    0 5px 15px rgba(0, 0, 0, 0.05) !important;
+
+  overflow: hidden; /* Mantiene el header dentro de los bordes redondeados */
+  margin-top: 1rem;
+}
+
+/* =========================================
+   HEADER DE LA TARJETA
+   ========================================= */
+.card-header {
+  /* Degradado Naranja */
+  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
+  border-bottom: none;
+  padding: 1.5rem 2rem;
+}
+
+.card-header h5 {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.3rem;
+  color: white;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Añadimos un icono decorativo antes del texto solo con CSS */
+.card-header h5::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-file-text-fill' viewBox='0 0 16 16'%3E%3Cpath d='M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1m-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5m.5 2.5h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1m0 2h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* =========================================
+   CUERPO Y DATOS (Transformando <p> en filas)
+   ========================================= */
+.card-body {
+  padding: 2.5rem;
+}
+
+/* Convertimos los párrafos simples en cajas elegantes */
+.card-body p {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(227, 139, 100, 0.15);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem; /* Espacio entre filas */
+
+  font-size: 1rem;
+  color: var(--mr-text-main);
+
+  /* Flexbox para separar Label (Strong) del Valor */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Por si en móvil no cabe */
+
+  transition: all 0.2s ease;
+}
+
+/* Efecto hover en las filas de datos */
+.card-body p:hover {
+  background-color: #fff;
+  transform: translateX(5px) scale(1.01);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid var(--mr-primary); /* Línea naranja indicadora */
+}
+
+/* Estilo para las etiquetas <strong> */
+.card-body strong {
+  color: var(--mr-accent);
+  font-family: 'Merriweather', serif;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Estilos específicos para textos dentro del HTML */
+.text-danger {
+  color: #e74c3c !important;
+  font-weight: 700;
+  background: rgba(231, 76, 60, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.text-muted {
+  color: #95a5a6 !important;
+  font-style: italic;
+}
+
+/* =========================================
+   LOADING STATE
+   ========================================= */
+.spinner-border {
+  color: var(--mr-primary);
+  width: 3rem;
+  height: 3rem;
+  border-width: 4px;
+}
+
+/* Texto de "Cargando..." */
+.text-center p.mt-2 {
+  /* Quitamos los estilos de "fila" que pusimos arriba a todos los p */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: block !important;
+  text-align: center;
+
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

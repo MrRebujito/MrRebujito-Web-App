@@ -1,5 +1,16 @@
 <div class="container mt-4">
-  <h2>Solicitudes de Licencia</h2>
+  <!-- Encabezado con botón -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Solicitudes de Licencia</h2>
+    
+    <button 
+      class="btn btn-success" 
+      (click)="abrirModal()"
+      title="Crear Nueva Solicitud">
+      <span style="font-size: 1.8rem; line-height: 0; margin-bottom: 4px">+</span>
+      <img src="/assets-webp/solicitud_licencia.webp" alt="Icono Solicitud" style="height: 30px; width: auto" />
+    </button>
+  </div>
 
   <!-- Filtros -->
   <div class="row mb-3">
@@ -17,8 +28,8 @@
       <label class="form-label">Ayuntamiento:</label>
       <select class="form-select" [(ngModel)]="filtroAyuntamiento">
         <option value="">Todos</option>
-        <option *ngFor="let ayto of ayuntamientos" [value]="ayto">
-          {{ ayto }}
+        <option *ngFor="let ayto of ayuntamientos" [value]="ayto.nombre">
+          {{ ayto.nombre }}
         </option>
       </select>
     </div>
@@ -48,7 +59,7 @@
         <tr *ngFor="let solicitud of solicitudesFiltradas">
           <td>{{ solicitud.id }}</td>
           <td>
-            <span [class]="'badge ' + getBadgeClass(solicitud.estadoLicencia)">
+            <span [class]="getBadgeClass(solicitud.estadoLicencia)">
               {{ solicitud.estadoLicencia }}
             </span>
           </td>
@@ -59,12 +70,6 @@
               title="Ver detalles"
               [routerLink]="['/solicitudes', solicitud.id]">
               <i class="bi bi-eye"></i>
-            </button>
-            <button class="btn btn-sm btn-warning me-1" title="Editar">
-              <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" title="Eliminar">
-              <i class="bi bi-trash"></i>
             </button>
           </td>
         </tr>
@@ -82,5 +87,61 @@
     <small class="text-muted">
       Mostrando {{ solicitudesFiltradas.length }} de {{ solicitudes.length }} solicitudes
     </small>
+  </div>
+</div>
+
+<!-- Modal de Nueva Solicitud -->
+<div class="modal fade" id="nuevaSolicitudModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">➕ Nueva Solicitud de Licencia</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="crearSolicitud()" #solicitudForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Ayuntamiento *</label>
+            <select 
+              class="form-select" 
+              [(ngModel)]="nuevoAyuntamientoId" 
+              name="ayuntamiento" 
+              (change)="onAyuntamientoChange()"
+              [class.is-invalid]="formSubmitted && formErrors['ayuntamiento']"
+              required>
+              <option value="">Seleccione un ayuntamiento</option>
+              <option *ngFor="let ayto of ayuntamientos" [value]="ayto.id">
+                {{ ayto.nombre }}
+              </option>
+            </select>
+            
+            <!-- Mensaje de error para ayuntamiento -->
+            <div *ngIf="formSubmitted && formErrors['ayuntamiento']" class="invalid-feedback d-block">
+              <i class="bi bi-exclamation-circle"></i> {{ formErrors['ayuntamiento'] }}
+            </div>
+            
+            <small class="text-muted">Seleccione el ayuntamiento que gestionará esta solicitud</small>
+          </div>
+          
+          <!-- Información sobre estado -->
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> 
+            <strong>Nota:</strong> El estado de la licencia se establecerá automáticamente como <span class="badge bg-warning text-dark">PENDIENTE</span>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">
+              Cancelar
+            </button>
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="!isFormValid()">
+              <i class="bi bi-check-circle"></i> Crear Solicitud
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
