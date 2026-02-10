@@ -1,5 +1,5 @@
 /* =========================================
-   MR. REBUJITO - TABLE AYUNTAMIENTO THEME (FINAL)
+   MR. REBUJITO - TABLE PRODUCTO THEME (FINAL)
    ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
@@ -66,11 +66,9 @@ h2 {
   letter-spacing: 0.5px;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  position: relative; /* Necesario para posicionar la barra animada */
+  position: relative; 
   display: flex;
   align-items: center;
-
-  /* Quitamos el border-bottom estático para usar el animado */
   border-bottom: none;
 }
 
@@ -81,27 +79,11 @@ h2::after {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px; /* Un poco más gruesa para que se vea el efecto */
+  height: 4px;
   background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
   background-size: 200% auto;
   border-radius: 2px;
   animation: gradientMove 3s linear infinite;
-}
-
-h2::before {
-  content: '';
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  margin-right: 1.5rem;
-  background-image: url('/assets-webp/ayuntamiento.webp');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  /* ANIMACIÓN DEL ICONO (Flotando) */
-  animation: floatIcon 3.5s ease-in-out infinite;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 /* =========================================
@@ -115,8 +97,6 @@ h2::before {
   border-radius: 6px;
   padding: 0.6rem 1.2rem;
   transition: all 0.2s;
-
-  /* Para centrar el + y la imagen */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -136,16 +116,6 @@ h2::before {
   border-color: #d27a53 !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
-}
-
-.btn-primary {
-  background-color: var(--mr-primary);
-  border-color: var(--mr-primary);
-}
-
-.btn-primary:hover {
-  background-color: #d27a53;
-  border-color: #d27a53;
 }
 
 /* =========================================
@@ -177,12 +147,9 @@ h2::before {
 }
 
 .table tbody tr {
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-/* Efecto hover en la fila */
 .table tbody tr:hover {
   background-color: rgba(155, 191, 156, 0.15);
   transform: scale(1.01);
@@ -206,15 +173,26 @@ h2::before {
   border-radius: 4px;
 }
 
-.btn-info {
+.btn-info { /* Editar */
   background-color: var(--mr-accent);
   border: none;
   color: white;
 }
-.btn-warning {
+.btn-warning { /* Borrar */
   background-color: var(--mr-primary);
   border: none;
   color: white;
+}
+
+/* NUEVO: Botón Ver Detalle */
+.btn-view {
+  background-color: var(--mr-secondary); /* Verde suave */
+  border: none;
+  color: white;
+}
+.btn-view:hover {
+  background-color: #7da57e;
+  transform: translateY(-2px);
 }
 
 /* =========================================
@@ -222,33 +200,11 @@ h2::before {
    ========================================= */
 
 @keyframes slideUpFade {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes floatIcon {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-6px) rotate(3deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }

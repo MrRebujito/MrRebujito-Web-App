@@ -42,6 +42,13 @@
               
               <td class="text-center">
                 <div class="btn-group" role="group">
+                  
+                  <button class="btn btn-sm btn-view" 
+                          [routerLink]="['/producto/detail', producto.id]" 
+                          title="Ver Detalle">
+                    <i class="bi bi-eye-fill"></i>
+                  </button>
+
                   <button class="btn btn-sm btn-info" 
                           [routerLink]="['/producto/edit', producto.id]" 
                           title="Editar">
@@ -53,6 +60,7 @@
                           title="Eliminar">
                     <i class="bi bi-trash-fill"></i>
                   </button>
+
                 </div>
               </td>
             </tr>

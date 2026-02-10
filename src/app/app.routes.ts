@@ -14,6 +14,7 @@ import { AdminTable } from '../components/administrador/admin-table/admin-table'
 import { AdminForm } from '../components/administrador/admin-form/admin-form';
 import { HomeComponent } from '../components/home/home';
 import { TableProducto } from '../components/producto/table-producto/table-producto';
+import { DetailProducto } from '../components/producto/detail-producto/detail-producto';
 
 export const routes: Routes = [
 
@@ -76,5 +77,6 @@ export const routes: Routes = [
   // Rutas de socio
   { path: 'socios', component: SocioTable },
 
-    { path: 'productos', component: TableProducto }
+    { path: 'productos', component: TableProducto },
+    { path: 'producto/detail/:id', component: DetailProducto }
 ];
