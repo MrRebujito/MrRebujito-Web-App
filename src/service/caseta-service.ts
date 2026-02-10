@@ -57,16 +57,6 @@ export class CasetaService {
     return this.http.get(`${this.apiUrl}/eliminarSocio/${socioId}`, { responseType: 'text' });
   }
 
-  // Obtener la carta/productos de una caseta
-  getCartaByCaseta(id: number): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.apiUrl}/carta/${id}`);
-  }
-
-  // Obtener la carta de la caseta logueada
-  getCartaCasetaLogin(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.apiUrl}/carta`);
-  }
-
   // Crear solicitud de licencia
   crearSolicitud(ayuntamientoId: number): Observable<string> {
     return this.http.post(`${this.apiUrl}/solicitud/${ayuntamientoId}`, {}, { responseType: 'text' });

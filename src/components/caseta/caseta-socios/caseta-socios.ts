@@ -10,7 +10,7 @@ import { Caseta } from '../../../model/caseta';
 @Component({
   selector: 'app-caseta-socios',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './caseta-socios.html',
   styleUrl: './caseta-socios.css'
 })
@@ -52,7 +52,7 @@ export class CasetaSocios implements OnInit {
   }
 
   cargarSociosDisponibles(): void {
-    this.socioService.findAll().subscribe({
+    /*this.socioService.findAll().subscribe({
       next: (todosSocios: any[]) => {
         // Filtrar socios que NO están ya asignados
         const idsAsignados = this.sociosAsignados.map(s => s.id);
@@ -62,7 +62,7 @@ export class CasetaSocios implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err: any) => console.error('Error al cargar socios:', err)
-    });
+    });*/
   }
 
   agregarSocio(): void {

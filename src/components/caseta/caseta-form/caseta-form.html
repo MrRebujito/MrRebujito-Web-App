@@ -59,9 +59,6 @@
           <div class="col-md-4 mb-3">
             <label class="form-label">Estado *</label>
             <select formControlName="estado" class="form-select" [class.is-invalid]="esInvalido('estado')">
-              <option *ngFor="let estado of estados" [value]="estado">
-                {{ estado }}
-              </option>
             </select>
             <div class="invalid-feedback">Seleccione un estado.</div>
           </div>

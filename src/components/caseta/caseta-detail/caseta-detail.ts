@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CasetaService } from '../../../service/caseta-service';
-import { Caseta, EstadoCaseta } from '../../../model/caseta';
+import { Caseta } from '../../../model/caseta';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './caseta-detail.html',
-  styleUrl: './caseta-detail.css',
+  styleUrls: [],
 })
 export class CasetaDetail implements OnInit {
   id!: string;
@@ -39,20 +39,5 @@ export class CasetaDetail implements OnInit {
         console.error('Error al cargar la caseta:', err);
       }
     });
-  }
-
-  getBadgeClass(estado?: EstadoCaseta): string {
-    switch (estado) {
-      case EstadoCaseta.DISPONIBLE:
-        return 'bg-success';
-      case EstadoCaseta.OCUPADA:
-        return 'bg-danger';
-      case EstadoCaseta.MANTENIMIENTO:
-        return 'bg-warning';
-      case EstadoCaseta.RESERVADA:
-        return 'bg-info';
-      default:
-        return 'bg-secondary';
-    }
   }
 }

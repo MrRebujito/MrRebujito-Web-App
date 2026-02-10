@@ -3,24 +3,20 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CasetaService } from '../../../service/caseta-service';
-import { Caseta, EstadoCaseta } from '../../../model/caseta';
-import { CasetaValidators } from '../../../validators/caseta-validators';
+import { Caseta } from '../../../model/caseta';
 
 @Component({
   selector: 'app-caseta-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './caseta-form.html',
-  styleUrl: './caseta-form.css',
+  styleUrls: [],
 })
 export class CasetaForm implements OnInit {
   formularioCaseta: FormGroup;
   caseta: Caseta = {} as Caseta;
   id: number | null = null;
   cdr = inject(ChangeDetectorRef);
-
-  // Estados disponibles para el select
-  estados = Object.values(EstadoCaseta);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,15 +37,6 @@ export class CasetaForm implements OnInit {
       razonS: ['', Validators.required],
       aforo: ['', [Validators.required, Validators.min(1)]],
       publica: [true],
-      // En caseta-form.ts, en el constructor:
-      numero: ['',
-        [Validators.required, Validators.min(1)],
-        [CasetaValidators.numeroUnico(this.casetaService, this.id || undefined)]
-      ],
-      ubicacion: ['', Validators.required],
-      estado: [EstadoCaseta.DISPONIBLE, Validators.required],
-      latitud: [''],
-      longitud: ['']
     });
   }
 

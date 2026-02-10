@@ -23,15 +23,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let caseta of casetas">
-          <td>{{ caseta.numero || 'N/A' }}</td>
           <td>{{ caseta.razonS }}</td>
-          <td>{{ caseta.ubicacion || caseta.direccion || 'No especificada' }}</td>
+          <td>{{ caseta.direccion || 'No especificada' }}</td>
           <td class="text-center">{{ caseta.aforo }}</td>
-          <td>
-            <span [class]="'badge ' + getBadgeClass(caseta.estado)">
-              {{ getEstadoTexto(caseta.estado) }}
-            </span>
-          </td>
           <td>
             <span class="badge" [ngClass]="caseta.publica ? 'bg-primary' : 'bg-secondary'">
               {{ caseta.publica ? 'Pública' : 'Privada' }}
