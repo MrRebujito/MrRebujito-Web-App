@@ -69,7 +69,10 @@
 
       <ul class="navbar-nav align-items-center">
         <li class="nav-item" *ngIf="!isLoggedIn()">
-          <a class="btn btn-gala-acceso" routerLink="/login">Acceso</a>
+          <a class="btn btn-gala-acceso" routerLink="/login">
+            <i class="bi bi-door-open-fill"></i>
+            <span>Acceso</span>
+          </a>
         </li>
 
         <li class="nav-item" *ngIf="isLoggedIn()">

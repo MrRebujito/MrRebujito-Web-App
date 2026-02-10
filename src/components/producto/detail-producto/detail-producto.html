@@ -1,49 +1,62 @@
-<div class="container mt-4" *ngIf="producto">
-  
-  <div class="mb-4 animate-back">
-    <button class="btn btn-volver" routerLink="/productos">
-      <i class="bi bi-arrow-left"></i> Volver al Listado
-    </button>
+<div class="container mt-5" *ngIf="producto">
+  <div class="card-header">
+    <h3>Ficha del Producto</h3>
   </div>
 
-  <div class="card shadow-sm">
-    
-    <div class="image-wrapper text-center mt-3 mt-lg-0">
-      <img [src]="producto.tipoAlimento === 'BEBIDA' 
-                  ? 'https://cdn-icons-png.flaticon.com/512/2405/2405479.png' 
-                  : 'https://cdn-icons-png.flaticon.com/512/706/706164.png'" 
-           alt="Imagen del producto" 
-           class="img-fluid rounded" 
-           style="max-height: 300px; padding: 20px;"/>
+  <div class="detail-content">
+    <div class="image-section">
+      <div class="image-frame">
+        <img
+          [src]="
+            producto.tipoAlimento === 'BEBIDA'
+              ? 'https://cdn-icons-png.flaticon.com/512/2405/2405479.png'
+              : 'https://cdn-icons-png.flaticon.com/512/706/706164.png'
+          "
+          alt="Imagen del producto"
+          class="img-detail"
+        />
+      </div>
     </div>
 
-    <div class="col-md-8">
-      <h2 class="titulo-detalle">{{ producto.nombre }}</h2>
-      
-      <ul class="list-group list-group-flush mt-4">
-        
-        <li class="list-group-item">
-          <strong>ID Referencia:</strong> 
-          <span class="text-muted">#{{ producto.id }}</span>
-        </li>
-        
-        <li class="list-group-item">
-          <strong>Categoría:</strong> 
-          <span class="badge" 
-                [ngClass]="{
-                  'bg-success': producto.tipoAlimento === 'COMIDA',
-                  'bg-info text-dark': producto.tipoAlimento === 'BEBIDA'
-                }">
-            {{ producto.tipoAlimento }}
-          </span>
-        </li>
+    <div class="info-section">
+      <div class="info-item">
+        <label>Referencia</label>
+        <p>#{{ producto.id }}</p>
+      </div>
 
-        <li class="list-group-item">
-          <strong>Precio:</strong> 
-          <span class="precio-destacado">{{ producto.precio | number:'1.2-2' }} €</span>
-        </li>
+      <div class="info-item">
+        <label>Nombre del Producto</label>
+        <p>{{ producto.nombre }}</p>
+      </div>
 
-      </ul>
+      <div class="info-item">
+        <label>Categoría</label>
+        <p
+          [class.text-bebida]="producto.tipoAlimento === 'BEBIDA'"
+          [class.text-comida]="producto.tipoAlimento === 'COMIDA'"
+        >
+          {{ producto.tipoAlimento }}
+        </p>
+      </div>
+
+      <div class="info-item">
+        <label>Precio de Venta</label>
+        <p class="precio-destacado">{{ producto.precio | number: '1.2-2' }} €</p>
+      </div>
+
+      <div class="actions-group mt-4">
+        <button class="btn btn-volver me-3" routerLink="/productos">
+          <i class="bi bi-arrow-left"></i> Volver
+        </button>
+        <button class="btn btn-primary-mr" [routerLink]="['/productos/editar', producto.id]">
+          <i class="bi bi-pencil-square me-2"></i>Editar
+        </button>
+      </div>
     </div>
   </div>
+</div>
+
+<div class="container mt-5 text-center py-5" *ngIf="!producto">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p class="mt-3 text-muted">Consultando bodega...</p>
 </div>

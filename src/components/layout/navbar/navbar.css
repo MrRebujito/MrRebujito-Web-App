@@ -147,31 +147,62 @@
 }
 
 /* Botón Acceso */
+/* Botón Acceso (Actualizado para iconos) */
 .btn-gala-acceso {
   background: var(--mr-teja);
   color: #fff !important;
   font-weight: 700;
-  padding: 0.6rem 2rem;
+  padding: 0.6rem 1.5rem; /* Ajusté un poco el padding lateral por el icono */
   border-radius: 12px;
   text-transform: uppercase;
   font-size: 0.85rem;
   box-shadow: 0 4px 12px rgba(227, 139, 100, 0.3);
+
+  /* Alineación del icono */
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
+/* =========================================
+   BOTÓN ACCESO GALA - EDICIÓN "GUAPA"
+   ========================================= */
+.btn-gala-acceso {
+  background: linear-gradient(135deg, var(--mr-teja) 0%, #d27a53 100%);
+  color: #fff !important;
+  font-weight: 800;
+  padding: 0.6rem 2rem;
+  border-radius: 30px; /* Forma de píldora, mucho más estética */
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* Espacio perfecto entre icono y texto */
+
+  /* Sombra con el color del botón para que parezca que brilla */
+  box-shadow: 0 4px 15px rgba(227, 139, 100, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-gala-acceso i {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Efecto al pasar el ratón: se hace grande y brilla más */
 .btn-gala-acceso:hover {
   background: #fff;
   color: var(--mr-teja) !important;
-  transform: translateY(-2px);
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(227, 139, 100, 0.6);
 }
 
-/* ANIMACIÓN */
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
+/* Efecto cuando lo pulsas */
+.btn-gala-acceso:active {
+  transform: scale(0.95);
 }
 
 @media (max-width: 991px) {

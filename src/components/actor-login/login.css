@@ -5,28 +5,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500&display=swap');
 
 :host {
-  --mr-primary: #e38b64;
-  --mr-accent: #e63946;
-  --mr-blue: #3b6b76;
-  --mr-blue-dark: #003362;
-  --mr-bg-light: #f2ebd9;
+  /* --- TOKENS CORPORATIVOS --- */
+  --mr-primary: #e38b64; /* Naranja/Teja */
+  --mr-secondary: #9bbf9c; /* Verde */
+  --mr-accent: #3b6b76; /* Azul oscuro */
+  --mr-bg-light: #f2ebd9; /* Fondo crema */
+  --mr-text-main: #2c3e50;
 
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 70px);
   position: relative;
+  padding: 2rem 0;
 
+  /* --- FONDO DE LUNARES FERIA ANIMADO --- */
+  background-color: var(--mr-bg-light);
   background-image:
-    linear-gradient(rgba(242, 235, 217, 0.92), rgba(242, 235, 217, 0.92)),
-    url('/assets-webp/icono_logo_sin_fondo.webp'),
-    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
+    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
+
+  background-size:
+    cover,
+    80px 80px,
+    80px 80px;
   background-position:
-    center center,
-    right -30px bottom -30px,
-    center center;
-  background-size: cover, 600px, cover;
-  background-repeat: no-repeat;
+    0 0,
+    0 0,
+    40px 40px;
+  background-repeat: repeat;
+  animation: backgroundScroll 100s linear infinite;
 }
 
 /* =========================================
@@ -229,5 +238,54 @@ h3::after {
   }
   100% {
     background-position: 200% 50%;
+  }
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+
+@keyframes backgroundScroll {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      40px 40px;
+  }
+  100% {
+    background-position:
+      0 1000px,
+      0 1000px,
+      40px 1040px;
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIcon {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
   }
 }

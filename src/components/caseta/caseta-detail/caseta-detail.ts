@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './caseta-detail.html',
-  styleUrls: [],
+  styleUrl: './caseta-detail.css',
 })
 export class CasetaDetail implements OnInit {
   id!: string;
