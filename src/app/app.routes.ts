@@ -13,6 +13,7 @@ import { RoleGuard } from '../service/role-guard';
 import { AdminTable } from '../components/administrador/admin-table/admin-table';
 import { AdminForm } from '../components/administrador/admin-form/admin-form';
 import { HomeComponent } from '../components/home/home';
+import { CasetaTable } from '../components/caseta/caseta-table/caseta-table';
 
 export const routes: Routes = [
 
@@ -21,6 +22,9 @@ export const routes: Routes = [
 
   // Ruta del login
   { path: 'login', component: Login },
+
+  // Rutas de caseta
+  { path: 'casetas', component: CasetaTable},
 
   // Rutas protegidas
   //socio

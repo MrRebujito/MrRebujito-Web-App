@@ -1,0 +1,121 @@
+<!-- src/components/caseta/caseta-socios/caseta-socios.html -->
+<div class="container mt-4" *ngIf="caseta">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">
+        <i class="bi bi-people-fill"></i>
+        Gestionar Socios - {{ caseta.nombre }}
+      </h3>
+    </div>
+
+    <div class="card-body">
+      
+      <!-- Información de aforo -->
+      <div class="alert" [ngClass]="{
+        'alert-success': sociosAsignados.length < caseta.aforo * 0.8,
+        'alert-warning': sociosAsignados.length >= caseta.aforo * 0.8 && sociosAsignados.length < caseta.aforo,
+        'alert-danger': sociosAsignados.length >= caseta.aforo
+      }">
+        <i class="bi bi-info-circle"></i>
+        <strong>Aforo:</strong> {{ sociosAsignados.length }} / {{ caseta.aforo }} socios
+      </div>
+
+      <!-- Formulario para añadir socio -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">Añadir Socio</h5>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-end">
+            <div class="col-md-9">
+              <label class="form-label">Seleccionar Socio</label>
+              <select 
+                class="form-select" 
+                [(ngModel)]="socioSeleccionadoId"
+                [disabled]="sociosDisponibles.length === 0 || sociosAsignados.length >= caseta.aforo">
+                <option [ngValue]="null">-- Seleccione un socio --</option>
+                <option *ngFor="let socio of sociosDisponibles" [value]="socio.id">
+                  {{ socio.nombre }} {{ socio.primerApellido }} ({{ socio.username }})
+                </option>
+              </select>
+              <small class="text-muted" *ngIf="sociosDisponibles.length === 0">
+                No hay socios disponibles para añadir
+              </small>
+            </div>
+            <div class="col-md-3">
+              <button 
+                class="btn btn-success w-100" 
+                (click)="agregarSocio()"
+                [disabled]="!socioSeleccionadoId || sociosAsignados.length >= caseta.aforo">
+                <i class="bi bi-plus-circle"></i> Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de socios asignados -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Socios Asignados ({{ sociosAsignados.length }})</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Foto</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Teléfono</th>
+                  <th class="text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let socio of sociosAsignados">
+                  <td>
+                    <img 
+                      [src]="socio.foto || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'" 
+                      alt="Foto"
+                      class="rounded-circle"
+                      style="width: 40px; height: 40px; object-fit: cover;">
+                  </td>
+                  <td>
+                    <strong>{{ socio.nombre }} {{ socio.primerApellido }}</strong>
+                    <br>
+                    <small class="text-muted">{{ socio.username }}</small>
+                  </td>
+                  <td>{{ socio.correo }}</td>
+                  <td>{{ socio.telefono || 'No disponible' }}</td>
+                  <td class="text-center">
+                    <button 
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="eliminarSocio(socio.id)"
+                      title="Eliminar socio">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <tr *ngIf="sociosAsignados.length === 0">
+                  <td colspan="5" class="text-center text-muted py-4">
+                    <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+                    <p class="mb-0 mt-2">No hay socios asignados a esta caseta</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón volver -->
+      <div class="mt-4 text-end">
+        <button class="btn btn-secondary" (click)="volver()">
+          <i class="bi bi-arrow-left"></i> Volver a Detalle
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
