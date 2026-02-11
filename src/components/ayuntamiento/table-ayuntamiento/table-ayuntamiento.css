@@ -1,28 +1,30 @@
 /* =========================================
-   MR. REBUJITO - TABLE CASETA THEME (GALA STYLE)
+   MR. REBUJITO - TABLE AYUNTAMIENTO THEME (FINAL ANIMATED)
    ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
 
 :host {
   /* --- TOKENS --- */
-  --mr-primary: #e38b64; /* Teja */
-  --mr-secondary: #9bbf9c; /* Verde */
-  --mr-accent: #3b6b76; /* Azul */
-  --mr-bg-light: #f2ebd9; /* Albero */
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
   --mr-text-main: #2c3e50;
 
   display: block;
   min-height: calc(100vh - 70px);
   padding-top: 2rem;
-  padding-bottom: 3rem;
   position: relative;
 
   /* --- FONDO DE LUNARES FERIA (COLORES CORPORATIVOS) --- */
   background-color: var(--mr-bg-light);
-  background-image:
+  background-image: 
+    /* Capa de suavizado */
     linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
+    /* Lunares Primarios (Naranja) */
     radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    /* Lunares Secundarios (Verde) */
     radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
 
   background-size:
@@ -35,11 +37,12 @@
     40px 40px;
   background-repeat: repeat;
 
+  /* La animación que te ha gustado */
   animation: backgroundScroll 100s linear infinite;
 }
 
 /* =========================================
-   CONTENEDOR (CON PUNTILLA)
+   CONTENEDOR
    ========================================= */
 
 .container {
@@ -58,6 +61,7 @@
   animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* La Puntilla (Efecto encaje troquelado) */
 .container::before {
   content: '';
   position: absolute;
@@ -73,7 +77,7 @@
 }
 
 /* =========================================
-   ENCABEZADO
+   ENCABEZADO CON BARRA ANIMADA
    ========================================= */
 
 h2 {
@@ -87,6 +91,7 @@ h2 {
   position: relative;
   display: flex;
   align-items: center;
+  border-bottom: none;
 }
 
 h2::after {
@@ -108,7 +113,7 @@ h2::before {
   width: 60px;
   height: 60px;
   margin-right: 1.5rem;
-  background-image: url('/assets-webp/caseta.webp'); /* Cambiado para Casetas */
+  background-image: url('/assets-webp/ayuntamiento.webp');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -117,29 +122,34 @@ h2::before {
 }
 
 /* =========================================
-   BUSCADOR
+   BOTONES
    ========================================= */
 
-.input-group {
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-  overflow: hidden;
+.btn {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.input-group-text {
-  border: none;
-  color: var(--mr-primary);
+.btn-success {
+  background-color: var(--mr-primary) !important;
+  border-color: var(--mr-primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(227, 139, 100, 0.3);
 }
 
-.form-control {
-  border: none;
-  padding: 0.75rem;
-}
-
-.form-control:focus {
-  box-shadow: none;
-  background-color: #fafafa;
+.btn-success:hover {
+  background-color: #d27a53 !important;
+  border-color: #d27a53 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
 }
 
 /* =========================================
@@ -150,7 +160,7 @@ h2::before {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   background: white;
 }
 
@@ -160,14 +170,12 @@ h2::before {
   font-family: 'Merriweather', serif;
   font-weight: 400;
   border: none;
-  padding: 1.2rem 1rem;
-  text-transform: uppercase;
-  font-size: 0.85rem;
+  padding: 1rem;
 }
 
 .table tbody td {
   vertical-align: middle;
-  padding: 1.2rem 1rem;
+  padding: 1rem;
   color: var(--mr-text-main);
   border-bottom: 1px solid #eee;
 }
@@ -179,66 +187,44 @@ h2::before {
 }
 
 .table tbody tr:hover {
-  background-color: rgba(155, 191, 156, 0.15); /* Color verde feria suave */
+  background-color: rgba(155, 191, 156, 0.15);
   transform: scale(1.01);
   z-index: 10;
   position: relative;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-/* Badges de Tipo */
-.badge {
-  padding: 0.5rem 0.8rem;
-  border-radius: 30px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.bg-primary {
-  background-color: var(--mr-secondary) !important;
-  color: #1a3a1b !important;
-}
-.bg-secondary {
-  background-color: #dee2e6 !important;
-  color: #495057 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* =========================================
-   BOTONES ACCIÓN
+   ACCIONES (Botones pequeños)
    ========================================= */
 
 .btn-sm {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  transition: all 0.3s;
-  border: none;
+  margin-right: 5px;
+  border-radius: 4px;
 }
 
 .btn-info {
-  background-color: var(--mr-accent) !important;
-  color: white !important;
+  background-color: var(--mr-accent);
+  border: none;
+  color: white;
 }
-
-.btn-primary {
-  background-color: var(--mr-primary) !important;
-  color: white !important;
-}
-
-.btn-sm:hover {
-  transform: translateY(-3px) rotate(5deg);
-  filter: brightness(1.1);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+.btn-warning {
+  background-color: var(--mr-primary);
+  border: none;
+  color: white;
 }
 
 /* =========================================
    ANIMACIONES
    ========================================= */
 
+/* Animación de los lunares: Mueve las capas de gradiente suavemente */
 @keyframes backgroundScroll {
   0% {
     background-position:
@@ -271,7 +257,7 @@ h2::before {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-8px) rotate(3deg);
+    transform: translateY(-6px) rotate(3deg);
   }
 }
 

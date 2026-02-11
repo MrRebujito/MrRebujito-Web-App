@@ -1,94 +1,92 @@
-<section class="admin-gala-wrapper">
-  <div class="dots-background"></div>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h2>Gestión de Casetas</h2>
+  </div>
 
-  <div class="container py-5">
-    <div class="master-card-gala shadow">
-      <div class="gala-header">
-        <div class="header-visual">
-          <img src="assets-webp/caseta.webp" alt="Gestión" class="header-main-icon" />
-          <div class="header-text">
-            <h1>Gestión de <span class="highlight">Casetas</span></h1>
-            <p>Control de ubicación, aforo y socios del Real</p>
-          </div>
-        </div>
-        <div class="header-gold-bar"></div>
-      </div>
-
-      <div class="gala-content">
-        <div class="search-block mb-5">
-          <div class="input-group-gala">
-            <span class="search-icon"><i class="bi bi-search"></i></span>
-            <input
-              type="text"
-              class="form-control-gala"
-              placeholder="Buscar casetas por nombre de socio..."
-              [(ngModel)]="textoBusqueda"
-              (input)="filtrar()"
-            />
-            <button class="btn-clear" *ngIf="textoBusqueda" (click)="textoBusqueda = ''; filtrar()">
-              <i class="bi bi-x-lg"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="table-container-gala">
-          <div class="table-responsive">
-            <table class="table table-hover align-middle">
-              <thead>
-                <tr>
-                  <th class="text-center">Razón Social</th>
-                  <th>Ubicación</th>
-                  <th class="text-center">Aforo</th>
-                  <th class="text-center">Tipo</th>
-                  <th class="text-center">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let caseta of casetasFiltradas">
-                  <td class="fw-bold">{{ caseta.razonS }}</td>
-                  <td>
-                    <i class="bi bi-geo-alt-fill text-teja me-2"></i>
-                    {{ caseta.direccion || 'No especificada' }}
-                  </td>
-                  <td class="text-center">
-                    <span class="aforo-badge">{{ caseta.aforo }}</span>
-                  </td>
-                  <td class="text-center">
-                    <span class="badge-gala" [ngClass]="caseta.publica ? 'publica' : 'privada'">
-                      {{ caseta.publica ? 'Pública' : 'Privada' }}
-                    </span>
-                  </td>
-                  <td class="text-center">
-                    <div class="action-buttons">
-                      <button
-                        class="btn-action view"
-                        [routerLink]="['/casetas', caseta.id]"
-                        title="Ver detalles"
-                      >
-                        <i class="bi bi-eye-fill"></i>
-                      </button>
-                      <button
-                        class="btn-action members"
-                        [routerLink]="['/casetas', caseta.id, 'socios']"
-                        title="Ver socios"
-                      >
-                        <i class="bi bi-people-fill"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr *ngIf="casetasFiltradas.length === 0">
-                  <td colspan="5" class="text-center py-5 no-results">
-                    <img src="assets-webp/noria.webp" alt="Nada" class="mb-3" />
-                    <p class="mb-0">No se han encontrado casetas en el Real</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+  <div class="row mb-4">
+    <div class="col-md-6 col-lg-4">
+      <div class="input-group search-container">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-start-0 ps-0"
+          placeholder="Buscar casetas..."
+          [(ngModel)]="textoBusqueda"
+          (input)="filtrar()"
+        />
+        <button
+          class="btn btn-outline-secondary border-start-0"
+          *ngIf="textoBusqueda"
+          (click)="textoBusqueda = ''; filtrar()"
+          type="button"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
       </div>
     </div>
   </div>
-</section>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">ID</th>
+          <th scope="col">Razón Social</th>
+          <th scope="col">Ubicación</th>
+          <th scope="col" class="text-center">Aforo</th>
+          <th scope="col" class="text-center">Tipo</th>
+          <th scope="col" class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let caseta of casetasFiltradas">
+          <td class="text-center fw-bold">{{ caseta.id }}</td>
+          <td>{{ caseta.razonS }}</td>
+          <td>
+            <i class="bi bi-geo-alt-fill text-muted me-1"></i>
+            {{ caseta.direccion || 'No especificada' }}
+          </td>
+          <td class="text-center">
+            <span class="aforo-tag">{{ caseta.aforo }}</span>
+          </td>
+          <td class="text-center">
+            <span class="badge" [ngClass]="caseta.publica ? 'bg-primary' : 'bg-secondary'">
+              {{ caseta.publica ? 'Pública' : 'Privada' }}
+            </span>
+          </td>
+          <td class="text-center align-middle">
+            <div class="btn-group" role="group">
+              <button
+                class="btn btn-info btn-sm me-2"
+                [routerLink]="['/casetas', caseta.id]"
+                title="Ver detalles"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/casetas', caseta.id, 'socios']"
+                title="Ver socios"
+              >
+                <i class="bi bi-people-fill text-white"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="casetasFiltradas.length === 0">
+          <td colspan="6" class="text-center py-5 no-results">
+            <i class="bi bi-exclamation-circle d-block mb-2 fs-2"></i>
+            <span *ngIf="textoBusqueda"
+              >No hay coincidencias con "<strong>{{ textoBusqueda }}</strong
+              >"</span
+            >
+            <span *ngIf="!textoBusqueda">No hay casetas registradas en el real</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

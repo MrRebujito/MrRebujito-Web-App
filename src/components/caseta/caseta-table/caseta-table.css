@@ -1,44 +1,26 @@
 /* =========================================
-   MR. REBUJITO - TABLE CASETA THEME (GALA STYLE)
-   Adaptado para la estructura master-card-gala
+   MR. REBUJITO - CASETA THEME (GALA STYLE)
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
 
 :host {
-  /* --- TOKENS --- */
   --mr-primary: #e38b64; /* Teja */
   --mr-secondary: #9bbf9c; /* Verde */
   --mr-accent: #3b6b76; /* Azul */
   --mr-bg-light: #f2ebd9; /* Albero */
   --mr-text-main: #2c3e50;
-  --mr-dark: #1a3238;
 
   display: block;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
   position: relative;
-}
 
-/* =========================================
-   FONDO Y LUNARES
-   ========================================= */
-
-.admin-gala-wrapper {
-  min-height: 100vh;
-  position: relative;
+  /* FONDO DE LUNARES FERIA */
   background-color: var(--mr-bg-light);
-  overflow-x: hidden;
-  padding-bottom: 4rem;
-}
-
-.dots-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   background-image:
-    linear-gradient(rgba(242, 235, 217, 0.4), rgba(242, 235, 217, 0.4)),
+    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
     radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
     radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
   background-size:
@@ -49,165 +31,140 @@
     0 0,
     0 0,
     40px 40px;
+  background-repeat: repeat;
   animation: backgroundScroll 100s linear infinite;
-  z-index: 1;
 }
 
-/* =========================================
-   MASTER CARD (LA TARJETA PRINCIPAL)
-   ========================================= */
-
-.master-card-gala {
+/* CONTENEDOR CON PUNTILLA */
+.container {
   position: relative;
   z-index: 10;
   background-color: white;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 0 0 40px 40px; /* Esquinas inferiores suaves */
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-  border: none;
-  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  margin-top: 1rem;
   animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Efecto Puntilla / Encaje en la parte superior de la card */
-.master-card-gala::before {
+.container::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -22px;
   left: 0;
   width: 100%;
   height: 24px;
-  background-color: transparent;
-  /* Esto crea el troquelado sobre el fondo del header */
-  mask-image: radial-gradient(circle at 12px 24px, transparent 14px, black 15px);
-  -webkit-mask-image: radial-gradient(circle at 12px 24px, transparent 14px, black 15px);
+  background-color: white;
+  mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  -webkit-mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
   mask-size: 24px 48px;
   -webkit-mask-size: 24px 48px;
-  z-index: 11;
 }
 
-/* =========================================
-   GALA HEADER
-   ========================================= */
-
-.gala-header {
-  background: linear-gradient(135deg, var(--mr-dark), var(--mr-accent));
-  padding: 4rem 2rem 3rem;
-  text-align: center;
-  position: relative;
-}
-
-.header-main-icon {
-  width: 70px;
-  height: 70px;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-  animation: floatIcon 3.5s ease-in-out infinite;
-}
-
-.header-text h1 {
-  font-family: 'Merriweather', serif;
-  color: white;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 2.2rem;
-  margin: 0;
-}
-
-.highlight {
-  color: var(--mr-primary);
-}
-
-.header-text p {
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 0.5rem;
-  font-weight: 400;
-}
-
-.header-gold-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
-  background-size: 200% auto;
-  animation: gradientMove 3s linear infinite;
-}
-
-/* =========================================
-   CONTENIDO Y BUSCADOR
-   ========================================= */
-
-.gala-content {
-  padding: 3rem;
-}
-
-.section-label {
+/* ENCABEZADO */
+h2 {
   font-family: 'Merriweather', serif;
   color: var(--mr-accent);
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-}
-
-.input-group-gala {
+  letter-spacing: 0.5px;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  position: relative;
   display: flex;
   align-items: center;
-  background: #f8f9fa;
-  border: 2px solid #eee;
-  border-radius: 15px;
-  padding: 0.5rem 1.2rem;
-  transition: all 0.3s ease;
-}
-
-.input-group-gala:focus-within {
-  border-color: var(--mr-primary);
-  background: white;
-  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.1);
-}
-
-.search-icon {
-  color: var(--mr-primary);
-  margin-right: 12px;
-  font-size: 1.2rem;
-}
-
-.form-control-gala {
-  border: none;
-  background: transparent;
   width: 100%;
-  padding: 0.8rem 0;
-  font-weight: 500;
-  color: var(--mr-text-main);
 }
 
-.form-control-gala:focus {
-  outline: none;
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
+  background-size: 200% auto;
+  border-radius: 2px;
+  animation: gradientMove 3s linear infinite;
 }
 
-.btn-clear {
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin-right: 1.2rem;
+  background-image: url('/assets-webp/caseta.webp'); /* Icono genérico de carpa feria */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: floatIcon 3.5s ease-in-out infinite;
+}
+
+/* BUSCADOR */
+/* =========================================
+   CORRECCIÓN DEL BUSCADOR (SEARCH FILTER)
+   ========================================= */
+
+.search-container {
+  border: 2px solid var(--mr-secondary) !important; /* El borde verde de la imagen */
+  border-radius: 50px !important; /* Forma de píldora */
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Evitar que el contenedor brille en azul (foco de Bootstrap) */
+.search-container:focus-within {
+  box-shadow: 0 0 0 3px rgba(155, 191, 156, 0.25);
+  border-color: var(--mr-secondary) !important;
+}
+
+/* Icono de Lupa */
+.search-container .input-group-text {
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--mr-primary); /* Color teja */
+  padding-left: 1.2rem;
+  padding-right: 0.5rem;
+}
+
+/* Campo de texto */
+.search-container .form-control {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.8rem 0.5rem;
   background: transparent;
-  border: none;
-  color: #bbb;
+  font-size: 0.95rem;
+}
+
+/* Botón de cerrar (X) */
+.search-container .btn-outline-secondary {
+  border: none !important;
+  background-color: transparent !important;
+  color: #6c757d !important;
+  padding-right: 1.2rem;
   transition: color 0.2s;
 }
 
-.btn-clear:hover {
-  color: var(--mr-primary);
+.search-container .btn-outline-secondary:hover {
+  color: var(--mr-primary) !important;
+  transform: scale(1.1);
 }
 
-/* =========================================
-   TABLA
-   ========================================= */
+/* Quitar la línea vertical azul/gris que sale entre iconos */
+.search-container * {
+  border-right: none !important;
+  border-left: none !important;
+}
 
-.table-container-gala {
+/* TABLA */
+.table-responsive {
+  border-radius: 12px;
   margin-top: 1rem;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .table thead th {
@@ -215,9 +172,9 @@
   color: white;
   font-family: 'Merriweather', serif;
   font-weight: 400;
-  text-transform: uppercase;
-  font-size: 0.85rem;
   padding: 1.2rem 1rem;
+  text-transform: uppercase;
+  font-size: 0.8rem;
   border: none;
 }
 
@@ -229,98 +186,84 @@
 }
 
 .table tbody tr {
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-.table tbody tr:hover {
-  background-color: rgba(155, 191, 156, 0.12);
-  transform: scale(1.01);
-  z-index: 5;
-  position: relative;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+.table tbody tr:hover:not(.no-results-row) {
+  background-color: rgba(155, 191, 156, 0.1);
+  transform: scale(1.005);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* ELEMENTOS DENTRO DE LA TABLA */
-
-.text-teja {
-  color: var(--mr-primary);
+/* BADGES Y ETIQUETAS */
+.badge {
+  padding: 0.6rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.75rem;
 }
 
-.aforo-badge {
-  background: var(--mr-accent);
-  color: white;
+.bg-primary {
+  background-color: var(--mr-secondary) !important;
+  color: #1a3a1b !important;
+}
+.bg-secondary {
+  background-color: #e9ecef !important;
+  color: #6c757d !important;
+}
+
+.aforo-tag {
+  background: #f8f9fa;
   padding: 0.4rem 0.8rem;
   border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.9rem;
+  border: 1px solid #eee;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
 }
 
-.badge-gala {
-  padding: 0.5rem 0.9rem;
-  border-radius: 30px;
-  font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.badge-gala.publica {
-  background-color: var(--mr-secondary) !important;
-  color: #1a4d1a !important;
-}
-
-.badge-gala.privada {
-  background-color: #dee2e6 !important;
-  color: #495057 !important;
-}
-
-/* ACCIONES */
-.action-buttons {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
-
-.btn-action {
-  width: 38px;
-  height: 38px;
-  display: flex;
+/* BOTONES */
+.btn-sm {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: none;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  color: white;
+  border: none;
 }
 
-.btn-action.view {
-  background-color: var(--mr-accent);
+.btn-info {
+  background-color: var(--mr-accent) !important;
+  color: white !important;
+}
+.btn-primary {
+  background-color: var(--mr-primary) !important;
+  color: white !important;
 }
 
-.btn-action.members {
-  background-color: var(--mr-primary);
-}
-
-.btn-action:hover {
+.btn-sm:hover {
   transform: translateY(-4px) rotate(8deg);
   filter: brightness(1.1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* =========================================
-   ANIMACIONES
-   ========================================= */
+/* MENSAJE VACÍO */
+.no-results {
+  color: #999;
+  font-style: italic;
+  background-color: #fafafa;
+}
 
+/* ANIMACIONES */
 @keyframes backgroundScroll {
-  0% {
+  from {
     background-position:
       0 0,
       0 0,
       40px 40px;
   }
-  100% {
+  to {
     background-position:
       0 1000px,
       0 1000px,
@@ -342,7 +285,7 @@
 @keyframes floatIcon {
   0%,
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0) rotate(0);
   }
   50% {
     transform: translateY(-8px) rotate(5deg);
@@ -355,18 +298,5 @@
   }
   100% {
     background-position: 100% 50%;
-  }
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .gala-content {
-    padding: 1.5rem;
-  }
-  .header-text h1 {
-    font-size: 1.8rem;
-  }
-  .master-card-gala {
-    border-radius: 0 0 25px 25px;
   }
 }
