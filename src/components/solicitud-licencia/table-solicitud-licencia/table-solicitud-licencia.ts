@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { SolicitudLicenciaService } from '../../../service/solicitud-licencia-service';
 import { SolicitudLicencia } from '../../../model/solicitud-licencia';
 import { EstadoLicencia } from '../../../model/estado-licencia';
-import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet, Routes } from '@angular/router';
 import { AyuntamientoService } from '../../../service/ayuntamiento-service';
 import { Ayuntamiento } from '../../../model/ayuntamiento';
 import { ActorService } from '../../../service/actor-service';
-import { CasetaService } from '../../../service/caseta-service'; // ✅ IMPORTAR
-import { Caseta } from '../../../model/caseta'; // ✅ IMPORTAR
+import { CasetaService } from '../../../service/caseta-service';
+import { Caseta } from '../../../model/caseta'; 
 
 declare var bootstrap: any;
 
@@ -32,15 +32,13 @@ export class TableSolicitudLicencia implements OnInit {
   formSubmitted = false;
   formErrors: { [key: string]: string } = {};
 
-  // Variables de rol
   rolUsuario: string = '';
-  idUsuario: number = 0; // ✅ AÑADIR idUsuario
+  idUsuario: number = 0;
   esAdmin: boolean = false;
   esAyuntamiento: boolean = false;
   esCaseta: boolean = false;
   esSocio: boolean = false;
   
-  // ✅ Datos de caseta para rol CASETA
   casetaActual: Caseta | null = null;
 
   cdr = inject(ChangeDetectorRef);
@@ -49,7 +47,8 @@ export class TableSolicitudLicencia implements OnInit {
     private solicitudService: SolicitudLicenciaService,
     private ayuntamientoService: AyuntamientoService,
     private authService: ActorService,
-    private casetaService: CasetaService // ✅ INYECTAR
+    private casetaService: CasetaService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -61,7 +60,7 @@ export class TableSolicitudLicencia implements OnInit {
       next: (actor: any) => {
         console.log('Usuario logueado:', actor);
         this.rolUsuario = actor.rol;
-        this.idUsuario = actor.id; // ✅ GUARDAR ID
+        this.idUsuario = actor.id;
         
         this.esAdmin = this.rolUsuario === 'ADMIN';
         this.esAyuntamiento = this.rolUsuario === 'AYUNTAMIENTO';
@@ -70,7 +69,6 @@ export class TableSolicitudLicencia implements OnInit {
         
         this.cargarAyuntamientos();
         
-        // ✅ SI ES CASETA, CARGAR CASETA COMPLETA
         if (this.esCaseta) {
           this.cargarCasetaCompleta();
         } else {
@@ -83,7 +81,7 @@ export class TableSolicitudLicencia implements OnInit {
     });
   }
 
-  // ✅ NUEVO: Cargar caseta completa con solicitudesLicencia
+  // Cargar caseta completa con solicitudesLicencia
   cargarCasetaCompleta(): void {
     this.casetaService.getCaseta(this.idUsuario).subscribe({
       next: (caseta: Caseta) => {
@@ -98,8 +96,8 @@ export class TableSolicitudLicencia implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar la caseta:', error);
-        // Fallback: intentar cargar por el método tradicional
         this.cargarSolicitudes();
+        this.router.navigate(['/forbidden']);
       }
     });
   }
@@ -114,19 +112,20 @@ export class TableSolicitudLicencia implements OnInit {
         },
         error: (error) => {
           console.error('Error al cargar solicitudes del ayuntamiento:', error);
+          this.router.navigate(['/forbidden']);
         }
       });
     } else if (this.esCaseta && !this.casetaActual) {
-      // Solo si no se pudo cargar la caseta completa
       this.solicitudService.getAllSolicitudLicencia().subscribe({
         next: (data: SolicitudLicencia[]) => {
           // Filtrar solicitudes de esta caseta (si hay alguna forma de identificarlas)
-          this.solicitudes = data; // Temporal
+          this.solicitudes = data;
           this.solicitudesFiltradas = [...this.solicitudes];
           this.cdr.detectChanges();
         },
         error: (error) => {
           console.error('Error al cargar solicitudes:', error);
+          this.router.navigate(['/forbidden']);
         }
       });
     } else if (this.esAdmin) {
@@ -138,6 +137,7 @@ export class TableSolicitudLicencia implements OnInit {
         },
         error: (error) => {
           console.error('Error al cargar solicitudes:', error);
+          this.router.navigate(['/forbidden']);
         }
       });
     }
@@ -181,9 +181,8 @@ export class TableSolicitudLicencia implements OnInit {
 
     this.solicitudService.crearSolicitudCaseta(ayuntamientoId).subscribe({
       next: () => {
-        this.showSuccessAlert('✅ Solicitud creada correctamente');
+        this.showSuccessAlert('Solicitud creada correctamente');
         
-        // ✅ SI ES CASETA, RECARGAR CASETA COMPLETA
         if (this.esCaseta) {
           this.cargarCasetaCompleta();
         } else {
@@ -194,18 +193,10 @@ export class TableSolicitudLicencia implements OnInit {
         this.resetForm();
       },
       error: (error: any) => {
-        console.error('❌ Error creando solicitud:', error);
+        console.error('Error creando solicitud:', error);
         let mensajeError = 'Error al crear la solicitud';
         
-        if (error.status === 403) {
-          mensajeError = 'No tienes permisos para crear solicitudes.';
-        } else if (error.status === 400) {
-          if (error.error?.includes('pendiente') || error.error?.includes('activa')) {
-            mensajeError = '❌ Ya tienes una solicitud pendiente o licencia activa con este ayuntamiento.';
-          } else {
-            mensajeError = 'Error en los datos enviados';
-          }
-        }
+        this.router.navigate(['/forbidden']);
         this.showErrorAlert(mensajeError);
       }
     });
@@ -215,11 +206,11 @@ export class TableSolicitudLicencia implements OnInit {
     if (confirm('¿Estás seguro de ACEPTAR esta solicitud?')) {
       this.solicitudService.aceptarSolicitud(id).subscribe({
         next: () => {
-          this.showSuccessAlert('✅ Solicitud aceptada');
+          this.showSuccessAlert('Solicitud aceptada');
           this.cargarSolicitudes();
         },
         error: (error) => {
-          console.error('❌ Error al aceptar solicitud:', error);
+          console.error('Error al aceptar solicitud:', error);
           this.showErrorAlert('Error al aceptar la solicitud');
         }
       });
@@ -230,11 +221,11 @@ export class TableSolicitudLicencia implements OnInit {
     if (confirm('¿Estás seguro de RECHAZAR esta solicitud?')) {
       this.solicitudService.rechazarSolicitud(id).subscribe({
         next: () => {
-          this.showSuccessAlert('✅ Solicitud rechazada');
+          this.showSuccessAlert('Solicitud rechazada');
           this.cargarSolicitudes();
         },
         error: (error) => {
-          console.error('❌ Error al rechazar solicitud:', error);
+          console.error('Error al rechazar solicitud:', error);
           this.showErrorAlert('Error al rechazar la solicitud');
         }
       });
@@ -250,9 +241,8 @@ export class TableSolicitudLicencia implements OnInit {
     if (confirm('¿Estás seguro de eliminar esta solicitud pendiente?')) {
       this.solicitudService.deleteSolicitudLicencia(id).subscribe({
         next: () => {
-          this.showSuccessAlert('✅ Solicitud eliminada');
+          this.showSuccessAlert('Solicitud eliminada');
           
-          // ✅ SI ES CASETA, RECARGAR CASETA COMPLETA
           if (this.esCaseta) {
             this.cargarCasetaCompleta();
           } else {
@@ -260,14 +250,13 @@ export class TableSolicitudLicencia implements OnInit {
           }
         },
         error: (error) => {
-          console.error('❌ Error al eliminar solicitud:', error);
+          console.error('Error al eliminar solicitud:', error);
           this.showErrorAlert('Error al eliminar la solicitud');
         }
       });
     }
   }
 
-  // ✅ CORREGIDO: getMensajeVacio para CASETA
   getMensajeVacio(): string {
     if (this.solicitudes.length === 0) {
       if (this.esAdmin) return 'No hay solicitudes en el sistema';
@@ -277,7 +266,6 @@ export class TableSolicitudLicencia implements OnInit {
     return 'No hay solicitudes que coincidan con los filtros';
   }
 
-  // ✅ CORREGIDO: getMensajeInformativo
   getMensajeInformativo(): string {
     if (this.esAdmin) return '👑 Administrador: Puedes ver y gestionar todas las solicitudes.';
     if (this.esAyuntamiento) return '🏛️ Ayuntamiento: Gestiona las solicitudes recibidas. Puedes ACEPTAR o RECHAZAR.';
@@ -286,7 +274,6 @@ export class TableSolicitudLicencia implements OnInit {
     return '';
   }
 
-  // ✅ El resto de métodos se quedan IGUAL
   getAlertClass(): string {
     if (this.esAdmin) return 'alert-primary';
     if (this.esAyuntamiento) return 'alert-info';
