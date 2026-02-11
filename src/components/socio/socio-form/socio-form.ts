@@ -60,15 +60,16 @@ export class SocioForm implements OnInit {
     }
   }
 
-  onSubmit(): void {
+ onSubmit(): void {
     if (this.formularioSocio.valid) {
       const datosSocio = this.formularioSocio.value;
 
       if (this.id == null) {
+        // CREACIÓN DE SOCIO
         this.socioService.saveSocio(datosSocio).subscribe({
           next: () => {
             alert("Socio registrado correctamente");
-            this.router.navigate(['/socios']);
+            this.router.navigate(['/']);
           },
           error: (error) => {
             console.error("Error al crear socio:", error);
@@ -76,12 +77,12 @@ export class SocioForm implements OnInit {
           }
         });
       } else {
+        // EDICIÓN DE SOCIO
         datosSocio.id = this.id;
-        // En la edición, pasamos el ID que tenemos guardado
         this.socioService.updateSocio(this.id, datosSocio).subscribe({
           next: () => {
             alert("Datos actualizados correctamente");
-            this.router.navigate(['/socios']);
+            this.router.navigate(['/']); // <--- Redirigir al Inicio
           },
           error: (error) => {
             console.error("Error al actualizar socio:", error);

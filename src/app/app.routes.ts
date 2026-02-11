@@ -28,147 +28,133 @@ import { CreateUser } from '../components/create-user/create-user';
 
 export const routes: Routes = [
 
-  // RUTA DEL ERROR 403
-  { path: 'forbidden', component: Forbidden },
+  // RUTA DEL ERROR 403
+  { path: 'forbidden', component: Forbidden },
 
-  // ==================== RUTAS PÚBLICAS ====================
-  { path: '', component: HomeComponent },
-  { path: 'login', component: Login },
+  // ==================== RUTAS PÚBLICAS ====================
+  { path: '', component: HomeComponent },
+  { path: 'login', component: Login },
 
-  // CASETAS - Listar y ver detalles (PÚBLICO según requisitos)
-  { path: 'casetas', component: CasetaTable },
-  { path: 'casetas/:id', component: CasetaDetail },
+  // CASETAS - Listar y ver detalles (PÚBLICO según requisitos)
+  { path: 'casetas', component: CasetaTable },
+  { path: 'casetas/:id', component: CasetaDetail },
 
-  // AYUNTAMIENTOS - Listar (PÚBLICO según requisitos)
-  { path: 'ayuntamientos', component: TableAyuntamiento },
-  { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
+  // AYUNTAMIENTOS - Listar (PÚBLICO según requisitos)
+  { path: 'ayuntamientos', component: TableAyuntamiento },
+  { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
 
-  // SOCIOS - Listar (PÚBLICO)
-  { path: 'socios', component: SocioTable },
-  { path: 'socios/:id', component: SocioDetail },
+  // ==================== RUTAS DE REGISTRO ====================
+  // Registrarse como CASETA o SOCIO (PÚBLICO según requisitos)
+  { path: 'casetas/nuevo', component: CasetaForm },
+  { path: 'socios/nuevo', component: SocioForm },
 
-  // ==================== RUTAS DE REGISTRO ====================
-  // Registrarse como CASETA o SOCIO (PÚBLICO según requisitos)
-  { path: 'casetas/nuevo', component: CasetaForm },
-  { path: 'socios/nuevo', component: SocioForm },
+  // ==================== RUTAS DE ADMINISTRADOR (SOLO ADMIN) ====================
+  {
+    path: 'administradores/crear-usuario',
+    component: CreateUser,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'administradores',
+    component: AdminTable,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'administradores/nuevo',
+    component: AdminForm,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'administradores/editar/:id',
+    component: AdminForm,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
 
-  // ==================== RUTAS DE ADMINISTRADOR (SOLO ADMIN) ====================
-  {
-    path: 'administradores/crear-usuario',
-    component: CreateUser,
-    canActivate: [RoleGuard],
-    data: { roles: ['ADMIN'] }
-  },
-  {
-    path: 'administradores',
-    component: AdminTable,
-    canActivate: [RoleGuard],
-    data: { roles: ['ADMIN'] }
-  },
-  {
-    path: 'administradores/nuevo',
-    component: AdminForm,
-    canActivate: [RoleGuard],
-    data: { roles: ['ADMIN'] }
-  },
-  {
-    path: 'administradores/editar/:id',
-    component: AdminForm,
-    canActivate: [RoleGuard],
-    data: { roles: ['ADMIN'] }
-  },
+  // Rutas de solicitudLicencia
+  { path: 'solicitudes', component: TableSolicitudLicencia, canActivate: [AuthGuard] },
+  { path: 'solicitudes/:id', component: DetailSolicitudLicencia, canActivate: [AuthGuard] },
 
-  // Rutas de solicitudLicencia
-  { path: 'solicitudes', component: TableSolicitudLicencia },
-  { path: 'solicitudes/:id', component: DetailSolicitudLicencia },
+  // Rutas de ayuntamiento
+  { path: 'ayuntamientos', component: TableAyuntamiento },
+  { path: 'ayuntamientos/form', component: FormAyuntamiento, canActivate: [RoleGuard], data: { roles: ['ADMIN'] } },
+  { path: 'ayuntamientos/form/:id', component: FormAyuntamiento, canActivate: [RoleGuard], data: { roles: ['ADMIN', 'AYUNTAMIENTO'] } },
+  { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
 
-  // Rutas de ayuntamiento
-  { path: 'ayuntamientos', component: TableAyuntamiento },
-  { path: 'ayuntamientos/form', component: FormAyuntamiento },
-  { path: 'ayuntamientos/form/:id', component: FormAyuntamiento },
-  { path: 'ayuntamientos/:id', component: DetailAyuntamiento },
+// ==================== RUTAS DE SOCIO ====================
+  { path: 'socios/nuevo', component: SocioForm }, 
 
-  //Socio
-  { path: 'socios', component: SocioTable },
-  { path: 'socios/nuevo', component: SocioForm },
-  { path: 'socios/editar/:id', component: SocioForm },
-  { path: 'socios/:id', component: SocioDetail },
+  { path: 'mi-perfil', component: SocioDetail, canActivate: [AuthGuard] },
+  { 
+    path: 'socios', 
+    component: SocioTable, 
+    canActivate: [RoleGuard], 
+    data: { roles: ['ADMIN', 'CASETA'] } 
+  },
 
-  // Rutas de socio
-  { path: 'socios', component: SocioTable },
+  { path: 'socios/:id', component: SocioDetail, canActivate: [AuthGuard] },
 
-    { path: 'productos', component: TableProducto },
-    { path: 'producto/detail/:id', component: DetailProducto },
-    // 3. Ruta CREAR (sin ID)
-  { path: 'producto/create', component: FormProducto },
+  { 
+    path: 'socios/editar/:id', 
+    component: SocioForm, 
+    canActivate: [RoleGuard], 
+    data: { roles: ['SOCIO', 'ADMIN'] } 
+  },
 
-  // 4. Ruta EDITAR (con ID) -> Usa el mismo componente
-  { path: 'producto/edit/:id', component: FormProducto },
-  // Registrar ayuntamientos (SOLO ADMIN según requisitos)
-  {
-    path: 'ayuntamientos/form',
-    component: FormAyuntamiento,
-    canActivate: [RoleGuard],
-    data: { roles: ['ADMIN'] }
-  },
-  {
-    path: 'ayuntamientos/form/:id',
-    component: FormAyuntamiento,
-    canActivate: [RoleGuard],
-    data: { roles: ['ADMIN', 'AYUNTAMIENTO'] } // Admin puede editar cualquiera, Ayuntamiento solo el suyo
-  },
+    { path: 'productos', component: TableProducto },
+    { path: 'producto/detail/:id', component: DetailProducto },
+    // 3. Ruta CREAR (sin ID)
+  { path: 'producto/create', component: FormProducto, canActivate: [RoleGuard], data: { roles: ['ADMIN', 'CASETA'] } },
 
-  // ==================== RUTAS DE CASETA ====================
-  {
-    path: 'casetas/editar/:id',
-    component: CasetaForm,
-    canActivate: [RoleGuard],
-    data: { roles: ['CASETA'] }
-  },
-  // Gestionar socios de caseta (SOLO CASETA según requisitos)
-  {
-    path: 'casetas/:id/socios',
-    component: CasetaSocios,
-    canActivate: [RoleGuard],
-    data: { roles: ['CASETA'] }
-  },
+  // 4. Ruta EDITAR (con ID) -> Usa el mismo componente
+  { path: 'producto/edit/:id', component: FormProducto, canActivate: [RoleGuard], data: { roles: ['ADMIN', 'CASETA'] } },
 
-  // ==================== RUTAS DE SOCIO ====================
-  // Editar perfil propio (SOLO el SOCIO autenticado)
-  {
-    path: 'socios/editar/:id',
-    component: SocioForm,
-    canActivate: [RoleGuard],
-    data: { roles: ['SOCIO'] }
-  },
-
-  // ==================== RUTAS DE SOLICITUDES DE LICENCIA ====================
-  // Listar solicitudes (Accesible para CASETA y AYUNTAMIENTO)
-  {
-    path: 'solicitudes',
-    component: TableSolicitudLicencia,
-    canActivate: [RoleGuard],
-    data: { roles: ['ADMIN', 'AYUNTAMIENTO', 'CASETA'] }
-  },
-  // Ver detalle de solicitud
-  {
-    path: 'solicitudes/:id',
-    component: DetailSolicitudLicencia,
-    canActivate: [AuthGuard]
-  },
+  // ==================== RUTAS DE CASETA ====================
+  {
+    path: 'casetas/editar/:id',
+    component: CasetaForm,
+    canActivate: [RoleGuard],
+    data: { roles: ['CASETA', 'ADMIN'] }
+  },
+  // Gestionar socios de caseta (SOLO CASETA según requisitos)
+  {
+    path: 'casetas/:id/socios',
+    component: CasetaSocios,
+    canActivate: [RoleGuard],
+    data: { roles: ['CASETA', 'ADMIN'] }
+  },
 
 
-  // Documentación
-  {
-    path: 'terms',
-    component: Terms
-  },
-  {
-    path: 'help-center',
-    component: HelpCenter
-  },
-  {
-    path: '**',
-    component: NotFound
-  }
+  // ==================== RUTAS DE SOLICITUDES DE LICENCIA ====================
+  // Listar solicitudes (Accesible para CASETA y AYUNTAMIENTO)
+  {
+    path: 'solicitudes',
+    component: TableSolicitudLicencia,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN', 'AYUNTAMIENTO', 'CASETA'] }
+  },
+  // Ver detalle de solicitud
+  {
+    path: 'solicitudes/:id',
+    component: DetailSolicitudLicencia,
+    canActivate: [AuthGuard]
+  },
+
+
+  // Documentación
+  {
+    path: 'terms',
+    component: Terms
+  },
+  {
+    path: 'help-center',
+    component: HelpCenter
+  },
+  {
+    path: '**',
+    component: NotFound
+  }
 ];

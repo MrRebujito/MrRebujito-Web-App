@@ -27,13 +27,16 @@
         </li>
       </ul>
       
-      <div class="text-center mt-3">
-        <button class="btn btn-outline-secondary btn-sm" routerLink="/socios">
+      <div class="text-center mt-4 mb-3">
+        <button *ngIf="socio.rol === 'SOCIO'" class="btn btn-outline-secondary btn-sm px-4" routerLink="/">
+          <i class="bi bi-house"></i> Volver al Inicio
+        </button>
+
+        <button *ngIf="socio.rol !== 'SOCIO'" class="btn btn-outline-secondary btn-sm px-4" routerLink="/socios">
           <i class="bi bi-arrow-left"></i> Volver al listado
         </button>
       </div>
     </div>
-
   </div>
 </div>
 

@@ -32,9 +32,9 @@ export class SocioService {
     return this.http.post(this.apiUrl, socio, { responseType: 'text' });
   }
 
-  // Actualizar datos de un socio existente por ID
   updateSocio(id: number, socio: Socio): Observable<string> {
-    return this.http.put(`${this.apiUrl}/${id}`, socio, { responseType: 'text' });
+    // Enviamos al endpoint "/socio" a secas, el ID ya va dentro del objeto socio
+    return this.http.put(this.apiUrl, socio, { responseType: 'text' });
   }
 
   // Eliminar un socio por ID
