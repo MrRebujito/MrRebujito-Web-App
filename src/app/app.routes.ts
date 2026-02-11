@@ -24,6 +24,7 @@ import { TableSolicitudLicencia } from '../components/solicitud-licencia/table-s
 import { Terms } from '../components/docs/terms/terms';
 import { HelpCenter } from '../components/docs/help-center/help-center';
 import { NotFound } from '../components/not-found/not-found';
+import { CreateUser } from '../components/create-user/create-user';
 
 export const routes: Routes = [
 
@@ -52,6 +53,12 @@ export const routes: Routes = [
   { path: 'socios/nuevo', component: SocioForm },
 
   // ==================== RUTAS DE ADMINISTRADOR (SOLO ADMIN) ====================
+  {
+    path: 'administradores/crear-usuario',
+    component: CreateUser,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
   {
     path: 'administradores',
     component: AdminTable,
