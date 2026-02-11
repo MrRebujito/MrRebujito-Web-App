@@ -18,7 +18,7 @@
     </button>
   </div>
 
-  <!-- Filtros - SOLO por estado (quitamos filtro por ayuntamiento) -->
+  <!-- Filtros - SOLO por estado -->
   <div class="row mb-3">
     <div class="col-md-4">
       <label class="form-label">Filtrar por Estado:</label>
@@ -61,7 +61,6 @@
           <th>ID</th>
           <th>Estado</th>
           <th>Ayuntamiento</th>
-          <!-- ELIMINADA la columna Caseta porque no existe en la entidad SolicitudLicencia -->
           <th>Acciones</th>
         </tr>
       </thead>
@@ -74,14 +73,33 @@
             </span>
           </td>
           <td>{{ getNombreAyuntamiento(solicitud) }}</td>
-          <!-- ELIMINADA la celda Caseta -->
           <td>
+            <!-- Botón Ver detalles (para todos) -->
             <button
               class="btn btn-sm btn-info me-1"
               title="Ver detalles"
               [routerLink]="['/solicitudes', solicitud.id]"
             >
               <i class="bi bi-eye"></i>
+            </button>
+            
+            <!-- ✅ BOTONES PARA AYUNTAMIENTO - Solo visibles para ayuntamientos y solo si está PENDIENTE -->
+            <button
+              *ngIf="esAyuntamiento && solicitud.estadoLicencia === 'PENDIENTE'"
+              class="btn btn-sm btn-success me-1"
+              title="Aprobar solicitud"
+              (click)="aceptarSolicitud(solicitud.id)"
+            >
+              <i class="bi bi-check-circle"></i>
+            </button>
+            
+            <button
+              *ngIf="esAyuntamiento && solicitud.estadoLicencia === 'PENDIENTE'"
+              class="btn btn-sm btn-danger me-1"
+              title="Rechazar solicitud"
+              (click)="rechazarSolicitud(solicitud.id)"
+            >
+              <i class="bi bi-x-circle"></i>
             </button>
             
             <!-- Botón eliminar solo para CASETA y solo si está PENDIENTE -->
@@ -93,10 +111,17 @@
             >
               <i class="bi bi-trash"></i>
             </button>
+            
+            <!-- ✅ Mensaje cuando ya está aprobada/rechazada para ayuntamiento -->
+            <span
+              *ngIf="esAyuntamiento && solicitud.estadoLicencia !== 'PENDIENTE'"
+              class="text-muted small"
+            >
+              <i class="bi bi-lock"></i> No editable
+            </span>
           </td>
         </tr>
         <tr *ngIf="solicitudesFiltradas.length === 0">
-          <!-- Ajustado el colspan de 5 a 4 (eliminamos columna Caseta) -->
           <td colspan="4" class="text-center text-muted">
             <i class="bi bi-inbox"></i> {{ getMensajeVacio() }}
           </td>
