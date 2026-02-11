@@ -1,16 +1,16 @@
-<div class="container mt-4">
+<div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><span>Tabla de Administradores</span></h2>
+    <h2 class="titulo-seccion">Gestión de Administradores</h2>
 
-    <button class="btn btn-success" [routerLink]="['/administradores/nuevo']" title="Registrar Nuevo Administrador">
-      <span style="font-size: 1.8rem; line-height: 0; margin-bottom: 4px">+</span>
-      <i class="bi bi-shield-lock" style="font-size: 1.4rem"></i>
+    <button class="btn btn-primary-mr" [routerLink]="['/administradores/nuevo']">
+      <i class="bi bi-shield-plus" style="font-size: 1.2rem"></i>
+      <span>Nuevo Admin</span>
     </button>
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-striped table-hover table-bordered">
-      <thead class="table-dark">
+  <div class="table-responsive shadow-sm">
+    <table class="table table-hover mb-0 align-middle">
+      <thead>
         <tr>
           <th scope="col" class="text-center">ID</th>
           <th scope="col">Nombre Completo</th>
@@ -21,44 +21,48 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let a of administradores" [class.table-danger]="a.baneado">
-          <td class="text-center fw-bold">{{ a.id }}</td>
-          <td>{{ a.nombre }} {{ a.primerApellido }} {{ a.segundoApellido || '' }}</td>
-          <td>
-            <div><i class="bi bi-envelope"></i> {{ a.correo }}</div>
-            <div *ngIf="a.telefono"><i class="bi bi-telephone"></i> {{ a.telefono }}</div>
+        <tr *ngFor="let a of administradores" [class.table-danger-mr]="a.baneado">
+          <td class="text-center fw-bold text-muted small">{{ a.id }}</td>
+          <td class="fw-medium">
+            {{ a.nombre }} {{ a.primerApellido }} {{ a.segundoApellido || '' }}
           </td>
           <td>
-            <span class="badge bg-light text-dark border">{{ a.username }}</span>
+            <div class="small mb-1"><i class="bi bi-envelope"></i> {{ a.correo }}</div>
+            <div class="small" *ngIf="a.telefono">
+              <i class="bi bi-telephone"></i> {{ a.telefono }}
+            </div>
           </td>
-          <td class="text-center align-middle">
-            <span class="badge" [ngClass]="a.baneado ? 'bg-danger' : 'bg-success'">
+          <td>
+            <span class="badge bg-username">{{ a.username }}</span>
+          </td>
+          <td class="text-center">
+            <span class="badge" [ngClass]="a.baneado ? 'bg-danger-mr' : 'bg-success-mr'">
               {{ a.baneado ? 'Baneado' : 'Activo' }}
             </span>
           </td>
-          <td class="text-center align-middle">
-            <div class="btn-group" role="group">
+          <td class="text-center">
+            <div class="btn-group">
               <button
-                class="btn btn-warning btn-sm"
+                class="btn btn-sm btn-edit"
                 [routerLink]="['/administradores/editar', a.id]"
-                title="Editar administrador"
+                title="Editar"
               >
-                <i class="bi bi-pencil text-white"></i>
+                <i class="bi bi-pencil"></i>
               </button>
 
               <button
                 class="btn btn-sm"
-                [ngClass]="a.baneado ? 'btn-success' : 'btn-danger'"
+                [ngClass]="a.baneado ? 'btn-unban' : 'btn-ban'"
                 (click)="toggleBaneo(a)"
                 [title]="a.baneado ? 'Desbanear' : 'Banear'"
               >
-                <i class="bi" [ngClass]="a.baneado ? 'bi-unlock' : 'bi-lock'" style="color: white"></i>
+                <i class="bi" [ngClass]="a.baneado ? 'bi-unlock' : 'bi-lock'"></i>
               </button>
 
               <button
-                class="btn btn-outline-danger btn-sm"
+                class="btn btn-sm btn-delete-outline"
                 (click)="eliminarAdministrador(a.id)"
-                title="Eliminar administrador"
+                title="Eliminar"
               >
                 <i class="bi bi-trash"></i>
               </button>
@@ -66,8 +70,9 @@
           </td>
         </tr>
         <tr *ngIf="administradores.length === 0">
-          <td colspan="6" class="text-center py-4 text-muted fst-italic">
-            <i class="bi bi-shield-exclamation me-2"></i> No hay administradores registrados en el sistema.
+          <td colspan="6" class="text-center py-5 text-muted">
+            <i class="bi bi-shield-exclamation display-4 d-block mb-3 opacity-25"></i>
+            <p class="fst-italic">No hay administradores registrados en el sistema.</p>
           </td>
         </tr>
       </tbody>

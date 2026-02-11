@@ -1,5 +1,6 @@
 <div class="container mt-4">
-  <h2 class="mb-4">Gestión de Casetas</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestión de Casetas</h2>
 
   <div class="row mb-3 align-items-center">
     
@@ -33,48 +34,53 @@
   </div>
 
   <div class="table-responsive">
-    <table class="table table-striped table-hover table-bordered">
-      <thead class="table-dark">
+    <table class="table table-hover">
+      <thead>
         <tr>
-          <th scope="col">Número</th>
+          <th scope="col" class="text-center">ID</th>
           <th scope="col">Razón Social</th>
           <th scope="col">Ubicación</th>
-          <th scope="col">Aforo</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Tipo</th>
-          <th scope="col">Acciones</th>
+          <th scope="col" class="text-center">Aforo</th>
+          <th scope="col" class="text-center">Tipo</th>
+          <th scope="col" class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let caseta of casetasFiltradas">
           <td>{{ caseta.razonS }}</td>
           <td>{{ caseta.direccion || 'No especificada' }}</td>
+
           <td class="text-center">{{ caseta.aforo }}</td>
-          <td>
+
+          <td class="text-center">
             <span class="badge" [ngClass]="caseta.publica ? 'bg-primary' : 'bg-secondary'">
               {{ caseta.publica ? 'Pública' : 'Privada' }}
             </span>
           </td>
+
           <td class="text-center align-middle">
             <div class="btn-group" role="group">
-              <button 
-                class="btn btn-info btn-sm" 
-                [routerLink]="['/casetas', caseta.id]" 
-                title="Ver detalles">
+              <button
+                class="btn btn-info btn-sm me-1"
+                [routerLink]="['/casetas', caseta.id]"
+                title="Ver detalles"
+              >
                 <i class="bi bi-eye"></i>
               </button>
-              
-              <button 
-                class="btn btn-warning btn-sm" 
-                [routerLink]="['/casetas/editar', caseta.id]" 
-                title="Editar caseta">
+
+              <button
+                class="btn btn-warning btn-sm me-1"
+                [routerLink]="['/casetas/editar', caseta.id]"
+                title="Editar caseta"
+              >
                 <i class="bi bi-pencil text-white"></i>
               </button>
 
-              <button 
-                class="btn btn-primary btn-sm" 
-                [routerLink]="['/casetas', caseta.id, 'socios']" 
-                title="Gestionar socios">
+              <button
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/casetas', caseta.id, 'socios']"
+                title="Gestionar socios"
+              >
                 <i class="bi bi-people-fill text-white"></i>
               </button>
             </div>

@@ -1,26 +1,62 @@
 <div class="container mt-4" *ngIf="ayuntamiento">
   <div class="mb-4 animate-back">
     <button class="btn btn-volver" routerLink="/ayuntamientos">
-      <i class="bi bi-arrow-left"></i> Volver
+      <i class="bi bi-arrow-left"></i> Volver al listado
     </button>
   </div>
 
-  <div class="card shadow-sm">
-    <div class="image-wrapper text-center mt-3 mt-lg-0">
-      <img [src]="ayuntamiento.foto" alt="Imagen del ayuntamiento" class="img-fluid rounded" />
+  <div class="card gala-card">
+    <div class="gala-header">
+      <h3>
+        <span class="ayuntamiento-icon"></span>
+        Detalle Institucional
+      </h3>
     </div>
 
-    <div class="col-md-8">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>ID:</strong> {{ ayuntamiento.id }}</li>
-        <li class="list-group-item"><strong>Nombre:</strong> {{ ayuntamiento.nombre }}</li>
-        <li class="list-group-item"><strong>Dirección:</strong> {{ ayuntamiento.direccion }}</li>
-        <li class="list-group-item"><strong>Email:</strong> {{ ayuntamiento.correo }}</li>
-        <li class="list-group-item"><strong>Teléfono:</strong> {{ ayuntamiento.telefono }}</li>
-        <li class="list-group-item">
-          <strong>Licencias máximas:</strong> {{ ayuntamiento.licenciaMax }}
-        </li>
-      </ul>
+    <div class="gala-content">
+      <div class="image-section">
+        <div class="image-frame">
+          <img
+            [src]="ayuntamiento.foto || '/assets/no-image.png'"
+            alt="Imagen del ayuntamiento"
+            class="img-detail"
+          />
+        </div>
+      </div>
+
+      <div class="info-section">
+        <div class="info-grid">
+          <div class="info-item" *ngIf="ayuntamiento.nombre">
+            <label>Nombre de la Institución</label>
+            <p>{{ ayuntamiento.nombre }}</p>
+          </div>
+
+          <div class="info-item" *ngIf="ayuntamiento.id">
+            <label>Identificador Único</label>
+            <p>#{{ ayuntamiento.id }}</p>
+          </div>
+
+          <div class="info-item" *ngIf="ayuntamiento.correo">
+            <label>Correo Electrónico</label>
+            <p>{{ ayuntamiento.correo }}</p>
+          </div>
+
+          <div class="info-item" *ngIf="ayuntamiento.telefono">
+            <label>Teléfono de Contacto</label>
+            <p>{{ ayuntamiento.telefono }}</p>
+          </div>
+
+          <div class="info-item" *ngIf="ayuntamiento.direccion">
+            <label>Dirección Postal</label>
+            <p>{{ ayuntamiento.direccion }}</p>
+          </div>
+
+          <div class="info-item" *ngIf="ayuntamiento.licenciaMax">
+            <label>Límite de Licencias</label>
+            <p class="badge-licencia">{{ ayuntamiento.licenciaMax }} Licencias</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

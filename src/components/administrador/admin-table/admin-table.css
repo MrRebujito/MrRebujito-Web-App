@@ -1,0 +1,282 @@
+/* =========================================
+   MR. REBUJITO - ADMIN TABLE (THEME FERIA)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
+
+:host {
+  /* --- TOKENS DE COLOR --- */
+  --mr-primary: #e38b64; /* Naranja Feria */
+  --mr-secondary: #9bbf9c; /* Verde Caseta */
+  --mr-accent: #3b6b76; /* Azul Oscuro */
+  --mr-bg-light: #f2ebd9; /* Crema */
+  --mr-text-main: #2c3e50;
+
+  display: block;
+  min-height: calc(100vh - 70px);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  position: relative;
+
+  /* --- FONDO DE LUNARES ANIMADO --- */
+  background-color: var(--mr-bg-light);
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
+    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
+  background-size:
+    cover,
+    80px 80px,
+    80px 80px;
+  background-position:
+    0 0,
+    0 0,
+    40px 40px;
+  animation: backgroundScroll 100s linear infinite;
+}
+
+/* =========================================
+   CONTENEDOR CON PUNTILLA
+   ========================================= */
+
+.container {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  margin-top: 1rem;
+  animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* La Puntilla (Efecto encaje troquelado) */
+.container::before {
+  content: '';
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  background-color: white;
+  mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  -webkit-mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  mask-size: 24px 48px;
+  -webkit-mask-size: 24px 48px;
+}
+
+/* =========================================
+   ENCABEZADO CON JARRA DE REBUJITO
+   ========================================= */
+
+h2 {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0; /* Ajustado para el d-flex del header */
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
+  background-size: 200% auto;
+  border-radius: 2px;
+  animation: gradientMove 3s linear infinite;
+}
+
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin-right: 1.2rem;
+  background-image: url('/assets-webp/entrada.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: floatIcon 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+
+.btn-primary-mr {
+  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
+  color: white !important;
+  border: none !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(227, 139, 100, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary-mr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.4);
+}
+
+/* =========================================
+   TABLA
+   ========================================= */
+
+.table-responsive {
+  border-radius: 15px;
+  background: white;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+.table thead th {
+  background-color: var(--mr-accent) !important;
+  color: white !important;
+  font-family: 'Merriweather', serif;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding: 1.2rem;
+  border: none;
+}
+
+.table tbody td {
+  padding: 1.2rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f8f9fa;
+  color: var(--mr-text-main);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(155, 191, 156, 0.1) !important;
+}
+
+/* Fila de administrador baneado */
+.table-danger-mr {
+  background-color: rgba(220, 53, 69, 0.05) !important;
+}
+
+/* Badges */
+.badge {
+  padding: 0.6em 1em;
+  border-radius: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.bg-success-mr {
+  background-color: var(--mr-secondary);
+  color: white;
+}
+.bg-danger-mr {
+  background-color: #dc3545;
+  color: white;
+}
+.bg-username {
+  background-color: #f8f9fa;
+  color: var(--mr-accent);
+  border: 1px solid #eee;
+}
+
+/* Iconos de contacto */
+.bi-envelope,
+.bi-telephone {
+  color: var(--mr-primary);
+  margin-right: 5px;
+}
+
+/* Acciones */
+.btn-sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  margin: 0 2px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+}
+
+.btn-edit {
+  background-color: var(--mr-accent);
+}
+.btn-ban {
+  background-color: #dc3545;
+}
+.btn-unban {
+  background-color: var(--mr-secondary);
+}
+.btn-delete-outline {
+  background: transparent;
+  border: 2px solid #dc3545;
+  color: #dc3545 !important;
+}
+.btn-delete-outline:hover {
+  background: #dc3545;
+  color: white !important;
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+
+@keyframes backgroundScroll {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      40px 40px;
+  }
+  100% {
+    background-position:
+      0 1000px,
+      0 1000px,
+      40px 1040px;
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIcon {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(3deg);
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

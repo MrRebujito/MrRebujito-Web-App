@@ -1,0 +1,135 @@
+/* =========================================
+   MR. REBUJITO - FORM PRODUCTO (PREMIUM)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500;700&display=swap');
+
+:host {
+  /* --- TOKENS --- */
+  --mr-primary: #e38b64; /* Naranja Teja */
+  --mr-secondary: #9bbf9c; /* Verde */
+  --mr-accent: #3b6b76; /* Azul Petróleo */
+  --mr-bg-light: #f2ebd9; /* Crema */
+  --mr-text-main: #2c3e50;
+  --mr-glass: rgba(255, 255, 255, 0.95); /* Cristal */
+
+  display: block;
+  min-height: calc(100vh - 70px);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  
+  /* --- FONDO ANIMADO --- */
+  background-image:
+    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
+    url('/assets-webp/icono_logo_sin_fondo.webp'),
+    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* =========================================
+   TARJETA CRISTAL
+   ========================================= */
+
+.glass-card {
+  background: var(--mr-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: slideUp 0.6s ease-out;
+}
+
+.card-header {
+  border-bottom: none;
+  padding: 1.5rem;
+}
+
+/* Colores específicos para cabecera */
+.bg-success { background-color: var(--mr-primary) !important; } /* Naranja para crear */
+.bg-info { background-color: var(--mr-accent) !important; }    /* Azul para editar */
+
+/* =========================================
+   FORMULARIO
+   ========================================= */
+
+.form-label {
+  color: var(--mr-accent);
+  font-family: 'Merriweather', serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-control, .form-select {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  transition: all 0.3s;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--mr-primary);
+  box-shadow: 0 0 0 4px rgba(227, 139, 100, 0.15);
+  background-color: #fff;
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+
+.btn {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  transition: all 0.3s;
+}
+
+/* Botón Crear (Naranja) */
+.btn-success {
+  background-color: var(--mr-primary);
+  border: none;
+}
+.btn-success:hover:not(:disabled) {
+  background-color: #d27a53;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(227, 139, 100, 0.3);
+}
+
+/* Botón Editar (Azul) */
+.btn-info {
+  background-color: var(--mr-accent);
+  border: none;
+}
+.btn-info:hover:not(:disabled) {
+  background-color: #2c525b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 107, 118, 0.3);
+}
+
+/* Botón Cancelar */
+.btn-outline-secondary {
+  border: 2px solid var(--mr-accent);
+  color: var(--mr-accent);
+}
+.btn-outline-secondary:hover {
+  background-color: var(--mr-accent);
+  color: white;
+}
+
+.btn:disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

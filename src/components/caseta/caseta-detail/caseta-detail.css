@@ -1,5 +1,5 @@
 /* =========================================
-   MR. REBUJITO - DETAIL AYUNTAMIENTO (SPECTACULAR GALA)
+   MR. REBUJITO - DETAIL CASETA (SPECTACULAR GALA)
    ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
@@ -17,7 +17,6 @@
   position: relative;
   overflow-x: hidden;
 
-  /* FONDO DE LUNARES ANIMADOS (ELEGANCIA PURA) */
   background-color: var(--mr-bg-light);
   background-image:
     linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
@@ -34,9 +33,7 @@
   animation: backgroundScroll 100s linear infinite;
 }
 
-/* =========================================
-   CONTENEDOR Y BOTÓN VOLVER
-   ========================================= */
+/* CONTENEDOR Y BOTÓN VOLVER */
 .container {
   max-width: 1100px;
   animation: entranceUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -55,6 +52,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
 }
 
 .btn-volver:hover {
@@ -63,18 +61,15 @@
   transform: translateX(-8px);
 }
 
-/* =========================================
-   LA TARJETA GALA (ESQUINAS LIMPIAS)
-   ========================================= */
+/* TARJETA GALA */
 .gala-card {
   background: white !important;
   border-radius: 40px !important;
   border: none !important;
   box-shadow: 0 40px 80px -20px rgba(59, 107, 118, 0.25) !important;
-  overflow: hidden; /* Clave para esquinas perfectas */
+  overflow: hidden;
 }
 
-/* Header de la ficha */
 .gala-header {
   background: linear-gradient(135deg, var(--mr-accent) 0%, #1f3a40 100%);
   padding: 2.5rem;
@@ -94,16 +89,15 @@
   gap: 20px;
 }
 
+/* Icono - Si tienes un icono de caseta puedes cambiar el asset aquí */
 .ayuntamiento-icon {
   width: 50px;
   height: 50px;
-  background: url('/assets-webp/ayuntamiento.webp') no-repeat center;
+  background: url('/assets-webp/caseta.webp') no-repeat center;
   background-size: contain;
-  filter: brightness(0) invert(1);
   animation: floatLogo 4s ease-in-out infinite;
 }
 
-/* Contenido */
 .gala-content {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -119,9 +113,7 @@
   }
 }
 
-/* =========================================
-   IMAGEN (SIN RECORTAR - SIEMPRE COMPLETA)
-   ========================================= */
+/* IMAGEN FRAME */
 .image-section {
   display: flex;
   justify-content: center;
@@ -133,7 +125,6 @@
   padding: 10px;
   background: white;
   border-radius: 25px;
-  /* Marco de gala */
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.1),
     0 0 0 8px white,
@@ -144,23 +135,21 @@
   width: 100%;
   height: auto;
   max-height: 500px;
-  object-fit: contain; /* GARANTIZA QUE NO SE RECORTE NUNCA */
+  object-fit: contain;
   border-radius: 15px;
   display: block;
 }
 
-/* =========================================
-   INFO SECTION
-   ========================================= */
+/* INFO SECTION */
 .info-grid {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .info-item {
   border-bottom: 2px solid #f2ebd9;
-  padding-bottom: 1rem;
+  padding-bottom: 0.8rem;
   transition: all 0.3s ease;
 }
 
@@ -178,12 +167,12 @@
   letter-spacing: 2px;
   color: var(--mr-accent);
   opacity: 0.7;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .info-item p {
   font-family: 'Merriweather', serif;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--mr-text-main);
   margin: 0;
@@ -193,9 +182,52 @@
   color: var(--mr-primary) !important;
 }
 
-/* =========================================
-   ANIMACIONES
-   ========================================= */
+/* BOTONES DE ACCIÓN GALA */
+.btn-warning-gala,
+.btn-primary-gala {
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  transition: all 0.3s ease;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-warning-gala {
+  background: linear-gradient(135deg, #f1c40f, #f39c12);
+  box-shadow: 0 10px 20px rgba(243, 156, 18, 0.2);
+}
+
+.btn-primary-gala {
+  background: linear-gradient(135deg, var(--mr-accent), #2c3e50);
+  box-shadow: 0 10px 20px rgba(59, 107, 118, 0.2);
+}
+
+.btn-warning-gala:hover,
+.btn-primary-gala:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+}
+
+/* LOADING STATE */
+.loading-container {
+  text-align: center;
+  padding: 5rem;
+}
+
+.spinner-gala {
+  width: 50px;
+  height: 50px;
+  border: 5px solid white;
+  border-top: 5px solid var(--mr-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+
+/* ANIMACIONES */
 @keyframes backgroundScroll {
   0% {
     background-position:
@@ -229,5 +261,11 @@
   }
   50% {
     transform: translateY(-8px);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

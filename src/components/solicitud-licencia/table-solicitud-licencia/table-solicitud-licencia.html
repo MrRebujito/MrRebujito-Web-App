@@ -2,13 +2,14 @@
   <!-- Encabezado con botón -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Solicitudes de Licencia</h2>
-    
-    <button 
-      class="btn btn-success" 
-      (click)="abrirModal()"
-      title="Crear Nueva Solicitud">
+
+    <button class="btn btn-primary" (click)="abrirModal()" title="Crear Nueva Solicitud">
       <span style="font-size: 1.8rem; line-height: 0; margin-bottom: 4px">+</span>
-      <img src="/assets-webp/solicitud_licencia.webp" alt="Icono Solicitud" style="height: 30px; width: auto" />
+      <img
+        src="/assets-webp/solicitud_licencia.webp"
+        alt="Icono Solicitud"
+        style="height: 30px; width: auto"
+      />
     </button>
   </div>
 
@@ -23,7 +24,7 @@
         <option value="RECHAZADA">Rechazada</option>
       </select>
     </div>
-    
+
     <div class="col-md-4">
       <label class="form-label">Ayuntamiento:</label>
       <select class="form-select" [(ngModel)]="filtroAyuntamiento">
@@ -33,7 +34,7 @@
         </option>
       </select>
     </div>
-    
+
     <div class="col-md-4 d-flex align-items-end">
       <button class="btn btn-primary me-2" (click)="aplicarFiltros()">
         <i class="bi bi-funnel"></i> Filtrar
@@ -65,10 +66,11 @@
           </td>
           <td>{{ getNombreAyuntamiento(solicitud) }}</td>
           <td>
-            <button 
-              class="btn btn-sm btn-info me-1" 
+            <button
+              class="btn btn-sm btn-info me-1"
               title="Ver detalles"
-              [routerLink]="['/solicitudes', solicitud.id]">
+              [routerLink]="['/solicitudes', solicitud.id]"
+            >
               <i class="bi bi-eye"></i>
             </button>
           </td>
@@ -81,7 +83,7 @@
       </tbody>
     </table>
   </div>
-  
+
   <!-- Información adicional -->
   <div class="mt-3">
     <small class="text-muted">
@@ -94,50 +96,65 @@
 <div class="modal fade" id="nuevaSolicitudModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">➕ Nueva Solicitud de Licencia</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+      <div class="modal-header">
+        <h5 class="modal-title">Nueva Solicitud de Licencia</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="resetForm()"
+        ></button>
       </div>
       <div class="modal-body">
         <form (ngSubmit)="crearSolicitud()" #solicitudForm="ngForm">
           <div class="mb-3">
             <label class="form-label">Ayuntamiento *</label>
-            <select 
-              class="form-select" 
-              [(ngModel)]="nuevoAyuntamientoId" 
-              name="ayuntamiento" 
+            <select
+              class="form-select"
+              [(ngModel)]="nuevoAyuntamientoId"
+              name="ayuntamiento"
               (change)="onAyuntamientoChange()"
               [class.is-invalid]="formSubmitted && formErrors['ayuntamiento']"
-              required>
+              required
+            >
               <option value="">Seleccione un ayuntamiento</option>
               <option *ngFor="let ayto of ayuntamientos" [value]="ayto.id">
                 {{ ayto.nombre }}
               </option>
             </select>
-            
+
             <!-- Mensaje de error para ayuntamiento -->
-            <div *ngIf="formSubmitted && formErrors['ayuntamiento']" class="invalid-feedback d-block">
+            <div
+              *ngIf="formSubmitted && formErrors['ayuntamiento']"
+              class="invalid-feedback d-block"
+            >
               <i class="bi bi-exclamation-circle"></i> {{ formErrors['ayuntamiento'] }}
             </div>
-            
-            <small class="text-muted">Seleccione el ayuntamiento que gestionará esta solicitud</small>
+
+            <small class="text-muted"
+              >Seleccione el ayuntamiento que gestionará esta solicitud</small
+            >
           </div>
-          
+
           <!-- Información sobre estado -->
           <div class="alert alert-info">
-            <i class="bi bi-info-circle"></i> 
-            <strong>Nota:</strong> El estado de la licencia se establecerá automáticamente como <span class="badge bg-warning text-dark">PENDIENTE</span>
+            <i class="bi bi-info-circle"></i>
+            <strong> Nota:</strong> El estado de la licencia se establecerá automáticamente como
+            <span class="badge bg-warning text-dark">PENDIENTE</span>
           </div>
-          
+
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              (click)="resetForm()"
+            >
               Cancelar
             </button>
-            <button 
-              type="submit" 
-              class="btn btn-primary"
-              [disabled]="!isFormValid()">
-              <i class="bi bi-check-circle"></i> Crear Solicitud
+            <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">
+              Crear Solicitud
             </button>
           </div>
         </form>

@@ -1,7 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top mr-navbar-custom">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" routerLink="/" title="Volver al Real">
-      <img src="assets-webp/logo_principal.webp" alt="MrRebujito" height="50" class="mr-logo" />
+<nav class="navbar navbar-expand-lg sticky-top mr-navbar-gala">
+  <div class="navbar-accent-line"></div>
+
+  <div class="container-fluid px-lg-5">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="assets-webp/logo_principal.webp" alt="MrRebujito" class="mr-logo-jewel" />
+      <div class="brand-text-wrapper">
+        <span class="mr-brand-name">Mr. Rebujito</span>
+        <span class="mr-brand-tagline">Gestión de Feria</span>
+      </div>
     </a>
 
     <button
@@ -10,11 +16,11 @@
       data-bs-toggle="collapse"
       data-bs-target="#navMrRebujito"
     >
-      <span class="navbar-toggler-icon"></span>
+      <i class="bi bi-list text-white fs-1"></i>
     </button>
 
     <div class="collapse navbar-collapse" id="navMrRebujito">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+      <ul class="navbar-nav mx-auto gala-menu-links">
         <li class="nav-item">
           <a
             class="nav-link"
@@ -22,70 +28,66 @@
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <i class="bi bi-house-door me-1"></i> Inicio
+            <img src="assets-webp/noria.webp" class="nav-icon-webp" /> Inicio
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/solicitudes" routerLinkActive="active">Licencias</a>
+          <a class="nav-link" routerLink="/solicitudes" routerLinkActive="active">
+            <img src="assets-webp/solicitud-naranja.webp" class="nav-icon-webp" /> Licencias
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/socios" routerLinkActive="active">Socios</a>
+          <a class="nav-link" routerLink="/socios" routerLinkActive="active">
+            <img src="assets-webp/socio-naranja.webp" class="nav-icon-webp" /> Socios
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/ayuntamientos" routerLinkActive="active">Ayuntamientos</a>
+          <a class="nav-link" routerLink="/ayuntamientos" routerLinkActive="active">
+            <img src="assets-webp/ayuntamiento.webp" class="nav-icon-webp" /> Ayuntamientos
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/casetas" routerLinkActive="active">Casetas</a>
+          <a class="nav-link" routerLink="/casetas" routerLinkActive="active">
+            <img src="assets-webp/caseta.webp" class="nav-icon-webp" /> Casetas
+          </a>
         </li>
-
         <li class="nav-item">
-          <a class="nav-link text-warning" routerLink="/administradores" routerLinkActive="active">
-            <i class="bi bi-shield-lock me-1"></i> Admin
+          <a class="nav-link" routerLink="/productos" routerLinkActive="active">
+            <img src="assets-webp/comida.webp" class="nav-icon-webp" /> Productos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link nav-link-admin"
+            routerLink="/administradores"
+            routerLinkActive="active"
+          >
+            <img src="assets-webp/entrada.webp" class="nav-icon-webp" /> Admins
           </a>
         </li>
       </ul>
 
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav align-items-center">
         <li class="nav-item" *ngIf="!isLoggedIn()">
-          <a class="btn btn-nav-action rounded-pill px-4 shadow-sm" routerLink="/login">
-            <i class="bi bi-person-badge me-2"></i>Acceso
+          <a class="btn btn-gala-acceso" routerLink="/login">
+            <i class="bi bi-door-open-fill"></i>
+            <span>Acceso</span>
           </a>
         </li>
 
-        <li class="nav-item dropdown" *ngIf="isLoggedIn()">
-          <div class="d-flex align-items-center">
-            <span class="text-light me-3 fw-bold d-none d-lg-block">
-              Hola, {{ getUsername() }}
-            </span>
-            <div class="d-flex gap-2">
-              <a
-                class="btn btn-outline-light btn-sm rounded-circle"
-                (click)="goToProfile()"
-                title="Mi Perfil"
-                style="
-                  width: 38px;
-                  height: 38px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                "
-              >
-                <i class="bi bi-person-fill"></i>
-              </a>
-              <a
-                class="btn btn-outline-danger btn-sm rounded-circle"
-                (click)="logout()"
-                title="Salir"
-                style="
-                  width: 38px;
-                  height: 38px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                "
-              >
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <div class="user-gala-area">
+            <span class="user-welcome"
+              >Hola, <strong>{{ getUsername() }}</strong></span
+            >
+            <div class="user-separator"></div>
+            <div class="user-actions">
+              <button class="btn-user-icon" (click)="goToProfile()" title="Mi Perfil">
+                <i class="bi bi-person-circle"></i>
+              </button>
+              <button class="btn-user-icon logout" (click)="logout()" title="Cerrar Sesión">
                 <i class="bi bi-power"></i>
-              </a>
+              </button>
             </div>
           </div>
         </li>

@@ -1,32 +1,29 @@
 /* =========================================
-   MR. REBUJITO - TABLE AYUNTAMIENTO THEME (FINAL ANIMATED)
+   MR. REBUJITO - TABLE PRODUCTO (THEME FERIA ANIMATED)
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
 
 :host {
-  /* --- TOKENS --- */
-  --mr-primary: #e38b64;
-  --mr-secondary: #9bbf9c;
-  --mr-accent: #3b6b76;
-  --mr-bg-light: #f2ebd9;
+  /* --- TOKENS DE COLOR --- */
+  --mr-primary: #e38b64; /* Naranja Feria */
+  --mr-secondary: #9bbf9c; /* Verde Caseta */
+  --mr-accent: #3b6b76; /* Azul Oscuro */
+  --mr-bg-light: #f2ebd9; /* Crema */
   --mr-text-main: #2c3e50;
 
   display: block;
   min-height: calc(100vh - 70px);
   padding-top: 2rem;
+  padding-bottom: 3rem;
   position: relative;
 
-  /* --- FONDO DE LUNARES FERIA (COLORES CORPORATIVOS) --- */
+  /* --- FONDO DE LUNARES ANIMADO --- */
   background-color: var(--mr-bg-light);
-  background-image: 
-    /* Capa de suavizado */
+  background-image:
     linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
-    /* Lunares Primarios (Naranja) */
     radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
-    /* Lunares Secundarios (Verde) */
     radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
-
   background-size:
     cover,
     80px 80px,
@@ -35,29 +32,21 @@
     0 0,
     0 0,
     40px 40px;
-  background-repeat: repeat;
-
-  /* La animación que te ha gustado */
   animation: backgroundScroll 100s linear infinite;
 }
 
 /* =========================================
-   CONTENEDOR
+   CONTENEDOR CON PUNTILLA
    ========================================= */
 
 .container {
   position: relative;
   z-index: 10;
   background-color: white;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
   border-radius: 0 0 24px 24px;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
   padding: 3rem;
   margin-top: 1rem;
-  border: none;
-
   animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -77,7 +66,7 @@
 }
 
 /* =========================================
-   ENCABEZADO CON BARRA ANIMADA
+   ENCABEZADO CON JARRA DE REBUJITO
    ========================================= */
 
 h2 {
@@ -91,7 +80,6 @@ h2 {
   position: relative;
   display: flex;
   align-items: center;
-  border-bottom: none;
 }
 
 h2::after {
@@ -113,7 +101,7 @@ h2::before {
   width: 60px;
   height: 60px;
   margin-right: 1.5rem;
-  background-image: url('/assets-webp/ayuntamiento.webp');
+  background-image: url('/assets-webp/jarra-rebujitos.webp');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -122,34 +110,63 @@ h2::before {
 }
 
 /* =========================================
-   BOTONES
+   BOTONES Y FILTROS
    ========================================= */
 
-.btn {
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.btn-success {
-  background-color: var(--mr-primary) !important;
-  border-color: var(--mr-primary) !important;
+.btn-primary-mr {
+  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
   color: white !important;
-  box-shadow: 0 4px 6px rgba(227, 139, 100, 0.3);
+  border: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(227, 139, 100, 0.3);
+  transition: all 0.3s ease;
 }
 
-.btn-success:hover {
-  background-color: #d27a53 !important;
-  border-color: #d27a53 !important;
+.btn-primary-mr:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
+  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.4);
+}
+
+.btn-secondary-mr {
+  border: 2px solid var(--mr-accent);
+  color: var(--mr-accent);
+  background: transparent;
+  border-radius: 12px;
+  padding: 0.8rem;
+}
+
+.btn-secondary-mr:hover {
+  background: var(--mr-accent);
+  color: white;
+}
+
+.form-label {
+  font-family: 'Merriweather', serif;
+  color: var(--mr-accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.filter-card {
+  background-color: #fcfaf5;
+  border: 2px solid rgba(59, 107, 118, 0.05);
+  border-radius: 15px;
+}
+
+.input-group-text {
+  background-color: white;
+  border: 2px solid rgba(59, 107, 118, 0.1);
+  color: var(--mr-accent);
+}
+
+.form-control,
+.form-select {
+  border: 2px solid rgba(59, 107, 118, 0.1);
+  border-radius: 10px;
+  padding: 0.6rem;
 }
 
 /* =========================================
@@ -157,74 +174,91 @@ h2::before {
    ========================================= */
 
 .table-responsive {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  margin-top: 1.5rem;
+  border-radius: 15px;
   background: white;
+  overflow: hidden;
 }
 
 .table thead th {
   background-color: var(--mr-accent);
   color: white;
   font-family: 'Merriweather', serif;
-  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding: 1.2rem;
   border: none;
-  padding: 1rem;
 }
 
 .table tbody td {
-  vertical-align: middle;
-  padding: 1rem;
-  color: var(--mr-text-main);
-  border-bottom: 1px solid #eee;
-}
-
-.table tbody tr {
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
+  padding: 1.2rem;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .table tbody tr:hover {
-  background-color: rgba(155, 191, 156, 0.15);
-  transform: scale(1.01);
-  z-index: 10;
-  position: relative;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background-color: rgba(155, 191, 156, 0.1);
+  transform: scale(1.002);
+  transition: all 0.2s ease;
 }
 
-/* =========================================
-   ACCIONES (Botones pequeños)
-   ========================================= */
-
-.btn-sm {
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 5px;
-  border-radius: 4px;
+/* Badges Personalizados */
+.badge {
+  padding: 0.6em 1em;
+  border-radius: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-.btn-info {
-  background-color: var(--mr-accent);
-  border: none;
+.bg-stock-empty {
+  background-color: #ff4d4d;
   color: white;
 }
-.btn-warning {
+.bg-stock-low {
+  background-color: #ffd11a;
+  color: #333;
+}
+.bg-stock-ok {
+  background-color: var(--mr-secondary);
+  color: white;
+}
+
+.bg-tipo-comida {
   background-color: var(--mr-primary);
+  color: white;
+}
+.bg-tipo-bebida {
+  background-color: #3498db;
+  color: white;
+}
+
+.text-precio {
+  color: var(--mr-accent);
+  font-size: 1.1rem;
+}
+
+/* Acciones */
+.btn-sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  margin: 0 2px;
   border: none;
   color: white;
+}
+
+.btn-view {
+  background-color: var(--mr-secondary);
+}
+.btn-edit {
+  background-color: var(--mr-accent);
+}
+.btn-delete {
+  background-color: var(--mr-primary);
 }
 
 /* =========================================
    ANIMACIONES
    ========================================= */
 
-/* Animación de los lunares: Mueve las capas de gradiente suavemente */
 @keyframes backgroundScroll {
   0% {
     background-position:

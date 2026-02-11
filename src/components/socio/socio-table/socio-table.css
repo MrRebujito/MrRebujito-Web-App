@@ -1,92 +1,105 @@
 /* =========================================
-   MR. REBUJITO - TABLE SOCIOS (PREMIUM FINAL)
+   MR. REBUJITO - TABLE SOCIOS (THEME ANIMATED)
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;500&display=swap');
 
 :host {
   /* --- TOKENS --- */
-  --mr-primary: #e38b64; /* Naranja Teja */
-  --mr-secondary: #9bbf9c; /* Verde */
-  --mr-accent: #3b6b76; /* Azul Petróleo */
-  --mr-bg-light: #f2ebd9; /* Crema */
+  --mr-primary: #e38b64;
+  --mr-secondary: #9bbf9c;
+  --mr-accent: #3b6b76;
+  --mr-bg-light: #f2ebd9;
   --mr-text-main: #2c3e50;
-  --mr-glass: rgba(255, 255, 255, 0.92);
 
   display: block;
   min-height: calc(100vh - 70px);
   padding-top: 2rem;
-  padding-bottom: 3rem;
   position: relative;
 
-  /* --- FONDO ANIMADO --- */
-  background-image:
-    linear-gradient(rgba(242, 235, 217, 0.94), rgba(242, 235, 217, 0.94)),
-    url('/assets-webp/icono_logo_sin_fondo.webp'),
-    linear-gradient(135deg, var(--mr-bg-light) 0%, #fffbf2 100%);
+  /* --- FONDO DE LUNARES FERIA (COLORES CORPORATIVOS) --- */
+  background-color: var(--mr-bg-light);
+  background-image: 
+    /* Capa de suavizado */
+    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
+    /* Lunares Primarios (Naranja) */
+    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    /* Lunares Secundarios (Verde) */
+    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
 
+  background-size:
+    cover,
+    80px 80px,
+    80px 80px;
   background-position:
-    center center,
-    right -20px bottom 0px,
-    center center;
-  background-size: cover, 500px, cover;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
+    0 0,
+    0 0,
+    40px 40px;
+  background-repeat: repeat;
+
+  /* Animación de los lunares */
+  animation: backgroundScroll 100s linear infinite;
 }
 
 /* =========================================
-   CONTENEDOR (Glassmorphism)
+   CONTENEDOR
    ========================================= */
+
 .container {
   position: relative;
   z-index: 10;
-  background-color: var(--mr-glass);
+  background-color: white;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 16px;
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.1),
-    0 5px 15px rgba(0, 0, 0, 0.05);
-  padding: 2.5rem;
+
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
   margin-top: 1rem;
-  margin-bottom: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  animation: slideUpFade 0.7s ease-out forwards;
-  opacity: 0;
-  transform: translateY(30px);
+  border: none;
+
+  animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* La Puntilla (Efecto encaje troquelado) */
+.container::before {
+  content: '';
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  background-color: white;
+  mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  -webkit-mask-image: radial-gradient(circle at 12px -2px, transparent 14px, black 15px);
+  mask-size: 24px 48px;
+  -webkit-mask-size: 24px 48px;
 }
 
 /* =========================================
-   ENCABEZADO (AJUSTADO)
+   ENCABEZADO CON BARRA ANIMADA
    ========================================= */
+
 h2 {
   font-family: 'Merriweather', serif;
   color: var(--mr-accent);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 0;
-  /* Quitamos padding y border del H2 principal */
-  padding-bottom: 0;
-  border-bottom: none;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  position: relative;
   display: flex;
   align-items: center;
+  border-bottom: none;
 }
 
-/* Nuevo: Span interno para que la barra se ajuste al texto */
-h2 span {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 1rem; /* Espacio para la barra */
-}
-
-/* Barra animada inferior (Ahora aplicada al span) */
-h2 span::after {
+h2::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%; /* 100% del span, no del contenedor */
+  width: 100%;
   height: 4px;
   background: linear-gradient(90deg, var(--mr-primary), var(--mr-secondary), var(--mr-primary));
   background-size: 200% auto;
@@ -94,31 +107,31 @@ h2 span::after {
   animation: gradientMove 3s linear infinite;
 }
 
-/* ICONO DE SOCIOS (IMAGEN WEBP) */
 h2::before {
   content: '';
   display: inline-block;
   width: 60px;
   height: 60px;
   margin-right: 1.5rem;
-  /* USAMOS LA IMAGEN SOLICITADA */
+  /* Icono de Socio */
   background-image: url('/assets-webp/socio.webp');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  animation: floatIcon 4s ease-in-out infinite;
+  animation: floatIcon 3.5s ease-in-out infinite;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 /* =========================================
-   BOTONES GENERALES
+   BOTONES
    ========================================= */
+
 .btn {
-  border-radius: 10px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
   transition: all 0.2s;
   display: inline-flex;
   align-items: center;
@@ -126,30 +139,30 @@ h2::before {
   gap: 10px;
 }
 
-/* BOTÓN NUEVO SOCIO */
 .btn-success {
-  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
-  border: none !important;
+  background-color: var(--mr-primary) !important;
+  border-color: var(--mr-primary) !important;
   color: white !important;
   box-shadow: 0 4px 6px rgba(227, 139, 100, 0.3);
 }
 
 .btn-success:hover {
+  background-color: #d27a53 !important;
+  border-color: #d27a53 !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(227, 139, 100, 0.4);
-  filter: brightness(1.1);
+  box-shadow: 0 6px 12px rgba(227, 139, 100, 0.4);
 }
 
 /* =========================================
    TABLA
    ========================================= */
+
 .table-responsive {
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  margin-top: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
   background: white;
-  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .table thead th {
@@ -158,78 +171,76 @@ h2::before {
   font-family: 'Merriweather', serif;
   font-weight: 400;
   border: none;
-  padding: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.85rem;
+  padding: 1rem;
 }
 
 .table tbody td {
   vertical-align: middle;
-  padding: 1.2rem;
+  padding: 1rem;
   color: var(--mr-text-main);
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #eee;
 }
 
 .table tbody tr {
-  transition: all 0.25s ease-out;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .table tbody tr:hover {
-  background-color: #fff !important;
-  transform: scale(1.01) translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  z-index: 5;
+  background-color: rgba(155, 191, 156, 0.15);
+  transform: scale(1.01);
+  z-index: 10;
   position: relative;
-  border-radius: 8px;
-}
-
-.table tbody td i {
-  color: var(--mr-primary);
-  margin-right: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* =========================================
-   BOTONES DE ACCIÓN (Restaurados)
+   ACCIONES (Botones pequeños)
    ========================================= */
+
 .btn-sm {
-  width: 38px; /* Tamaño fijo para que sean cuadrados */
-  height: 38px;
-  padding: 0; /* Sin padding para centrar el icono */
+  width: 34px;
+  height: 34px;
+  padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  margin: 0 3px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
+  margin-right: 5px;
+  border-radius: 4px;
 }
 
 .btn-info {
-  background-color: var(--mr-accent) !important;
-  border: none !important;
-  color: white !important;
+  background-color: var(--mr-accent);
+  border: none;
+  color: white;
 }
 
 .btn-warning {
-  background-color: var(--mr-primary) !important;
-  border: none !important;
-  color: white !important;
-}
-
-.btn-sm:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  filter: brightness(1.1);
-}
-
-.btn-warning i {
-  color: white !important; /* Asegurar icono blanco en editar */
+  background-color: var(--mr-primary);
+  border: none;
+  color: white;
 }
 
 /* =========================================
    ANIMACIONES
    ========================================= */
+
+@keyframes backgroundScroll {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      40px 40px;
+  }
+  100% {
+    background-position:
+      0 1000px,
+      0 1000px,
+      40px 1040px;
+  }
+}
+
 @keyframes slideUpFade {
   from {
     opacity: 0;
@@ -241,23 +252,21 @@ h2::before {
   }
 }
 
+@keyframes floatIcon {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(3deg);
+  }
+}
+
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;
   }
   100% {
     background-position: 100% 50%;
-  }
-}
-
-@keyframes floatIcon {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-5px) rotate(3deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
   }
 }

@@ -9,17 +9,7 @@
 
         <!-- Sección: Datos Básicos -->
         <h5 class="mb-3 text-primary">Datos Básicos</h5>
-
         <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Número de Caseta *</label>
-            <input type="number" formControlName="numero" class="form-control" [class.is-invalid]="esInvalido('numero')"
-              placeholder="Ej: 42">
-            <div class="invalid-feedback">Debe ingresar un número único mayor a 0.</div>
-            <div class="invalid-feedback" *ngIf="formularioCaseta.get('numero')?.hasError('numeroNoUnico')">
-              Este número de caseta ya está en uso.
-            </div>
-          </div>
 
           <div class="col-md-6 mb-3">
             <label class="form-label">Razón Social *</label>
@@ -36,17 +26,10 @@
               placeholder="Ej: La Caseta del Sur">
             <div class="invalid-feedback">El nombre es obligatorio.</div>
           </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Ubicación *</label>
-            <input type="text" formControlName="ubicacion" class="form-control"
-              [class.is-invalid]="esInvalido('ubicacion')" placeholder="Ej: Sector Norte, Fila 3, Caseta 42">
-            <div class="invalid-feedback">La ubicación es obligatoria.</div>
-          </div>
         </div>
 
         <!-- Sección: Capacidad y Estado -->
-        <h5 class="mb-3 text-primary mt-4">Capacidad y Estado</h5>
+        <h5 class="mb-3 text-primary mt-4">Capacidad</h5>
 
         <div class="row">
           <div class="col-md-4 mb-3">
@@ -55,14 +38,6 @@
               placeholder="Ej: 50">
             <div class="invalid-feedback">Debe ser mayor a 0.</div>
           </div>
-
-          <div class="col-md-4 mb-3">
-            <label class="form-label">Estado *</label>
-            <select formControlName="estado" class="form-select" [class.is-invalid]="esInvalido('estado')">
-            </select>
-            <div class="invalid-feedback">Seleccione un estado.</div>
-          </div>
-
           <div class="col-md-4 mb-3">
             <label class="form-label">Tipo de Caseta</label>
             <div class="form-check form-switch mt-2">
@@ -71,23 +46,6 @@
                 {{ formularioCaseta.get('publica')?.value ? 'Pública' : 'Privada' }}
               </label>
             </div>
-          </div>
-        </div>
-
-        <!-- Sección: Coordenadas para Mapa -->
-        <h5 class="mb-3 text-primary mt-4">Ubicación en Mapa (Opcional)</h5>
-
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Latitud</label>
-            <input type="number" step="any" formControlName="latitud" class="form-control" placeholder="Ej: 37.389092">
-            <small class="text-muted">Coordenada para mostrar en el mapa</small>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Longitud</label>
-            <input type="number" step="any" formControlName="longitud" class="form-control" placeholder="Ej: -5.984459">
-            <small class="text-muted">Coordenada para mostrar en el mapa</small>
           </div>
         </div>
 
@@ -156,7 +114,6 @@
             {{ id == null ? 'Registrar Caseta' : 'Guardar Cambios' }}
           </button>
         </div>
-
       </form>
     </div>
   </div>

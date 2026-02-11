@@ -1,240 +1,138 @@
-<!-- ============================================
-     MR. REBUJITO - HOME REDISEÑADO BRUTAL
-     ============================================ -->
+<section class="hero-gala">
+  <div class="decor-circle circle-1"></div>
+  <div class="decor-circle circle-2"></div>
 
-<!-- HERO SECTION - Diseño Limpio y Potente -->
-<section class="hero-brutal">
-  <div class="container">
+  <div class="container hero-container">
     <div class="hero-content-wrapper">
-      <!-- Logo y Título Principal -->
       <div class="hero-header">
-        <img src="/assets-webp/logo_principal.webp" alt="Mr. Rebujito" class="hero-logo-main" />
-        <h1 class="hero-title-brutal">
+        <div class="logo-container">
+          <img
+            src="/assets-webp/icono_logo_sin_fondo.webp"
+            alt="Mr. Rebujito"
+            class="hero-logo-main"
+          />
+        </div>
+
+        <h1 class="hero-title-gala">
           Tu Plataforma de Gestión
           <span class="title-highlight">para Ferias Andaluzas</span>
         </h1>
+
+        <div class="hero-divider">
+          <img src="/assets-webp/abanico.webp" alt="decoración" class="divider-icon" />
+        </div>
+
         <p class="hero-subtitle">
-          Gestiona licencias, casetas, socios y ayuntamientos desde una única plataforma moderna y
-          profesional
+          Gestiona licencias, casetas, socios y ayuntamientos con el
+          <strong>arte y la profesionalidad</strong> que nuestra tierra merece.
         </p>
       </div>
 
-      <!-- Botones de Acción -->
       <div class="hero-actions">
-        <button class="btn-brutal btn-brutal-primary" routerLink="/login">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Acceder a la Plataforma</span>
+        <button class="btn-gala btn-gala-primary" routerLink="/login">
+          <i class="bi bi-door-open-fill"></i>
+          <span>Acceder ahora</span>
         </button>
-        <button class="btn-brutal btn-brutal-outline" (click)="scrollToFeatures()">
-          <i class="bi bi-grid-3x3-gap"></i>
-          <span>Ver Funcionalidades</span>
+        <button class="btn-gala btn-gala-outline" (click)="scrollToFeatures()">
+          <span>Saber más</span>
+          <i class="bi bi-chevron-down"></i>
         </button>
-      </div>
-
-      <!-- Iconos de Confianza -->
-      <div class="trust-badges">
-        <div class="trust-item">
-          <i class="bi bi-shield-check"></i>
-          <span>Seguro y Confiable</span>
-        </div>
-        <div class="trust-item">
-          <i class="bi bi-lightning-charge"></i>
-          <span>Rápido y Eficiente</span>
-        </div>
-        <div class="trust-item">
-          <i class="bi bi-gear"></i>
-          <span>Fácil de Usar</span>
-        </div>
       </div>
     </div>
   </div>
-
-  <!-- Decoración de fondo minimalista -->
-  <div class="hero-decoration">
-    <div class="decoration-circle circle-1"></div>
-    <div class="decoration-circle circle-2"></div>
-    <div class="decoration-circle circle-3"></div>
-  </div>
 </section>
-
-<!-- SECCIÓN DE CARACTERÍSTICAS - Grid de Servicios -->
 <section class="features-section" id="features">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title-brutal">
-        <i class="bi bi-stars"></i>
-        Funcionalidades Principales
-      </h2>
-      <p class="section-description">
-        Todo lo que necesitas para gestionar tu feria de forma profesional
-      </p>
+      <h2 class="section-title-gala">Funcionalidades Principales</h2>
+      <div class="title-underline"></div>
     </div>
 
-    <div class="features-grid-brutal">
-      <!-- Feature Card: Solicitudes -->
-      <div class="feature-card-brutal" routerLink="/solicitudes">
-        <div class="card-icon-brutal">
-          <i class="bi bi-file-earmark-text"></i>
+    <div class="features-grid-gala">
+      <div class="feature-card-gala" routerLink="/solicitudes">
+        <div class="card-icon-wrapper">
+          <img src="/assets-webp/solicitud_licencia.webp" alt="Solicitudes" />
         </div>
-        <h3 class="card-title-brutal">Solicitudes de Licencia</h3>
-        <p class="card-description-brutal">
-          Gestiona y aprueba solicitudes de licencias de forma ágil y transparente
-        </p>
-        <div class="card-link-brutal">
-          <span>Ir a Solicitudes</span>
-          <i class="bi bi-arrow-right"></i>
-        </div>
+        <h3 class="card-title-gala">Solicitudes de Licencia</h3>
+        <p>Gestión ágil y transparente de licencias institucionales.</p>
+        <div class="card-link-gala">Explorar <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <!-- Feature Card: Ayuntamientos -->
-      <div class="feature-card-brutal" routerLink="/ayuntamientos">
-        <div class="card-icon-brutal">
-          <i class="bi bi-building"></i>
+      <div class="feature-card-gala" routerLink="/ayuntamientos">
+        <div class="card-icon-wrapper">
+          <img src="/assets-webp/ayuntamiento.webp" alt="Ayuntamientos" />
         </div>
-        <h3 class="card-title-brutal">Ayuntamientos</h3>
-        <p class="card-description-brutal">
-          Administra ayuntamientos, documentos y ferias organizadas
-        </p>
-        <div class="card-link-brutal">
-          <span>Ir a Ayuntamientos</span>
-          <i class="bi bi-arrow-right"></i>
-        </div>
+        <h3 class="card-title-gala">Ayuntamientos</h3>
+        <p>Administra sedes, documentos y ferias organizadas.</p>
+        <div class="card-link-gala">Gestionar <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <!-- Feature Card: Socios -->
-      <div class="feature-card-brutal" routerLink="/socios">
-        <div class="card-icon-brutal">
-          <i class="bi bi-people"></i>
+      <div class="feature-card-gala" routerLink="/socios">
+        <div class="card-icon-wrapper">
+          <img src="/assets-webp/socio.webp" alt="Socios" />
         </div>
-        <h3 class="card-title-brutal">Gestión de Socios</h3>
-        <p class="card-description-brutal">
-          Registra y gestiona todos los socios de tu caseta con control total
-        </p>
-        <div class="card-link-brutal">
-          <span>Ir a Socios</span>
-          <i class="bi bi-arrow-right"></i>
-        </div>
+        <h3 class="card-title-gala">Gestión de Socios</h3>
+        <p>Control total de integrantes de casetas y registros.</p>
+        <div class="card-link-gala">Ver Socios <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <!-- Feature Card: Casetas (PRÓXIMAMENTE) -->
-      <div class="feature-card-brutal feature-card-disabled">
-        <div class="card-icon-brutal">
-          <i class="bi bi-shop"></i>
+      <div class="feature-card-gala" routerLink="/casetas">
+        <div class="card-icon-wrapper">
+          <img src="/assets-webp/caseta.webp" alt="Casetas" />
         </div>
-        <h3 class="card-title-brutal">Casetas</h3>
-        <p class="card-description-brutal">
-          Administra casetas públicas y privadas, aforo y gestión de invitados
-        </p>
-        <span class="badge-coming">Próximamente</span>
+        <h3 class="card-title-gala">Casetas</h3>
+        <p>Administración de aforo, ubicación y tipología de caseta.</p>
+        <div class="card-link-gala">Ir a Casetas <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <!-- Feature Card: Productos (PRÓXIMAMENTE) -->
-      <div class="feature-card-brutal feature-card-disabled">
-        <div class="card-icon-brutal">
-          <i class="bi bi-cup-straw"></i>
+      <div class="feature-card-gala" routerLink="/productos">
+        <div class="card-icon-wrapper">
+          <img src="/assets-webp/jarra-rebujitos.webp" alt="Productos" />
         </div>
-        <h3 class="card-title-brutal">Productos & Carta</h3>
-        <p class="card-description-brutal">
-          Define tu carta de bebidas y comidas con precios actualizados
-        </p>
-        <span class="badge-coming">Próximamente</span>
+        <h3 class="card-title-gala">Productos & Carta</h3>
+        <p>Define la oferta gastronómica de tu caseta.</p>
+        <div class="card-link-gala">VER LA CARTA <i class="bi bi-arrow-right"></i></div>
       </div>
 
-      <!-- Feature Card: Admin -->
-      <div class="feature-card-brutal" routerLink="/administradores">
-        <div class="card-icon-brutal">
-          <i class="bi bi-shield-lock"></i>
+      <div class="feature-card-gala" routerLink="/administradores">
+        <div class="card-icon-wrapper">
+          <img src="/assets-webp/entrada.webp" alt="Administración" />
         </div>
-        <h3 class="card-title-brutal">Administración</h3>
-        <p class="card-description-brutal">
-          Panel completo de administración y configuración del sistema
-        </p>
-        <div class="card-link-brutal">
-          <span>Panel Admin</span>
-          <i class="bi bi-arrow-right"></i>
-        </div>
+        <h3 class="card-title-gala">Administración</h3>
+        <p>Panel de configuración y seguridad del sistema.</p>
+        <div class="card-link-gala">Panel Admin <i class="bi bi-arrow-right"></i></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SECCIÓN DE VENTAJAS - Por qué elegirnos -->
 <section class="benefits-section">
   <div class="container">
-    <div class="section-header">
-      <h2 class="section-title-brutal section-title-light">
-        <i class="bi bi-award"></i>
-        ¿Por Qué Elegir Mr. Rebujito?
-      </h2>
-      <p class="section-description section-description-light">
-        La solución más completa para la gestión de ferias
-      </p>
+    <div class="section-header-light">
+      <h2 class="section-title-gala">¿Por Qué Mr. Rebujito?</h2>
     </div>
 
     <div class="benefits-grid">
       <div class="benefit-item">
-        <div class="benefit-icon">
-          <i class="bi bi-clock-history"></i>
-        </div>
-        <h3 class="benefit-title">Ahorra Tiempo</h3>
-        <p class="benefit-text">Automatiza procesos y reduce el tiempo de gestión hasta un 70%</p>
+        <img src="/assets-webp/abanico.webp" alt="Tiempo" class="benefit-img" />
+        <h3>Ahorra Tiempo</h3>
+        <p>Automatiza procesos feriantes en segundos.</p>
       </div>
-
       <div class="benefit-item">
-        <div class="benefit-icon">
-          <i class="bi bi-graph-up-arrow"></i>
-        </div>
-        <h3 class="benefit-title">Mayor Control</h3>
-        <p class="benefit-text">
-          Toda la información centralizada y accesible desde cualquier lugar
-        </p>
+        <img src="/assets-webp/peineta.webp" alt="Control" class="benefit-img" />
+        <h3>Mayor Control</h3>
+        <p>Toda tu feria centralizada y segura.</p>
       </div>
-
       <div class="benefit-item">
-        <div class="benefit-icon">
-          <i class="bi bi-people-fill"></i>
-        </div>
-        <h3 class="benefit-title">Colaboración Fácil</h3>
-        <p class="benefit-text">Trabajo en equipo fluido entre ayuntamientos, casetas y socios</p>
+        <img src="/assets-webp/castañuelas.webp" alt="Colaboración" class="benefit-img" />
+        <h3>Ritmo Fluido</h3>
+        <p>Colaboración total entre socios y entidades.</p>
       </div>
-
       <div class="benefit-item">
-        <div class="benefit-icon">
-          <i class="bi bi-phone"></i>
-        </div>
-        <h3 class="benefit-title">Multiplataforma</h3>
-        <p class="benefit-text">Accede desde cualquier dispositivo: ordenador, tablet o móvil</p>
+        <img src="/assets-webp/guitarra.webp" alt="Multiplataforma" class="benefit-img" />
+        <h3>A tu Vera</h3>
+        <p>Accede desde móvil, tablet o PC en el Real.</p>
       </div>
-
-      <div class="benefit-item">
-        <div class="benefit-icon">
-          <i class="bi bi-file-earmark-check"></i>
-        </div>
-        <h3 class="benefit-title">Gestión Documental</h3>
-        <p class="benefit-text">Almacena y organiza documentos importantes de forma segura</p>
-      </div>
-
-      <div class="benefit-item">
-        <div class="benefit-icon">
-          <i class="bi bi-calendar-event"></i>
-        </div>
-        <h3 class="benefit-title">Planificación de Ferias</h3>
-        <p class="benefit-text">Organiza y vincula ferias con ayuntamientos fácilmente</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CALL TO ACTION FINAL -->
-<section class="cta-section">
-  <div class="container">
-    <div class="cta-content-brutal">
-      <h2 class="cta-title-brutal">¿Listo para Comenzar?</h2>
-      <p class="cta-text-brutal">Únete a Mr. Rebujito y transforma la gestión de tu feria</p>
-      <button class="btn-cta-brutal" routerLink="/login">
-        <i class="bi bi-rocket-takeoff"></i>
-        <span>Comenzar Ahora - Es Gratis</span>
-      </button>
     </div>
   </div>
 </section>

@@ -1,86 +1,216 @@
-/* Usando el azul de tu archivo styles.css */
-.mr-navbar-custom {
-  background-color: var(--mr-blue); /* #3b6b76 según tu styles.css */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+/* =========================================
+   MR. REBUJITO - NAVBAR GALA (ULTRA-CLEAN)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@900&family=Roboto:wght@500;700&display=swap');
+
+:host {
+  --mr-blue-dark: #1a3238;
+  --mr-blue-mid: #3b6b76;
+  --mr-teja: #e38b64;
+  --mr-verde: #9bbf9c;
 }
 
-/* Efecto Glassmorphism */
-.mr-navbar-custom.scrolled {
-  background-color: var(--mr-glass);
-  backdrop-filter: blur(10px);
-  padding: 0.5rem 0;
-}
-
-/* Estilo de los links de navegación */
-.navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.85) !important;
-  font-weight: 500;
-  margin: 0 5px;
+.mr-navbar-gala {
+  background: linear-gradient(to right, var(--mr-blue-dark), var(--mr-blue-mid));
+  padding: 0.7rem 0; /* Proporción ideal */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   position: relative;
-  transition: color 0.3s ease;
+  border: none !important;
 }
 
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-  color: #fff !important;
-}
-
-/* Línea animada inferior (Acento Rojo Feria) */
-.navbar-nav .nav-link::after {
-  content: '';
+.navbar-accent-line {
   position: absolute;
-  width: 0;
-  height: 2px;
   bottom: 0;
-  left: 50%;
-  background-color: var(--mr-accent); /* #e63946 */
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--mr-teja), var(--mr-verde), var(--mr-teja));
+  background-size: 200% auto;
+  animation: gradientMove 4s linear infinite;
 }
 
-.navbar-nav .nav-link:hover::after,
-.navbar-nav .nav-link.active::after {
-  width: 70%;
-}
-
-/* Animación del Logo */
-.mr-logo {
+/* --- LOGO Y MARCA --- */
+.mr-logo-jewel {
+  height: 55px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   transition: transform 0.3s ease;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.navbar-brand:hover .mr-logo {
-  transform: scale(1.08);
+.brand-text-wrapper {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ESTILO ESPECTACULAR PARA ADMIN */
-.btn-nav-action {
-  color: white !important;
-  border: 2px solid white;
-  background-color: rgba(255, 255, 255, 0.1);
-  font-weight: 600;
+.mr-brand-name {
+  font-family: 'Merriweather', serif;
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.mr-brand-tagline {
+  color: var(--mr-verde);
+  font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* --- MENÚ: MÁRGENES GENEROSOS --- */
+.gala-menu-links .nav-item {
+  margin: 0 20px; /* AQUÍ TIENES EL MARGEN IZQUIERDA/DERECHA */
+}
+
+.nav-icon-webp {
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
   font-size: 0.85rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0 !important;
+  border-bottom: 2px solid transparent;
   transition: all 0.3s ease;
 }
 
-.btn-nav-action:hover {
-  background-color: white;
-  color: var(--mr-blue) !important;
+.nav-link:hover,
+.nav-link.active {
+  color: #fff !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Ajuste móvil */
-@media (max-width: 991.98px) {
-  .navbar-collapse {
-    background: var(--mr-blue-dark);
-    margin-top: 1rem;
-    padding: 1rem;
-    border-radius: 12px;
+.nav-link.active {
+  border-bottom-color: var(--mr-teja);
+}
+
+.nav-link:hover .nav-icon-webp {
+  transform: scale(1.25) rotate(5deg);
+}
+
+/* --- ÁREA DE USUARIO (REDISEÑADA) --- */
+.user-gala-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 18px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-welcome {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.user-separator {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.user-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-user-icon {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.btn-user-icon:hover {
+  color: var(--mr-teja);
+  transform: scale(1.2);
+}
+
+.btn-user-icon.logout:hover {
+  color: #ff5e57;
+}
+
+/* Botón Acceso */
+/* Botón Acceso (Actualizado para iconos) */
+.btn-gala-acceso {
+  background: var(--mr-teja);
+  color: #fff !important;
+  font-weight: 700;
+  padding: 0.6rem 1.5rem; /* Ajusté un poco el padding lateral por el icono */
+  border-radius: 12px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(227, 139, 100, 0.3);
+
+  /* Alineación del icono */
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* =========================================
+   BOTÓN ACCESO GALA - EDICIÓN "GUAPA"
+   ========================================= */
+.btn-gala-acceso {
+  background: linear-gradient(135deg, var(--mr-teja) 0%, #d27a53 100%);
+  color: #fff !important;
+  font-weight: 800;
+  padding: 0.6rem 2rem;
+  border-radius: 30px; /* Forma de píldora, mucho más estética */
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* Espacio perfecto entre icono y texto */
+
+  /* Sombra con el color del botón para que parezca que brilla */
+  box-shadow: 0 4px 15px rgba(227, 139, 100, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-gala-acceso i {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Efecto al pasar el ratón: se hace grande y brilla más */
+.btn-gala-acceso:hover {
+  background: #fff;
+  color: var(--mr-teja) !important;
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(227, 139, 100, 0.6);
+}
+
+/* Efecto cuando lo pulsas */
+.btn-gala-acceso:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 991px) {
+  .gala-menu-links .nav-item {
+    margin: 10px 0;
+  }
+  .user-gala-area {
+    margin-top: 15px;
+    justify-content: center;
   }
 }
