@@ -1,253 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
+
 :host {
   --mr-teja: #e38b64;
   --mr-verde: #9bbf9c;
   --mr-azul: #3b6b76;
-  --mr-azul-dark: #1a3238;
+  --mr-dark: #1a3238;
   display: block;
 }
 
-.admin-form-section {
+.admin-gala-wrapper {
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
   background-color: #f2ebd9;
-  /* CORRECCIÓN LUNARES: Dos capas con posiciones alternas */
+  padding-bottom: 5rem;
+  overflow-x: hidden;
+}
+
+/* --- LUNARES ANIMADOS --- */
+.dots-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image:
-    radial-gradient(circle, var(--mr-teja) 10%, transparent 11%),
-    radial-gradient(circle, rgba(155, 191, 156, 0.4) 10%, transparent 11%);
-  background-size: 70px 70px;
+    radial-gradient(circle, var(--mr-teja) 12%, transparent 13%),
+    radial-gradient(circle, var(--mr-verde) 12%, transparent 13%);
+  background-size: 80px 80px;
   background-position:
     0 0,
-    35px 35px;
-  animation: bgScroll 120s linear infinite;
-}
-
-/* DECORACIONES */
-.decor-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.1;
+    40px 40px;
+  opacity: 0.5;
+  animation: dotsMove 120s linear infinite;
   z-index: 1;
 }
-.blob-1 {
-  width: 500px;
-  height: 500px;
-  background: var(--mr-teja);
-  top: -100px;
-  left: -100px;
-}
-.blob-2 {
-  width: 400px;
-  height: 400px;
-  background: var(--mr-azul);
-  bottom: -100px;
-  right: -50px;
-}
 
-/* CARD GALA */
-.gala-card {
-  border: none;
-  border-radius: 40px !important;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(15px);
-  z-index: 10;
+/* --- MASTER CARD CRISTAL --- */
+.master-card-gala {
   position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  border-radius: 45px;
+  border: 1px solid white;
+  box-shadow: 0 30px 80px rgba(26, 50, 56, 0.12);
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15) !important;
 }
 
-.card-header-gala {
-  background: linear-gradient(135deg, var(--mr-azul-dark), var(--mr-azul));
-  padding: 3rem 2rem;
+/* --- HEADER --- */
+.gala-header {
+  background: linear-gradient(135deg, var(--mr-dark), var(--mr-azul));
+  padding: 4rem 2rem;
   text-align: center;
   position: relative;
 }
 
-.header-asset {
-  height: 70px;
+.header-main-icon {
   margin-bottom: 1rem;
-  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
 }
-.card-header-gala h3 {
+
+.header-text h1 {
   font-family: 'Merriweather', serif;
   color: white;
   font-weight: 900;
+  font-size: 2.2rem;
+  margin: 0;
 }
-.text-teja {
+
+.highlight {
   color: var(--mr-teja);
 }
-.header-divider {
+
+.header-gold-bar {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 5px;
+  height: 6px;
   background: var(--mr-teja);
 }
 
-/* SELECTOR DE ROLES (GRID) */
-.role-selector-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
-}
-
-.role-option {
-  cursor: pointer;
-}
-.role-option input {
-  position: absolute;
-  opacity: 0;
-}
-
-.role-card-inner {
-  background: white;
-  border: 2px solid #eee;
-  border-radius: 20px;
-  padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.role-card-inner img {
-  height: 40px;
-}
-.role-card-inner span {
-  font-weight: 800;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: var(--mr-azul);
-}
-
-.role-option:hover .role-card-inner {
-  transform: translateY(-5px);
-  border-color: var(--mr-teja);
-}
-.role-option.selected .role-card-inner {
-  border-color: var(--mr-teja);
-  background: rgba(227, 139, 100, 0.05);
-  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.1);
-}
-
-/* BLOQUES DE FORMULARIO (MÁS ESPACIO) */
-.form-block {
+/* --- BLOQUES DE INFO --- */
+.gala-info-card {
   background: white;
   padding: 2.5rem;
-  border-radius: 30px;
-  margin-bottom: 2.5rem; /* Más espacio entre bloques */
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  animation: slideUp 0.5s ease both;
+  border-radius: 35px;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  animation: slideIn 0.5s ease both;
 }
 
-.bg-soft {
-  background: rgba(59, 107, 118, 0.03);
-  border: 1px dashed var(--mr-azul);
+.special-card {
+  background: rgba(155, 191, 156, 0.05);
+  border: 2px dashed var(--mr-verde);
 }
 
-.block-header {
+.block-title {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 2rem;
-}
-.block-icon {
-  height: 35px;
-}
-.block-header h4 {
-  font-family: 'Merriweather', serif;
-  font-weight: 800;
-  margin: 0;
-  color: var(--mr-azul-dark);
-  font-size: 1.1rem;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
 }
 
-/* INPUTS */
-.form-label {
+.block-title h4 {
+  font-family: 'Merriweather', serif;
+  font-weight: 800;
+  color: var(--mr-dark);
+  margin: 0;
+}
+
+/* --- INPUTS --- */
+.gala-input-group label {
+  display: block;
   font-weight: 700;
   color: #555;
   margin-bottom: 10px;
   font-size: 0.9rem;
+  padding-left: 5px;
+  text-transform: uppercase;
 }
-.form-control-gala {
+
+.gala-input-group input {
+  width: 100%;
+  padding: 1rem 1.4rem;
+  border-radius: 18px;
   border: 2px solid #eee;
-  border-radius: 15px;
-  padding: 0.8rem 1.2rem;
   transition: 0.3s;
 }
-.form-control-gala:focus {
-  border-color: var(--mr-teja);
-  box-shadow: 0 0 0 4px rgba(227, 139, 100, 0.1);
+
+.gala-input-group input:focus {
   outline: none;
+  border-color: var(--mr-teja);
+  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.1);
 }
 
-/* CSS PARA LA FECHA */
-.date-input {
-  cursor: pointer;
-  color: var(--mr-azul-dark);
-  font-weight: 600;
-}
-.date-input::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  filter: sepia(100%) saturate(1000%) hue-rotate(340deg); /* Color teja para el icono del calendario */
+.gala-input-group input.is-invalid {
+  border-color: #dc3545;
+  background-image: none;
 }
 
-/* ACCIONES */
-.form-actions {
+/* --- ACCIONES --- */
+.gala-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
-  border-top: 1px solid #eee;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
-.btn-gala-primary {
+
+.btn-submit {
   background: var(--mr-teja);
   color: white;
   border: none;
-  padding: 1.2rem 3rem;
-  border-radius: 18px;
+  padding: 1.2rem 3.5rem;
+  border-radius: 20px;
   font-weight: 800;
   text-transform: uppercase;
-  transition: 0.3s;
+  transition: 0.4s;
+  box-shadow: 0 10px 25px rgba(227, 139, 100, 0.3);
 }
-.btn-gala-primary:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.2);
+
+.btn-submit:hover:not(:disabled) {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 15px 35px rgba(227, 139, 100, 0.4);
 }
-.btn-gala-outline {
+
+.btn-submit:disabled {
+  background: #ccc;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
   background: transparent;
   border: 2px solid #ddd;
   color: #888;
   padding: 1.2rem 2.5rem;
-  border-radius: 18px;
-  font-weight: 800;
+  border-radius: 20px;
+  font-weight: 700;
   text-transform: uppercase;
   transition: 0.3s;
 }
-.btn-gala-outline:hover {
-  border-color: var(--mr-azul);
-  color: var(--mr-azul);
+
+.btn-cancel:hover {
+  border-color: var(--mr-dark);
+  color: var(--mr-dark);
 }
 
 /* ANIMACIONES */
-@keyframes bgScroll {
+@keyframes dotsMove {
   from {
     background-position:
       0 0,
-      35px 35px;
+      40px 40px;
   }
   to {
     background-position:
       1000px 1000px,
-      1035px 1035px;
+      1040px 1040px;
   }
 }
-@keyframes slideUp {
+
+@keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -256,14 +213,14 @@
 }
 
 @media (max-width: 768px) {
-  .workflow-visual {
-    flex-direction: column;
+  .gala-actions {
+    flex-direction: column-reverse;
   }
-  .form-actions {
-    flex-direction: column;
-  }
-  .btn-gala-primary,
-  .btn-gala-outline {
+  .btn-submit,
+  .btn-cancel {
     width: 100%;
+  }
+  .header-text h1 {
+    font-size: 1.6rem;
   }
 }

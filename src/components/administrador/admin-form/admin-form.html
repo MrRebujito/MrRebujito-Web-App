@@ -1,118 +1,159 @@
-<div class="container mt-4">
-  <div class="card shadow-none">
-    <div class="card-header">
-      <h3>{{ id == null ? 'Registro de Administrador' : 'Editar Administrador' }}</h3>
-    </div>
+<div class="admin-gala-wrapper">
+  <div class="dots-background"></div>
 
-    <div class="card-body">
-      <form [formGroup]="formularioAdmin" (ngSubmit)="onSubmit()">
-        <div class="row">
-          <div class="col-md-4 mb-4">
-            <label class="form-label">Nombre *</label>
-            <input
-              type="text"
-              formControlName="nombre"
-              class="form-control"
-              [class.is-invalid]="esInvalido('nombre')"
-            />
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <label class="form-label">Primer Apellido *</label>
-            <input
-              type="text"
-              formControlName="primerApellido"
-              class="form-control"
-              [class.is-invalid]="esInvalido('primerApellido')"
-            />
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <label class="form-label">Segundo Apellido</label>
-            <input type="text" formControlName="segundoApellido" class="form-control" />
-          </div>
+  <div class="container py-5">
+    <div class="master-card-gala">
+      <header class="gala-header">
+        <div class="header-main-icon">
+          <i class="bi bi-shield-lock text-white" style="font-size: 4rem"></i>
         </div>
+        <div class="header-text">
+          <h1>
+            {{ id == null ? 'Registro de' : 'Editar' }}
+            <span class="highlight">Administrador</span>
+          </h1>
+        </div>
+        <div class="header-gold-bar"></div>
+      </header>
 
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <label class="form-label">Correo Electrónico *</label>
-            <input
-              type="email"
-              formControlName="correo"
-              class="form-control"
-              [class.is-invalid]="esInvalido('correo')"
-            />
-            <div class="invalid-feedback">Debe introducir un email válido.</div>
+      <div class="p-4 p-md-5">
+        <form [formGroup]="formularioAdmin" (ngSubmit)="onSubmit()">
+          <div class="gala-info-card">
+            <div class="block-title">
+              <i class="bi bi-person-badge fs-3 text-primary"></i>
+              <h4>Datos de Identidad</h4>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="gala-input-group mb-4">
+                  <label>Nombre *</label>
+                  <input
+                    type="text"
+                    formControlName="nombre"
+                    [class.is-invalid]="esInvalido('nombre')"
+                    placeholder="Ej. Juan"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="gala-input-group mb-4">
+                  <label>Primer Apellido *</label>
+                  <input
+                    type="text"
+                    formControlName="primerApellido"
+                    [class.is-invalid]="esInvalido('primerApellido')"
+                    placeholder="Ej. García"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="gala-input-group mb-4">
+                  <label>Segundo Apellido</label>
+                  <input type="text" formControlName="segundoApellido" placeholder="Ej. Pérez" />
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="col-md-6 mb-4">
-            <label class="form-label">Teléfono *</label>
-            <input
-              type="text"
-              formControlName="telefono"
-              class="form-control"
-              [class.is-invalid]="esInvalido('telefono')"
-              placeholder="9 dígitos"
-            />
-            <div class="invalid-feedback">Formato de teléfono no válido.</div>
+          <div class="gala-info-card">
+            <div class="block-title">
+              <i class="bi bi-geo-alt fs-3 text-primary"></i>
+              <h4>Contacto y Ubicación</h4>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="gala-input-group mb-4">
+                  <label>Correo Electrónico *</label>
+                  <input
+                    type="email"
+                    formControlName="correo"
+                    [class.is-invalid]="esInvalido('correo')"
+                    placeholder="admin@ejemplo.com"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="gala-input-group mb-4">
+                  <label>Teléfono *</label>
+                  <input
+                    type="text"
+                    formControlName="telefono"
+                    [class.is-invalid]="esInvalido('telefono')"
+                    placeholder="9 dígitos"
+                  />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="gala-input-group mb-4">
+                  <label>Dirección Postal (Opcional)</label>
+                  <input
+                    type="text"
+                    formControlName="direccion"
+                    placeholder="Calle, número, ciudad..."
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-12 mb-4">
-            <label class="form-label">URL de la Foto</label>
-            <input
-              type="text"
-              formControlName="foto"
-              class="form-control"
-              [class.is-invalid]="esInvalido('foto')"
-              placeholder="https://ejemplo.com/mi-foto.jpg"
-            />
-            <div class="invalid-feedback">Debe ser una URL válida.</div>
+          <div class="gala-info-card special-card">
+            <div class="block-title">
+              <i class="bi bi-key fs-3 text-success"></i>
+              <h4>Credenciales y Perfil</h4>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="gala-input-group mb-4">
+                  <label>URL de la Imagen de Perfil</label>
+                  <input
+                    type="text"
+                    formControlName="foto"
+                    [class.is-invalid]="esInvalido('foto')"
+                    placeholder="https://tu-servidor.com/foto.jpg"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="gala-input-group mb-4">
+                  <label>Nombre de Usuario *</label>
+                  <input
+                    type="text"
+                    formControlName="username"
+                    [class.is-invalid]="esInvalido('username')"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="id == null">
+                <div class="gala-input-group mb-4">
+                  <label>Contraseña Maestra *</label>
+                  <input
+                    type="password"
+                    formControlName="password"
+                    [class.is-invalid]="esInvalido('password')"
+                    placeholder="Mínimo 6 caracteres"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <label class="form-label">Nombre de Usuario *</label>
-            <input
-              type="text"
-              formControlName="username"
-              class="form-control"
-              [class.is-invalid]="esInvalido('username')"
-            />
+          <div class="gala-actions">
+            <button
+              type="button"
+              class="btn-cancel"
+              (click)="router.navigate(['/administradores'])"
+            >
+              Volver al listado
+            </button>
+            <button type="submit" class="btn-submit" [disabled]="formularioAdmin.invalid">
+              {{ id == null ? 'Registrar Admin' : 'Guardar Cambios' }}
+            </button>
           </div>
-
-          <div class="col-md-6 mb-4" *ngIf="id == null">
-            <label class="form-label">Contraseña *</label>
-            <input
-              type="password"
-              formControlName="password"
-              class="form-control"
-              [class.is-invalid]="esInvalido('password')"
-            />
-            <div class="invalid-feedback">Mínimo 6 caracteres.</div>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <label class="form-label">Dirección (Opcional)</label>
-          <input type="text" formControlName="direccion" class="form-control" />
-        </div>
-
-        <div class="text-end mt-5">
-          <button
-            type="button"
-            class="btn btn-secondary me-3"
-            (click)="router.navigate(['/administradores'])"
-          >
-            Cancelar
-          </button>
-          <button type="submit" class="btn btn-success" [disabled]="formularioAdmin.invalid">
-            {{ id == null ? 'Registrar Administrador' : 'Guardar Cambios' }}
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>
