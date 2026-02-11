@@ -23,6 +23,7 @@ import { Forbidden } from '../components/forbidden/forbidden';
 import { TableSolicitudLicencia } from '../components/solicitud-licencia/table-solicitud-licencia/table-solicitud-licencia';
 import { Terms } from '../components/docs/terms/terms';
 import { HelpCenter } from '../components/docs/help-center/help-center';
+import { NotFound } from '../components/not-found/not-found';
 
 export const routes: Routes = [
 
@@ -155,8 +156,12 @@ export const routes: Routes = [
     path: 'terms',
     component: Terms
   },
-    {
+  {
     path: 'help-center',
     component: HelpCenter
+  },
+  {
+    path: '**',
+    component: NotFound
   }
 ];

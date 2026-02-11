@@ -1,0 +1,54 @@
+/* =========================================
+   ESTILOS TARJETA FORBIDDEN (403)
+   ========================================= */
+.forbidden-card {
+  border-radius: 28px !important;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.forbidden-title {
+  font-size: 6rem;
+  color: #e63946;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+.forbidden-subtitle {
+  font-family: 'Merriweather', serif;
+  color: #3b6b76;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.forbidden-icon {
+  width: 150px;
+  height: auto;
+  opacity: 0.9;
+  transition: transform 0.3s ease;
+}
+
+.forbidden-icon:hover {
+  transform: rotate(10deg) scale(1.05);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #e38b64 0%, #d27a53 100%) !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 25px;
+  padding: 0.8rem 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.2);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(227, 139, 100, 0.3);
+}
