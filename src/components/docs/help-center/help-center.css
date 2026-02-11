@@ -1,0 +1,352 @@
+/* =========================================
+   HELP CENTER - GALA PREMIERE CSS
+   ========================================= */
+
+:host {
+  --primary: #e38b64;
+  --accent: #3b6b76;
+  --dark: #1a3238;
+  --bg: #f2ebd9;
+  --glass: rgba(255, 255, 255, 0.96);
+  display: block;
+}
+
+.help-center-section {
+  min-height: 100vh;
+  padding: 4rem 1.5rem;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle, var(--primary) 10%, transparent 11%),
+    radial-gradient(circle, rgba(155, 191, 156, 0.4) 10%, transparent 11%);
+  background-size: 70px 70px;
+  background-position:
+    0 0,
+    35px 35px;
+  animation: bgScroll 120s linear infinite;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* DECORACIONES */
+.decor-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.15;
+  z-index: 1;
+}
+.blob-primary {
+  width: 500px;
+  height: 500px;
+  background: var(--primary);
+  top: -100px;
+  left: -100px;
+}
+.blob-accent {
+  width: 400px;
+  height: 400px;
+  background: var(--accent);
+  bottom: -100px;
+  right: -50px;
+}
+
+.help-container {
+  max-width: 1050px;
+  width: 100%;
+  z-index: 10;
+}
+
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 50px;
+  padding: 4rem 3.5rem;
+  border: 1px solid white;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
+}
+
+/* HEADER */
+.help-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.badge-gala {
+  background: rgba(59, 107, 118, 0.1);
+  color: var(--accent);
+  padding: 0.6rem 1.6rem;
+  border-radius: 50px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+}
+.main-title {
+  font-family: 'Merriweather', serif;
+  font-size: 3.2rem;
+  color: var(--accent);
+  margin: 1.5rem 0;
+}
+.highlight {
+  color: var(--primary);
+}
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* TABS */
+.help-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 3.5rem;
+}
+
+.help-tabs button {
+  padding: 1.1rem 2rem;
+  border-radius: 20px;
+  border: none;
+  background: white;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.help-tabs button.active {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(227, 139, 100, 0.3);
+}
+
+/* GUIA CONTENT */
+.tab-pane {
+  animation: fadeIn 0.5s ease both;
+}
+.text-block {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+.text-block h3 {
+  font-family: 'Merriweather', serif;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.workflow-visual {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 3rem;
+  border-radius: 40px;
+  text-align: center;
+}
+.flow-item {
+  flex: 1;
+}
+.flow-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+.flow-item h5 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+.flow-item p {
+  font-size: 0.9rem;
+  color: #777;
+}
+.flow-sep {
+  width: 40px;
+  height: 2px;
+  background: var(--primary);
+  opacity: 0.3;
+}
+
+/* ROLES */
+.roles-detailed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.role-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.role-info {
+  background: white;
+  padding: 2rem;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+.role-tag {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.role-tag.admin {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.role-tag.ayto {
+  background: #dcfce7;
+  color: #166534;
+}
+.role-tag.titular {
+  background: #fef9c3;
+  color: #854d0e;
+}
+.role-tag.socio {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+/* FAQ ACCORDION */
+.faq-accordion {
+  max-width: 850px;
+  margin: 0 auto;
+}
+.faq-card {
+  background: white;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+.faq-head {
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--accent);
+}
+.faq-head:hover {
+  background: #fafafa;
+}
+.faq-body {
+  padding: 0 2.5rem;
+  max-height: 0;
+  transition: 0.4s ease;
+  background: #fdfdfd;
+  opacity: 0;
+}
+.faq-card.open .faq-body {
+  padding: 1.5rem 2.5rem;
+  max-height: 300px;
+  opacity: 1;
+  border-top: 1px solid #f2ebd9;
+}
+.faq-card.open .faq-head {
+  color: var(--primary);
+}
+
+/* FOOTER */
+.help-footer {
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+.footer-ies {
+  margin-bottom: 2.5rem;
+}
+.mini-logo {
+  width: 100px;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+.ies-loc {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+.btn-primary-gala {
+  background: linear-gradient(135deg, var(--accent), var(--dark));
+  color: white;
+  border: none;
+  padding: 1.2rem 3.5rem;
+  border-radius: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-primary-gala:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ANIMACIONES */
+@keyframes bgScroll {
+  from {
+    background-position:
+      0 0,
+      35px 35px;
+  }
+  to {
+    background-position:
+      1000px 1000px,
+      1035px 1035px;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .help-tabs {
+    flex-direction: column;
+  }
+  .workflow-visual {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .flow-sep {
+    width: 2px;
+    height: 30px;
+  }
+  .role-row {
+    grid-template-columns: 1fr;
+  }
+  .glass-card {
+    padding: 2.5rem 1.5rem;
+  }
+  .main-title {
+    font-size: 2.4rem;
+  }
+}

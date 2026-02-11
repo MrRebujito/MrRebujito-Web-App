@@ -20,6 +20,8 @@ import { CasetaTable } from '../components/caseta/caseta-table/caseta-table';
 import { CasetaDetail } from '../components/caseta/caseta-detail/caseta-detail';
 import { CasetaForm } from '../components/caseta/caseta-form/caseta-form';
 import { CasetaSocios } from '../components/caseta/caseta-socios/caseta-socios';
+import { Terms } from '../components/docs/terms/terms';
+import { HelpCenter } from '../components/docs/help-center/help-center';
 
 export const routes: Routes = [
 
@@ -140,5 +142,16 @@ export const routes: Routes = [
     path: 'solicitudes/:id',
     component: DetailSolicitudLicencia,
     canActivate: [AuthGuard]
+  },
+
+
+  // Documentación
+  {
+    path: 'terms',
+    component: Terms
+  },
+    {
+    path: 'help-center',
+    component: HelpCenter
   }
 ];
