@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { TableSolicitudLicencia } from '../components/solicitud-licencia/table-solicitud-licencia/table-solicitud-licencia';
 import { TableAyuntamiento } from '../components/ayuntamiento/table-ayuntamiento/table-ayuntamiento';
 import { DetailAyuntamiento } from '../components/ayuntamiento/detail-ayuntamiento/detail-ayuntamiento';
 import { SocioTable } from '../components/socio/socio-table/socio-table';
@@ -20,8 +19,13 @@ import { CasetaTable } from '../components/caseta/caseta-table/caseta-table';
 import { CasetaDetail } from '../components/caseta/caseta-detail/caseta-detail';
 import { CasetaForm } from '../components/caseta/caseta-form/caseta-form';
 import { CasetaSocios } from '../components/caseta/caseta-socios/caseta-socios';
+import { Forbidden } from '../components/forbidden/forbidden';
+import { TableSolicitudLicencia } from '../components/solicitud-licencia/table-solicitud-licencia/table-solicitud-licencia';
 
 export const routes: Routes = [
+
+  // RUTA DEL ERROR 403
+  { path: 'forbidden', component: Forbidden },
 
   // ==================== RUTAS PÚBLICAS ====================
   { path: '', component: HomeComponent },
@@ -133,7 +137,8 @@ export const routes: Routes = [
   {
     path: 'solicitudes',
     component: TableSolicitudLicencia,
-    canActivate: [AuthGuard]
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN', 'AYUNTAMIENTO', 'CASETA'] }
   },
   // Ver detalle de solicitud
   {

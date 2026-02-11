@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SolicitudLicenciaService } from '../../../service/solicitud-licencia-service';
 import { SolicitudLicencia } from '../../../model/solicitud-licencia';
 import { EstadoLicencia } from '../../../model/estado-licencia';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AyuntamientoService } from '../../../service/ayuntamiento-service';
 import { Ayuntamiento } from '../../../model/ayuntamiento';
 
@@ -19,6 +19,15 @@ declare var bootstrap: any;
   styleUrls: ['./table-solicitud-licencia.css'],
 })
 export class TableSolicitudLicencia implements OnInit {
+  
+  // ★ Inyectamos el Router para poder redirigir si hay error 403
+  private router = inject(Router);
+  
+  // Servicios inyectados
+  private solicitudService = inject(SolicitudLicenciaService);
+  private ayuntamientoService = inject(AyuntamientoService);
+  private cdr = inject(ChangeDetectorRef);
+
   solicitudes: SolicitudLicencia[] = [];
   solicitudesFiltradas: SolicitudLicencia[] = [];
 
@@ -28,34 +37,27 @@ export class TableSolicitudLicencia implements OnInit {
   ayuntamientos: Ayuntamiento[] = [];
   nuevoAyuntamientoId: string = '';
 
-  // Variables para validación
   formSubmitted = false;
   formErrors: { [key: string]: string } = {};
 
-  cdr = inject(ChangeDetectorRef);
-
-  constructor(
-    private solicitudService: SolicitudLicenciaService,
-    private ayuntamientoService: AyuntamientoService
-  ) { }
-
   ngOnInit(): void {
-    setTimeout(() => {
-      this.cargarAyuntamientos();
-      this.cargarSolicitudes();
-    });
+    // Carga inicial de datos
+    this.cargarAyuntamientos();
+    this.cargarSolicitudes();
   }
 
+  // ★ CORREGIDO: Método extraído para poder reutilizarlo
   cargarSolicitudes(): void {
     this.solicitudService.getAllSolicitudLicencia().subscribe({
-      next: (data: SolicitudLicencia[]) => {
+      next: (data) => {
+        // Si todo va bien, cargamos los datos
         this.solicitudes = data;
-        this.solicitudesFiltradas = [...data];
-        this.cdr.detectChanges();
+        // Aplicamos filtros por si había alguno seleccionado
+        this.aplicarFiltros();
       },
-      error: (error) => {
-        console.error('Error al cargar solicitudes:', error);
-        this.showErrorAlert('Error al cargar las solicitudes');
+      error: (err) => {
+        console.error('Error cargando solicitudes:', err);
+        this.router.navigate(['/forbidden']);
       }
     });
   }
@@ -67,7 +69,6 @@ export class TableSolicitudLicencia implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar ayuntamientos:', error);
-        this.showErrorAlert('Error al cargar los ayuntamientos');
       }
     });
   }
@@ -82,7 +83,6 @@ export class TableSolicitudLicencia implements OnInit {
     }
 
     const ayuntamientoId = Number(this.nuevoAyuntamientoId);
-
     console.log('Creando solicitud para ayuntamiento ID:', ayuntamientoId);
 
     // Usar el método que envía solo el ID
@@ -90,29 +90,31 @@ export class TableSolicitudLicencia implements OnInit {
       next: (respuesta: any) => {
         console.log('✅ Solicitud creada, respuesta:', respuesta);
 
-        // Buscar el ayuntamiento completo en nuestra lista local
+        // Buscar el ayuntamiento completo en nuestra lista local para mostrarlo sin recargar todo
         const ayuntamientoCompleto = this.ayuntamientos.find(a => a.id === ayuntamientoId);
 
         if (!ayuntamientoCompleto) {
           console.warn('Ayuntamiento no encontrado localmente, recargando lista completa...');
-          this.cargarSolicitudes(); // Recargar todo
+          // ★ CORREGIDO: Llamada limpia al método sin errores de sintaxis
+          this.cargarSolicitudes(); 
           this.cerrarModal();
           this.showSuccessAlert('Solicitud creada correctamente (recargando lista...)');
           return;
         }
 
-        // Crear objeto completo para mostrar
+        // Crear objeto completo para mostrar en la tabla inmediatamente (Optimistic UI)
         const nuevaSolicitudFrontend: SolicitudLicencia = {
           id: respuesta.id || 0,
-          estadoLicencia: respuesta.estadoLicencia || EstadoLicencia.PENDIENTE,
-          ayuntamiento: ayuntamientoCompleto
+          estadoLicencia: respuesta.estado || EstadoLicencia.PENDIENTE, // Aseguramos que mapee bien el campo 'estado' o 'estadoLicencia' según tu backend
+          ayuntamiento: ayuntamientoCompleto,
         };
 
         console.log('Añadiendo a lista local:', nuevaSolicitudFrontend);
 
         // Añadir al principio de la lista
         this.solicitudes.unshift(nuevaSolicitudFrontend);
-        this.solicitudesFiltradas = [...this.solicitudes];
+        // Actualizar la lista filtrada
+        this.aplicarFiltros();
 
         // Forzar actualización de la vista
         this.cdr.detectChanges();
@@ -125,13 +127,12 @@ export class TableSolicitudLicencia implements OnInit {
         console.error('❌ Error creando solicitud:', error);
 
         let mensajeError = 'Error al crear la solicitud';
+        
         if (error.status === 403) {
-          mensajeError = 'No tienes permisos (403 Forbidden). Debes estar logueado como ADMIN.';
+          mensajeError = 'No tienes permisos para crear solicitudes. Debes ser ADMIN o CASETA.';
         } else if (error.status === 400) {
-          mensajeError = 'Error en los datos enviados (400 Bad Request): ' + (error.error?.message || error.error);
-        } else if (error.error) {
-          mensajeError = `Error: ${error.error.message || error.error}`;
-        }
+          mensajeError = 'Error en los datos (400): ' + (error.error?.message || 'Datos inválidos');
+        } 
 
         this.showErrorAlert(mensajeError);
       }
@@ -152,16 +153,6 @@ export class TableSolicitudLicencia implements OnInit {
       isValid = false;
     }
 
-    // Validar que el ayuntamiento exista en la lista local (opcional)
-    if (this.nuevoAyuntamientoId && !isNaN(Number(this.nuevoAyuntamientoId))) {
-      const id = Number(this.nuevoAyuntamientoId);
-      const ayuntamientoExists = this.ayuntamientos.some(a => a.id === id);
-      if (!ayuntamientoExists) {
-        this.formErrors['ayuntamiento'] = 'El ayuntamiento seleccionado no es válido';
-        isValid = false;
-      }
-    }
-
     return isValid;
   }
 
@@ -174,22 +165,21 @@ export class TableSolicitudLicencia implements OnInit {
 
   // Método para limpiar errores cuando el usuario cambia la selección
   onAyuntamientoChange(): void {
-    // Solo limpiar errores si ya se había intentado enviar
     if (this.formSubmitted) {
-      // Si el usuario selecciona algo, limpiamos el error específico
       if (this.nuevoAyuntamientoId && this.nuevoAyuntamientoId !== '') {
         delete this.formErrors['ayuntamiento'];
-
-        // Si no hay más errores, podríamos resetear formSubmitted
-        // pero mejor lo dejamos así para no perder el estado de "enviado"
       }
     }
   }
 
   aplicarFiltros(): void {
     this.solicitudesFiltradas = this.solicitudes.filter(solicitud => {
-      const cumpleEstado = !this.filtroEstado || solicitud.estadoLicencia === this.filtroEstado;
+      // Ajusta 'estado' o 'estadoLicencia' según tu modelo exacto
+      const estadoReal = solicitud.estadoLicencia || solicitud.estadoLicencia; 
+      
+      const cumpleEstado = !this.filtroEstado || estadoReal === this.filtroEstado;
       const cumpleAyuntamiento = !this.filtroAyuntamiento || solicitud.ayuntamiento?.nombre === this.filtroAyuntamiento;
+      
       return cumpleEstado && cumpleAyuntamiento;
     });
   }
@@ -200,33 +190,29 @@ export class TableSolicitudLicencia implements OnInit {
     this.solicitudesFiltradas = [...this.solicitudes];
   }
 
-  getBadgeClass(estado: EstadoLicencia): string {
-    switch (estado) {
-      case EstadoLicencia.PENDIENTE: return 'badge bg-warning text-dark';
-      case EstadoLicencia.APROBADA: return 'badge bg-success text-white';
-      case EstadoLicencia.RECHAZADA: return 'badge bg-danger text-white';
-      default: return 'badge bg-secondary text-white';
-    }
+  getBadgeClass(estado: EstadoLicencia | string): string {
+    // Convertimos a string por seguridad
+    const estadoStr = estado.toString();
+    
+    if (estadoStr === 'PENDIENTE') return 'badge bg-warning text-dark';
+    if (estadoStr === 'ACEPTADA' || estadoStr === 'APROBADA') return 'badge bg-success text-white';
+    if (estadoStr === 'RECHAZADA') return 'badge bg-danger text-white';
+    
+    return 'badge bg-secondary text-white';
   }
 
   getNombreAyuntamiento(solicitud: SolicitudLicencia): string {
     return solicitud.ayuntamiento?.nombre || 'N/A';
   }
 
-  // Verificar si el formulario es válido para habilitar/deshabilitar botón
   isFormValid(): boolean {
     if (this.formSubmitted) {
-      // !! convierte a booleano explícitamente
       const hasAyuntamientoError = !!this.formErrors['ayuntamiento'];
-
-      return !hasAyuntamientoError &&
-        !!this.nuevoAyuntamientoId &&
-        this.nuevoAyuntamientoId !== '';
+      return !hasAyuntamientoError && !!this.nuevoAyuntamientoId;
     }
     return true;
   }
 
-  // Métodos para mostrar alertas
   showSuccessAlert(message: string): void {
     alert(message);
   }
@@ -249,7 +235,7 @@ export class TableSolicitudLicencia implements OnInit {
   }
 
   abrirModal(): void {
-    this.resetForm(); // Resetear formulario al abrir
+    this.resetForm(); 
     const modalElement = document.getElementById('nuevaSolicitudModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);

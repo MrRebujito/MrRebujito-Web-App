@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
     if (requiredRoles) {
       const userRole = sessionStorage.getItem('rol');
       if (!userRole || !requiredRoles.includes(userRole)) {
-        this.router.navigate(['/unauthorized']);
+        this.router.navigate(['/forbidden']);
         return false;
       }
     }

@@ -31,7 +31,7 @@
             <img src="assets-webp/noria.webp" class="nav-icon-webp" /> Inicio
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isLoggedIn() && !isSocio()">
           <a class="nav-link" routerLink="/solicitudes" routerLinkActive="active">
             <img src="assets-webp/solicitud-naranja.webp" class="nav-icon-webp" /> Licencias
           </a>
