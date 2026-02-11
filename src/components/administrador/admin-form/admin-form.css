@@ -1,203 +1,269 @@
-/* =========================================
-   MR. REBUJITO - ADMIN FORM (PURE ELEGANCE)
-   ========================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
-
 :host {
-  --mr-primary: #e38b64;
-  --mr-secondary: #9bbf9c;
-  --mr-accent: #3b6b76;
-  --mr-bg-light: #f2ebd9;
-
+  --mr-teja: #e38b64;
+  --mr-verde: #9bbf9c;
+  --mr-azul: #3b6b76;
+  --mr-azul-dark: #1a3238;
   display: block;
-  min-height: 100vh;
-  padding: 2rem 1rem 5rem;
-  position: relative;
+}
 
-  /* FONDO DE LUNARES ANIMADOS */
-  background-color: var(--mr-bg-light);
+.admin-form-section {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: #f2ebd9;
+  /* CORRECCIÓN LUNARES: Dos capas con posiciones alternas */
   background-image:
-    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
-    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
-    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
-  background-size:
-    cover,
-    80px 80px,
-    80px 80px;
+    radial-gradient(circle, var(--mr-teja) 10%, transparent 11%),
+    radial-gradient(circle, rgba(155, 191, 156, 0.4) 10%, transparent 11%);
+  background-size: 70px 70px;
   background-position:
     0 0,
-    0 0,
-    40px 40px;
-  animation: backgroundScroll 100s linear infinite;
+    35px 35px;
+  animation: bgScroll 120s linear infinite;
 }
 
-/* =========================================
-   CONTENEDOR
-   ========================================= */
-.container {
-  max-width: 950px;
-  background: #ffffff;
-  border-radius: 40px;
-  padding: 0;
-  box-shadow: 0 30px 60px -12px rgba(59, 107, 118, 0.25);
-  overflow: hidden;
+/* DECORACIONES */
+.decor-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.1;
+  z-index: 1;
+}
+.blob-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--mr-teja);
+  top: -100px;
+  left: -100px;
+}
+.blob-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--mr-azul);
+  bottom: -100px;
+  right: -50px;
+}
+
+/* CARD GALA */
+.gala-card {
   border: none;
-  animation: entranceUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-.card {
-  border: none !important;
-  background: transparent !important;
-}
-
-/* =========================================
-   CABECERA INTEGRAL
-   ========================================= */
-.card-header {
-  background: linear-gradient(135deg, var(--mr-accent) 0%, #1f3a40 100%) !important;
-  padding: 3rem !important;
+  border-radius: 40px !important;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: 10;
   position: relative;
-  border: none !important;
-  display: flex;
-  justify-content: center;
-  border-radius: 0 !important;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15) !important;
 }
 
-.card-header h3 {
+.card-header-gala {
+  background: linear-gradient(135deg, var(--mr-azul-dark), var(--mr-azul));
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.header-asset {
+  height: 70px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+}
+.card-header-gala h3 {
   font-family: 'Merriweather', serif;
-  font-weight: 900;
   color: white;
+  font-weight: 900;
+}
+.text-teja {
+  color: var(--mr-teja);
+}
+.header-divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--mr-teja);
+}
+
+/* SELECTOR DE ROLES (GRID) */
+.role-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.role-option {
+  cursor: pointer;
+}
+.role-option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.role-card-inner {
+  background: white;
+  border: 2px solid #eee;
+  border-radius: 20px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.role-card-inner img {
+  height: 40px;
+}
+.role-card-inner span {
+  font-weight: 800;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  color: var(--mr-azul);
+}
+
+.role-option:hover .role-card-inner {
+  transform: translateY(-5px);
+  border-color: var(--mr-teja);
+}
+.role-option.selected .role-card-inner {
+  border-color: var(--mr-teja);
+  background: rgba(227, 139, 100, 0.05);
+  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.1);
+}
+
+/* BLOQUES DE FORMULARIO (MÁS ESPACIO) */
+.form-block {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 30px;
+  margin-bottom: 2.5rem; /* Más espacio entre bloques */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: slideUp 0.5s ease both;
+}
+
+.bg-soft {
+  background: rgba(59, 107, 118, 0.03);
+  border: 1px dashed var(--mr-azul);
+}
+
+.block-header {
   display: flex;
   align-items: center;
-  gap: 20px;
-  z-index: 2;
+  gap: 15px;
+  margin-bottom: 2rem;
+}
+.block-icon {
+  height: 35px;
+}
+.block-header h4 {
+  font-family: 'Merriweather', serif;
+  font-weight: 800;
   margin: 0;
+  color: var(--mr-azul-dark);
+  font-size: 1.1rem;
 }
 
-/* ICONO DE ESCUDO/ADMIN */
-.card-header h3::before {
-  content: '';
-  width: 60px;
-  height: 60px;
-  background: url('/assets-webp/solicitud_licencia.webp') no-repeat center;
-  background-size: contain;
-  filter: brightness(0) invert(1);
-  animation: floatLogo 4s ease-in-out infinite;
-}
-
-/* =========================================
-   CUERPO Y FORMULARIO
-   ========================================= */
-.card-body {
-  padding: 3rem 4rem 4rem;
-}
-
+/* INPUTS */
 .form-label {
   font-weight: 700;
-  color: var(--mr-accent);
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
-  font-family: 'Roboto', sans-serif;
+  color: #555;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+.form-control-gala {
+  border: 2px solid #eee;
+  border-radius: 15px;
+  padding: 0.8rem 1.2rem;
+  transition: 0.3s;
+}
+.form-control-gala:focus {
+  border-color: var(--mr-teja);
+  box-shadow: 0 0 0 4px rgba(227, 139, 100, 0.1);
+  outline: none;
 }
 
-.form-control {
-  border: 2px solid #f0f2f4 !important;
-  border-radius: 15px !important;
-  padding: 0.8rem 1.2rem !important;
-  transition: all 0.3s ease !important;
-  background-color: #fbfbfb !important;
-}
-
-.form-control:focus {
-  background-color: #ffffff !important;
-  border-color: var(--mr-primary) !important;
-  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.1) !important;
-  transform: translateY(-2px);
-}
-
-/* Manejo de errores */
-.is-invalid {
-  border-color: #e74c3c !important;
-  background-color: #fffafa !important;
-}
-
-.invalid-feedback {
+/* CSS PARA LA FECHA */
+.date-input {
+  cursor: pointer;
+  color: var(--mr-azul-dark);
   font-weight: 600;
-  margin-left: 0.5rem;
+}
+.date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: sepia(100%) saturate(1000%) hue-rotate(340deg); /* Color teja para el icono del calendario */
 }
 
-/* =========================================
-   BOTONES
-   ========================================= */
-.btn {
-  border-radius: 25px !important;
-  padding: 0.8rem 2.5rem !important;
-  font-weight: 800 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  transition: all 0.3s ease !important;
+/* ACCIONES */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  border-top: 1px solid #eee;
 }
-
-.btn-success {
-  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
-  border: none !important;
-  color: white !important;
-  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.2) !important;
+.btn-gala-primary {
+  background: var(--mr-teja);
+  color: white;
+  border: none;
+  padding: 1.2rem 3rem;
+  border-radius: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: 0.3s;
 }
-
-.btn-success:hover:not(:disabled) {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 15px 30px rgba(227, 139, 100, 0.3) !important;
+.btn-gala-primary:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.2);
 }
-
-.btn-secondary {
-  background-color: transparent !important;
-  border: 2px solid var(--mr-accent) !important;
-  color: var(--mr-accent) !important;
+.btn-gala-outline {
+  background: transparent;
+  border: 2px solid #ddd;
+  color: #888;
+  padding: 1.2rem 2.5rem;
+  border-radius: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: 0.3s;
 }
-
-.btn-secondary:hover {
-  background-color: var(--mr-accent) !important;
-  color: white !important;
+.btn-gala-outline:hover {
+  border-color: var(--mr-azul);
+  color: var(--mr-azul);
 }
 
 /* ANIMACIONES */
-@keyframes backgroundScroll {
-  0% {
+@keyframes bgScroll {
+  from {
     background-position:
       0 0,
-      0 0,
-      40px 40px;
+      35px 35px;
   }
-  100% {
+  to {
     background-position:
-      0 1000px,
-      0 1000px,
-      40px 1040px;
+      1000px 1000px,
+      1035px 1035px;
   }
 }
-
-@keyframes floatLogo {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes entranceUp {
+@keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .workflow-visual {
+    flex-direction: column;
+  }
+  .form-actions {
+    flex-direction: column;
+  }
+  .btn-gala-primary,
+  .btn-gala-outline {
+    width: 100%;
   }
 }

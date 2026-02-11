@@ -165,52 +165,97 @@
 }
 
 /* =========================================
-   BOTÓN ACCESO GALA - EDICIÓN "GUAPA"
+   BOTÓN ACCESO "CRISTAL DE GALA" - V3
    ========================================= */
-.btn-gala-acceso {
-  background: linear-gradient(135deg, var(--mr-teja) 0%, #d27a53 100%);
-  color: #fff !important;
-  font-weight: 800;
-  padding: 0.6rem 2rem;
-  border-radius: 30px; /* Forma de píldora, mucho más estética */
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
+.btn-gala-white {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px; /* Espacio perfecto entre icono y texto */
+  justify-content: center;
+  padding: 0.6rem 1.8rem;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 15px; /* Esquina moderna, no tan redonda */
+  transition: all 0.4s ease;
 
-  /* Sombra con el color del botón para que parezca que brilla */
-  box-shadow: 0 4px 15px rgba(227, 139, 100, 0.4);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Fondo estilo cristal sutil */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 
-.btn-gala-acceso i {
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  /* TEXTO BLANCO COMO EL RESTO DEL NAVBAR */
+  color: #ffffff !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+}
+
+.btn-content i {
   font-size: 1.1rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
 }
 
-/* Efecto al pasar el ratón: se hace grande y brilla más */
-.btn-gala-acceso:hover {
-  background: #fff;
-  color: var(--mr-teja) !important;
-  transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 8px 25px rgba(227, 139, 100, 0.6);
+/* El "Aura" de color que aparece al fondo */
+.btn-aura {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--mr-teja), #ff9a7b);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
 }
 
-/* Efecto cuando lo pulsas */
-.btn-gala-acceso:active {
-  transform: scale(0.95);
+/* --- ESTADO HOVER --- */
+.btn-gala-white:hover {
+  transform: translateY(-2px);
+  border-color: var(--mr-teja); /* El borde se ilumina en teja */
+  box-shadow: 0 10px 25px rgba(227, 139, 100, 0.3);
 }
 
+/* Al pasar el ratón, el aura aparece muy suavemente al fondo */
+.btn-gala-white:hover .btn-aura {
+  opacity: 0.15; /* Muy sutil para no comerse el blanco del texto */
+}
+
+.btn-gala-white:hover .btn-content i {
+  transform: translateX(3px) rotate(-5deg);
+}
+
+/* Brillo que cruza el botón */
+.btn-gala-white::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: skewX(-25deg);
+  transition: 0.5s;
+}
+
+.btn-gala-white:hover::after {
+  left: 150%;
+}
+
+/* Responsive */
 @media (max-width: 991px) {
-  .gala-menu-links .nav-item {
-    margin: 10px 0;
-  }
-  .user-gala-area {
+  .btn-gala-white {
+    width: 100%;
     margin-top: 15px;
-    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
   }
+}
+.btn-create-user:hover {
+  color: var(--mr-verde) !important; /* Resalta en verde al ser una acción positiva */
+  transform: scale(1.3) rotate(10deg) !important;
 }

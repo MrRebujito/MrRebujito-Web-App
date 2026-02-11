@@ -1,0 +1,184 @@
+/* =========================================
+   MR. REBUJITO - CASETA SOCIOS (REFEINED)
+   ========================================= */
+
+:host {
+  --mr-primary: #e38b64;
+  --mr-accent: #3b6b76;
+  --mr-blue-dark: #1a3238;
+  --mr-bg-light: #f2ebd9;
+  --glass: rgba(255, 255, 255, 0.94);
+
+  display: block;
+  min-height: 100vh;
+  padding: 2rem 0;
+
+  /* --- LUNARES DETRÁS --- */
+  background-color: var(--mr-bg-light);
+  background-image:
+    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
+    radial-gradient(circle, rgba(155, 191, 156, 0.4) 10%, transparent 11%);
+  background-size: 70px 70px;
+  background-position:
+    0 0,
+    35px 35px;
+  animation: backgroundScroll 120s linear infinite;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.card.shadow {
+  border: none;
+  border-radius: 40px !important; /* Esquinas mucho más suaves */
+  overflow: hidden; /* Evita que el contenido se salga de las esquinas */
+  background: var(--glass);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 25px 50px rgba(26, 50, 56, 0.15) !important;
+}
+
+/* --- CABECERA (ESQUINAS CORREGIDAS) --- */
+.card-header.bg-primary {
+  background: linear-gradient(135deg, var(--mr-accent) 0%, var(--mr-blue-dark) 100%) !important;
+  border-bottom: 4px solid var(--mr-primary);
+  padding: 2rem;
+  border-radius: 0 !important; /* El overflow del padre ya lo corta */
+}
+
+.card-header h3 {
+  font-family: 'Merriweather', serif;
+  font-weight: 900;
+  color: white;
+  margin: 0;
+  font-size: 1.6rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- MEJORA DEL TEXTO --- */
+.card-body {
+  padding: 2.5rem;
+  color: var(--mr-blue-dark);
+}
+
+.card-body h5 {
+  font-family: 'Merriweather', serif;
+  font-weight: 800;
+  color: var(--mr-accent);
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: 700;
+  color: var(--mr-accent);
+  margin-bottom: 0.5rem;
+}
+
+/* --- ALERTA DE AFORO (ESTILO PREMIUM) --- */
+.alert {
+  border-radius: 20px;
+  border: none;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* --- TABLA DE SOCIOS --- */
+.table-responsive {
+  border-radius: 25px;
+  background: white;
+  padding: 10px;
+}
+
+.table {
+  margin: 0;
+}
+
+.table thead th {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: #888;
+  background: transparent;
+  border-bottom: 2px solid var(--mr-bg-light);
+  padding: 1.2rem 1rem;
+}
+
+.table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(227, 139, 100, 0.05);
+}
+
+.table td {
+  padding: 1.2rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* --- FOTO DEL SOCIO --- */
+.rounded-circle {
+  border: 3px solid var(--mr-primary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- BOTONES --- */
+.btn-success {
+  background: var(--mr-primary);
+  border: none;
+  border-radius: 15px;
+  padding: 0.8rem 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #d27a53;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.3);
+}
+
+.btn-outline-secondary {
+  border: 2px solid var(--mr-accent);
+  color: var(--mr-accent);
+  border-radius: 15px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.btn-outline-secondary:hover {
+  background: var(--mr-accent);
+  color: white;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes backgroundScroll {
+  from {
+    background-position:
+      0 0,
+      35px 35px;
+  }
+  to {
+    background-position:
+      1000px 1000px,
+      1035px 1035px;
+  }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 1.5rem;
+  }
+  .main-title {
+    font-size: 1.8rem;
+  }
+  .help-tabs {
+    gap: 5px;
+  }
+}

@@ -1,199 +1,273 @@
-/* =========================================
-   MR. REBUJITO - CREATE USER (ADMIN PANEL)
-   ========================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
-
 :host {
-  --mr-primary: #e38b64;
-  --mr-secondary: #9bbf9c;
-  --mr-accent: #3b6b76;
-  --mr-bg-light: #f2ebd9;
-
+  --mr-teja: #e38b64;
+  --mr-verde: #9bbf9c;
+  --mr-azul: #3b6b76;
+  --mr-dark: #1a3238;
   display: block;
-  min-height: 100vh;
-  padding: 2rem 1rem 5rem;
-  position: relative;
+}
 
-  background-color: var(--mr-bg-light);
+.admin-gala-wrapper {
+  min-height: 100vh;
+  position: relative;
+  background-color: #f2ebd9;
+  padding-bottom: 5rem;
+  overflow-x: hidden;
+}
+
+/* --- FIX DE LUNARES: DOS COLORES SIN PISARSE --- */
+.dots-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image:
-    linear-gradient(rgba(242, 235, 217, 0.6), rgba(242, 235, 217, 0.6)),
-    radial-gradient(circle, var(--mr-primary) 10%, transparent 11%),
-    radial-gradient(circle, rgba(155, 191, 156, 0.5) 10%, transparent 11%);
-  background-size:
-    cover,
-    80px 80px,
-    80px 80px;
+    radial-gradient(circle, var(--mr-teja) 12%, transparent 13%),
+    radial-gradient(circle, var(--mr-verde) 12%, transparent 13%);
+  background-size: 80px 80px;
   background-position:
     0 0,
-    0 0,
-    40px 40px;
-  animation: backgroundScroll 100s linear infinite;
+    40px 40px; /* Offset de 40px para que el verde esté en el centro de los naranjas */
+  opacity: 0.5;
+  animation: dotsMove 120s linear infinite;
+  z-index: 1;
 }
 
-.container {
-  max-width: 950px;
-  background: #ffffff;
-  border-radius: 40px;
-  padding: 0;
-  box-shadow: 0 30px 60px -12px rgba(59, 107, 118, 0.25);
-  overflow: hidden;
-  border: none;
-  animation: entranceUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-.card {
-  border: none !important;
-  background: transparent !important;
-}
-
-.card-header {
-  background: linear-gradient(135deg, var(--mr-accent) 0%, #1f3a40 100%) !important;
-  padding: 3rem !important;
+/* --- MASTER CARD (CRISTAL) --- */
+.master-card-gala {
   position: relative;
-  border: none !important;
-  display: flex;
-  justify-content: center;
-  border-radius: 0 !important;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  border-radius: 45px;
+  border: 1px solid white;
+  box-shadow: 0 30px 80px rgba(26, 50, 56, 0.12);
+  overflow: hidden;
 }
 
-.card-header h3 {
+/* --- HEADER --- */
+.gala-header {
+  background: linear-gradient(135deg, var(--mr-dark), var(--mr-azul));
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.header-main-icon {
+  height: 80px;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+  margin-bottom: 1rem;
+}
+
+.header-text h1 {
   font-family: 'Merriweather', serif;
-  font-weight: 900;
   color: white;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  z-index: 2;
+  font-weight: 900;
+  font-size: 2.2rem;
   margin: 0;
 }
 
-.header-icon {
-  width: 60px;
-  height: 60px;
-  background: url('/assets-webp/entrada.webp') no-repeat center;
-  background-size: contain;
-  filter: brightness(0) invert(1);
-  animation: floatLogo 4s ease-in-out infinite;
+.highlight {
+  color: var(--mr-teja);
+}
+.header-gold-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: var(--mr-teja);
 }
 
-.card-body {
-  padding: 3rem 4rem 4rem;
+/* --- SELECTOR DE ROLES --- */
+.role-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 
-.seccion-form {
-  animation: fadeIn 0.5s ease-out forwards;
+.role-card {
+  cursor: pointer;
+}
+.role-card input {
+  position: absolute;
+  opacity: 0;
 }
 
-.form-label {
-  font-weight: 700;
-  color: var(--mr-accent);
-  text-transform: uppercase;
+.role-card-inner {
+  background: white;
+  border: 2px solid #eee;
+  border-radius: 25px;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.role-card-inner img {
+  height: 45px;
+  transition: 0.3s;
+}
+.role-card-inner span {
+  font-weight: 800;
+  color: var(--mr-azul);
   font-size: 0.8rem;
-  margin-bottom: 0.5rem;
-  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
 }
 
-.form-control {
-  border: 2px solid #f0f2f4 !important;
-  border-radius: 15px !important;
-  padding: 0.8rem 1.2rem !important;
-  transition: all 0.3s ease !important;
-  background-color: #fbfbfb !important;
+/* >>> EFECTO HOVER (Añadido) <<< */
+.role-card:hover .role-card-inner {
+  transform: translateY(-5px);
+  border-color: var(--mr-teja);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
-.form-control:focus {
-  background-color: #ffffff !important;
-  border-color: var(--mr-primary) !important;
-  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.1) !important;
-  transform: translateY(-2px);
+.role-card:hover img {
+  transform: scale(1.1) rotate(3deg);
 }
 
-.form-check-input:checked {
-  background-color: var(--mr-primary) !important;
-  border-color: var(--mr-primary) !important;
+/* ESTADO SELECCIONADO (Active) */
+.role-card.active .role-card-inner {
+  border-color: var(--mr-teja);
+  background: rgba(227, 139, 100, 0.05);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(227, 139, 100, 0.15);
 }
 
-.is-invalid {
-  border-color: #e74c3c !important;
-  background-color: #fffafa !important;
+.role-card.active img {
+  transform: scale(1.15);
 }
 
-.invalid-feedback {
+/* --- BLOQUES DE INFORMACIÓN (MÁS ESPACIO) --- */
+.gala-info-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 35px;
+  margin-bottom: 3rem; /* AIRE ENTRE TARJETAS */
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  animation: slideIn 0.5s ease both;
+}
+
+.special-card {
+  background: rgba(155, 191, 156, 0.05);
+  border: 2px dashed var(--mr-verde);
+}
+
+.block-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.block-title img {
+  height: 35px;
+}
+.block-title h4 {
+  font-family: 'Merriweather', serif;
+  font-weight: 800;
+  color: var(--mr-dark);
+  margin: 0;
+}
+
+/* --- INPUTS --- */
+.gala-input-group label {
+  display: block;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  padding-left: 5px;
+}
+
+.gala-input-group input {
+  width: 100%;
+  padding: 1rem 1.4rem;
+  border-radius: 18px;
+  border: 2px solid #eee;
+  transition: 0.3s;
+}
+
+.gala-input-group input:focus {
+  outline: none;
+  border-color: var(--mr-teja);
+  box-shadow: 0 8px 20px rgba(227, 139, 100, 0.1);
+}
+
+/* --- ESTILO CALENDARIO (DATE PICKER) --- */
+.gala-datepicker {
+  cursor: pointer;
   font-weight: 600;
-  margin-left: 0.5rem;
+  color: var(--mr-dark);
 }
 
-.btn {
-  border-radius: 25px !important;
-  padding: 0.8rem 2.5rem !important;
-  font-weight: 800 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  transition: all 0.3s ease !important;
+.gala-datepicker::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e38b64' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+  width: 22px;
+  height: 22px;
 }
 
-.btn-success {
-  background: linear-gradient(135deg, var(--mr-primary) 0%, #d27a53 100%) !important;
-  border: none !important;
-  color: white !important;
-  box-shadow: 0 10px 20px rgba(227, 139, 100, 0.2) !important;
+/* --- ACCIONES --- */
+.gala-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-.btn-success:hover:not(:disabled) {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 15px 30px rgba(227, 139, 100, 0.3) !important;
+.btn-submit {
+  background: var(--mr-teja);
+  color: white;
+  border: none;
+  padding: 1.2rem 3.5rem;
+  border-radius: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: 0.4s;
+  box-shadow: 0 10px 25px rgba(227, 139, 100, 0.3);
 }
 
-.btn-secondary {
-  background-color: transparent !important;
-  border: 2px solid var(--mr-accent) !important;
-  color: var(--mr-accent) !important;
+.btn-submit:hover:not(:disabled) {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 15px 35px rgba(227, 139, 100, 0.4);
 }
 
-.btn-secondary:hover {
-  background-color: var(--mr-accent) !important;
-  color: white !important;
+.btn-cancel {
+  background: transparent;
+  border: 2px solid #ddd;
+  color: #888;
+  padding: 1.2rem 2.5rem;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.3s;
 }
 
-.alert {
-  border-radius: 15px !important;
-  border: none !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
-  animation: toastIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  padding: 1.2rem 2rem !important;
+.btn-cancel:hover {
+  border-color: var(--mr-dark);
+  color: var(--mr-dark);
 }
 
-.alert-success {
-  background: linear-gradient(135deg, #9bbf9c, #7fa07f) !important;
-  color: white !important;
-}
-
-.alert-danger {
-  background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
-  color: white !important;
-}
-
-@keyframes backgroundScroll {
-  0% {
-    background-position: 0 0, 0 0, 40px 40px;
+/* ANIMACIONES */
+@keyframes dotsMove {
+  from {
+    background-position:
+      0 0,
+      40px 40px;
   }
-  100% {
-    background-position: 0 1000px, 0 1000px, 40px 1040px;
+  to {
+    background-position:
+      1000px 1000px,
+      1040px 1040px;
   }
 }
-
-@keyframes floatLogo {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes entranceUp {
+@keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -201,32 +275,12 @@
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+@media (max-width: 768px) {
+  .gala-actions {
+    flex-direction: column-reverse;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .btn-submit,
+  .btn-cancel {
+    width: 100%;
   }
-}
-
-@keyframes toastIn {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.text-primary {
-  color: var(--mr-primary) !important;
-}
-
-.border-bottom {
-  border-bottom: 3px solid rgba(227, 139, 100, 0.1) !important;
 }
