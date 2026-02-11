@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SolicitudLicenciaService } from '../../../service/solicitud-licencia-service';
 import { SolicitudLicencia } from '../../../model/solicitud-licencia';
 import { EstadoLicencia } from '../../../model/estado-licencia';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AyuntamientoService } from '../../../service/ayuntamiento-service';
 import { Ayuntamiento } from '../../../model/ayuntamiento';
 import { ActorService } from '../../../service/actor-service';
@@ -21,15 +21,6 @@ declare var bootstrap: any;
   styleUrls: ['./table-solicitud-licencia.css'],
 })
 export class TableSolicitudLicencia implements OnInit {
-  
-  // ★ Inyectamos el Router para poder redirigir si hay error 403
-  private router = inject(Router);
-  
-  // Servicios inyectados
-  private solicitudService = inject(SolicitudLicenciaService);
-  private ayuntamientoService = inject(AyuntamientoService);
-  private cdr = inject(ChangeDetectorRef);
-
   solicitudes: SolicitudLicencia[] = [];
   solicitudesFiltradas: SolicitudLicencia[] = [];
 
