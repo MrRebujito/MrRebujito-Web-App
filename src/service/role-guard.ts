@@ -1,3 +1,4 @@
+// src/service/role-guard.ts
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
@@ -15,13 +16,11 @@ export class RoleGuard implements CanActivate {
       return false;
     }
 
-    // Verificación de roles obligatoria
     const requiredRoles = route.data['roles'] as Array<string>;
     if (requiredRoles && requiredRoles.length > 0) {
       const userRole = sessionStorage.getItem('rol');
       if (!userRole || !requiredRoles.includes(userRole)) {
-        alert('No tienes permisos para acceder a esta sección.');
-        this.router.navigate(['/solicitudes']);
+        this.router.navigate(['/forbidden']); 
         return false;
       }
     }
