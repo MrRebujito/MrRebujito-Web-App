@@ -7,8 +7,10 @@ import { EstadoLicencia } from '../../../model/estado-licencia';
 import { RouterModule } from '@angular/router';
 import { AyuntamientoService } from '../../../service/ayuntamiento-service';
 import { Ayuntamiento } from '../../../model/ayuntamiento';
+import { ActorService } from '../../../service/actor-service';
+import { CasetaService } from '../../../service/caseta-service'; // ✅ IMPORTAR
+import { Caseta } from '../../../model/caseta'; // ✅ IMPORTAR
 
-// Declaración para Bootstrap
 declare var bootstrap: any;
 
 @Component({
@@ -23,127 +25,308 @@ export class TableSolicitudLicencia implements OnInit {
   solicitudesFiltradas: SolicitudLicencia[] = [];
 
   filtroEstado: EstadoLicencia | null = null;
-  filtroAyuntamiento: string = '';
 
   ayuntamientos: Ayuntamiento[] = [];
   nuevoAyuntamientoId: string = '';
 
-  // Variables para validación
   formSubmitted = false;
   formErrors: { [key: string]: string } = {};
+
+  // Variables de rol
+  rolUsuario: string = '';
+  idUsuario: number = 0; // ✅ AÑADIR idUsuario
+  esAdmin: boolean = false;
+  esAyuntamiento: boolean = false;
+  esCaseta: boolean = false;
+  esSocio: boolean = false;
+  
+  // ✅ Datos de caseta para rol CASETA
+  casetaActual: Caseta | null = null;
 
   cdr = inject(ChangeDetectorRef);
 
   constructor(
     private solicitudService: SolicitudLicenciaService,
-    private ayuntamientoService: AyuntamientoService
+    private ayuntamientoService: AyuntamientoService,
+    private authService: ActorService,
+    private casetaService: CasetaService // ✅ INYECTAR
   ) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.cargarAyuntamientos();
-      this.cargarSolicitudes();
+    this.obtenerUsuarioLogueado();
+  }
+
+  obtenerUsuarioLogueado(): void {
+    this.authService.actorLogin().subscribe({
+      next: (actor: any) => {
+        console.log('Usuario logueado:', actor);
+        this.rolUsuario = actor.rol;
+        this.idUsuario = actor.id; // ✅ GUARDAR ID
+        
+        this.esAdmin = this.rolUsuario === 'ADMIN';
+        this.esAyuntamiento = this.rolUsuario === 'AYUNTAMIENTO';
+        this.esCaseta = this.rolUsuario === 'CASETA';
+        this.esSocio = this.rolUsuario === 'SOCIO';
+        
+        this.cargarAyuntamientos();
+        
+        // ✅ SI ES CASETA, CARGAR CASETA COMPLETA
+        if (this.esCaseta) {
+          this.cargarCasetaCompleta();
+        } else {
+          this.cargarSolicitudes();
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener usuario logueado:', error);
+      }
+    });
+  }
+
+  // ✅ NUEVO: Cargar caseta completa con solicitudesLicencia
+  cargarCasetaCompleta(): void {
+    this.casetaService.getCaseta(this.idUsuario).subscribe({
+      next: (caseta: Caseta) => {
+        this.casetaActual = caseta;
+        console.log('Caseta cargada:', caseta);
+        console.log('Solicitudes de la caseta:', caseta.solicitudesLicencia);
+        
+        // Las solicitudes están dentro de caseta.solicitudesLicencia
+        this.solicitudes = caseta.solicitudesLicencia || [];
+        this.solicitudesFiltradas = [...this.solicitudes];
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error al cargar la caseta:', error);
+        // Fallback: intentar cargar por el método tradicional
+        this.cargarSolicitudes();
+      }
     });
   }
 
   cargarSolicitudes(): void {
-    this.solicitudService.getAllSolicitudLicencia().subscribe({
-      next: (data: SolicitudLicencia[]) => {
-        this.solicitudes = data;
-        this.solicitudesFiltradas = [...data];
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error al cargar solicitudes:', error);
-        this.showErrorAlert('Error al cargar las solicitudes');
-      }
-    });
+    if (this.esAyuntamiento) {
+      this.solicitudService.getSolicitudesDeMiAyuntamiento().subscribe({
+        next: (data: SolicitudLicencia[]) => {
+          this.solicitudes = data;
+          this.solicitudesFiltradas = [...data];
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Error al cargar solicitudes del ayuntamiento:', error);
+        }
+      });
+    } else if (this.esCaseta && !this.casetaActual) {
+      // Solo si no se pudo cargar la caseta completa
+      this.solicitudService.getAllSolicitudLicencia().subscribe({
+        next: (data: SolicitudLicencia[]) => {
+          // Filtrar solicitudes de esta caseta (si hay alguna forma de identificarlas)
+          this.solicitudes = data; // Temporal
+          this.solicitudesFiltradas = [...this.solicitudes];
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Error al cargar solicitudes:', error);
+        }
+      });
+    } else if (this.esAdmin) {
+      this.solicitudService.getAllSolicitudLicencia().subscribe({
+        next: (data: SolicitudLicencia[]) => {
+          this.solicitudes = data;
+          this.solicitudesFiltradas = [...data];
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Error al cargar solicitudes:', error);
+        }
+      });
+    }
   }
 
   cargarAyuntamientos(): void {
-    this.ayuntamientoService.getAyuntamientos().subscribe({
-      next: (data: Ayuntamiento[]) => {
-        this.ayuntamientos = data;
-      },
-      error: (error) => {
-        console.error('Error al cargar ayuntamientos:', error);
-        this.showErrorAlert('Error al cargar los ayuntamientos');
-      }
-    });
+    if (this.esAdmin || this.esCaseta) {
+      this.ayuntamientoService.getAyuntamientos().subscribe({
+        next: (data: Ayuntamiento[]) => {
+          this.ayuntamientos = data;
+        },
+        error: (error) => {
+          console.error('Error al cargar ayuntamientos:', error);
+        }
+      });
+    }
+  }
+
+  puedeCrearSolicitudes(): boolean {
+    return this.esAdmin || this.esCaseta;
+  }
+
+  puedeAceptarRechazar(): boolean {
+    return this.esAyuntamiento;
   }
 
   crearSolicitud(): void {
+    if (!this.puedeCrearSolicitudes()) {
+      this.showErrorAlert('No tienes permiso para crear solicitudes');
+      return;
+    }
+
     this.formSubmitted = true;
     this.formErrors = {};
 
-    // Validación del formulario
     if (!this.validarFormulario()) {
       return;
     }
 
     const ayuntamientoId = Number(this.nuevoAyuntamientoId);
 
-    console.log('Creando solicitud para ayuntamiento ID:', ayuntamientoId);
-
-    // Usar el método que envía solo el ID
-    this.solicitudService.saveSolicitudConAyuntamientoId(ayuntamientoId).subscribe({
-      next: (respuesta: any) => {
-        console.log('✅ Solicitud creada, respuesta:', respuesta);
-
-        // Buscar el ayuntamiento completo en nuestra lista local
-        const ayuntamientoCompleto = this.ayuntamientos.find(a => a.id === ayuntamientoId);
-
-        if (!ayuntamientoCompleto) {
-          console.warn('Ayuntamiento no encontrado localmente, recargando lista completa...');
-          this.cargarSolicitudes(); // Recargar todo
-          this.cerrarModal();
-          this.showSuccessAlert('Solicitud creada correctamente (recargando lista...)');
-          return;
+    this.solicitudService.crearSolicitudCaseta(ayuntamientoId).subscribe({
+      next: () => {
+        this.showSuccessAlert('✅ Solicitud creada correctamente');
+        
+        // ✅ SI ES CASETA, RECARGAR CASETA COMPLETA
+        if (this.esCaseta) {
+          this.cargarCasetaCompleta();
+        } else {
+          this.cargarSolicitudes();
         }
-
-        // Crear objeto completo para mostrar
-        const nuevaSolicitudFrontend: SolicitudLicencia = {
-          id: respuesta.id || 0,
-          estadoLicencia: respuesta.estadoLicencia || EstadoLicencia.PENDIENTE,
-          ayuntamiento: ayuntamientoCompleto
-        };
-
-        console.log('Añadiendo a lista local:', nuevaSolicitudFrontend);
-
-        // Añadir al principio de la lista
-        this.solicitudes.unshift(nuevaSolicitudFrontend);
-        this.solicitudesFiltradas = [...this.solicitudes];
-
-        // Forzar actualización de la vista
-        this.cdr.detectChanges();
-
+        
         this.cerrarModal();
         this.resetForm();
-        this.showSuccessAlert('✅ Solicitud creada correctamente');
       },
       error: (error: any) => {
         console.error('❌ Error creando solicitud:', error);
-
         let mensajeError = 'Error al crear la solicitud';
+        
         if (error.status === 403) {
-          mensajeError = 'No tienes permisos (403 Forbidden). Debes estar logueado como ADMIN.';
+          mensajeError = 'No tienes permisos para crear solicitudes.';
         } else if (error.status === 400) {
-          mensajeError = 'Error en los datos enviados (400 Bad Request): ' + (error.error?.message || error.error);
-        } else if (error.error) {
-          mensajeError = `Error: ${error.error.message || error.error}`;
+          if (error.error?.includes('pendiente') || error.error?.includes('activa')) {
+            mensajeError = '❌ Ya tienes una solicitud pendiente o licencia activa con este ayuntamiento.';
+          } else {
+            mensajeError = 'Error en los datos enviados';
+          }
         }
-
         this.showErrorAlert(mensajeError);
       }
     });
   }
 
-  // Método de validación
+  aceptarSolicitud(id: number): void {
+    if (confirm('¿Estás seguro de ACEPTAR esta solicitud?')) {
+      this.solicitudService.aceptarSolicitud(id).subscribe({
+        next: () => {
+          this.showSuccessAlert('✅ Solicitud aceptada');
+          this.cargarSolicitudes();
+        },
+        error: (error) => {
+          console.error('❌ Error al aceptar solicitud:', error);
+          this.showErrorAlert('Error al aceptar la solicitud');
+        }
+      });
+    }
+  }
+
+  rechazarSolicitud(id: number): void {
+    if (confirm('¿Estás seguro de RECHAZAR esta solicitud?')) {
+      this.solicitudService.rechazarSolicitud(id).subscribe({
+        next: () => {
+          this.showSuccessAlert('✅ Solicitud rechazada');
+          this.cargarSolicitudes();
+        },
+        error: (error) => {
+          console.error('❌ Error al rechazar solicitud:', error);
+          this.showErrorAlert('Error al rechazar la solicitud');
+        }
+      });
+    }
+  }
+
+  eliminarSolicitud(id: number): void {
+    if (!this.esCaseta) {
+      this.showErrorAlert('Solo las casetas pueden eliminar solicitudes');
+      return;
+    }
+
+    if (confirm('¿Estás seguro de eliminar esta solicitud pendiente?')) {
+      this.solicitudService.deleteSolicitudLicencia(id).subscribe({
+        next: () => {
+          this.showSuccessAlert('✅ Solicitud eliminada');
+          
+          // ✅ SI ES CASETA, RECARGAR CASETA COMPLETA
+          if (this.esCaseta) {
+            this.cargarCasetaCompleta();
+          } else {
+            this.cargarSolicitudes();
+          }
+        },
+        error: (error) => {
+          console.error('❌ Error al eliminar solicitud:', error);
+          this.showErrorAlert('Error al eliminar la solicitud');
+        }
+      });
+    }
+  }
+
+  // ✅ CORREGIDO: getMensajeVacio para CASETA
+  getMensajeVacio(): string {
+    if (this.solicitudes.length === 0) {
+      if (this.esAdmin) return 'No hay solicitudes en el sistema';
+      if (this.esAyuntamiento) return 'No tienes solicitudes pendientes';
+      if (this.esCaseta) return 'No has creado ninguna solicitud. ¡Crea una!';
+    }
+    return 'No hay solicitudes que coincidan con los filtros';
+  }
+
+  // ✅ CORREGIDO: getMensajeInformativo
+  getMensajeInformativo(): string {
+    if (this.esAdmin) return '👑 Administrador: Puedes ver y gestionar todas las solicitudes.';
+    if (this.esAyuntamiento) return '🏛️ Ayuntamiento: Gestiona las solicitudes recibidas. Puedes ACEPTAR o RECHAZAR.';
+    if (this.esCaseta) return '🏠 Caseta: Crea nuevas solicitudes y elimina las pendientes.';
+    if (this.esSocio) return '👤 Socio: No tienes acceso a solicitudes.';
+    return '';
+  }
+
+  // ✅ El resto de métodos se quedan IGUAL
+  getAlertClass(): string {
+    if (this.esAdmin) return 'alert-primary';
+    if (this.esAyuntamiento) return 'alert-info';
+    if (this.esCaseta) return 'alert-success';
+    return 'alert-warning';
+  }
+
+  getAlertIcon(): string {
+    if (this.esAdmin) return 'bi-shield-shaded';
+    if (this.esAyuntamiento) return 'bi-building';
+    if (this.esCaseta) return 'bi-house';
+    return 'bi-person';
+  }
+
+  getRolBadgeClass(): string {
+    if (this.esAdmin) return 'badge bg-danger';
+    if (this.esAyuntamiento) return 'badge bg-info';
+    if (this.esCaseta) return 'badge bg-success';
+    return 'badge bg-secondary';
+  }
+
+  getRolIcon(): string {
+    if (this.esAdmin) return 'bi-shield-lock';
+    if (this.esAyuntamiento) return 'bi-building';
+    if (this.esCaseta) return 'bi-house-door';
+    return 'bi-person';
+  }
+
+  getRolNombre(): string {
+    if (this.esAdmin) return 'ADMIN';
+    if (this.esAyuntamiento) return 'AYUNTAMIENTO';
+    if (this.esCaseta) return 'CASETA';
+    if (this.esSocio) return 'SOCIO';
+    return this.rolUsuario || 'INVITADO';
+  }
+
   validarFormulario(): boolean {
     let isValid = true;
     this.formErrors = {};
 
-    // Validar ayuntamiento (obligatorio)
     if (!this.nuevoAyuntamientoId || this.nuevoAyuntamientoId === '') {
       this.formErrors['ayuntamiento'] = 'El ayuntamiento es obligatorio';
       isValid = false;
@@ -152,7 +335,6 @@ export class TableSolicitudLicencia implements OnInit {
       isValid = false;
     }
 
-    // Validar que el ayuntamiento exista en la lista local (opcional)
     if (this.nuevoAyuntamientoId && !isNaN(Number(this.nuevoAyuntamientoId))) {
       const id = Number(this.nuevoAyuntamientoId);
       const ayuntamientoExists = this.ayuntamientos.some(a => a.id === id);
@@ -165,47 +347,35 @@ export class TableSolicitudLicencia implements OnInit {
     return isValid;
   }
 
-  // Resetear formulario
   resetForm(): void {
     this.nuevoAyuntamientoId = '';
     this.formSubmitted = false;
     this.formErrors = {};
   }
 
-  // Método para limpiar errores cuando el usuario cambia la selección
   onAyuntamientoChange(): void {
-    // Solo limpiar errores si ya se había intentado enviar
-    if (this.formSubmitted) {
-      // Si el usuario selecciona algo, limpiamos el error específico
-      if (this.nuevoAyuntamientoId && this.nuevoAyuntamientoId !== '') {
-        delete this.formErrors['ayuntamiento'];
-
-        // Si no hay más errores, podríamos resetear formSubmitted
-        // pero mejor lo dejamos así para no perder el estado de "enviado"
-      }
+    if (this.formSubmitted && this.nuevoAyuntamientoId && this.nuevoAyuntamientoId !== '') {
+      delete this.formErrors['ayuntamiento'];
     }
   }
 
   aplicarFiltros(): void {
     this.solicitudesFiltradas = this.solicitudes.filter(solicitud => {
-      const cumpleEstado = !this.filtroEstado || solicitud.estadoLicencia === this.filtroEstado;
-      const cumpleAyuntamiento = !this.filtroAyuntamiento || solicitud.ayuntamiento?.nombre === this.filtroAyuntamiento;
-      return cumpleEstado && cumpleAyuntamiento;
+      return !this.filtroEstado || solicitud.estadoLicencia === this.filtroEstado;
     });
   }
 
   limpiarFiltros(): void {
     this.filtroEstado = null;
-    this.filtroAyuntamiento = '';
     this.solicitudesFiltradas = [...this.solicitudes];
   }
 
   getBadgeClass(estado: EstadoLicencia): string {
     switch (estado) {
       case EstadoLicencia.PENDIENTE: return 'badge bg-warning text-dark';
-      case EstadoLicencia.APROBADA: return 'badge bg-success text-white';
-      case EstadoLicencia.RECHAZADA: return 'badge bg-danger text-white';
-      default: return 'badge bg-secondary text-white';
+      case EstadoLicencia.APROBADA: return 'badge bg-success';
+      case EstadoLicencia.RECHAZADA: return 'badge bg-danger';
+      default: return 'badge bg-secondary';
     }
   }
 
@@ -213,47 +383,32 @@ export class TableSolicitudLicencia implements OnInit {
     return solicitud.ayuntamiento?.nombre || 'N/A';
   }
 
-  // Verificar si el formulario es válido para habilitar/deshabilitar botón
   isFormValid(): boolean {
     if (this.formSubmitted) {
-      // !! convierte a booleano explícitamente
-      const hasAyuntamientoError = !!this.formErrors['ayuntamiento'];
-
-      return !hasAyuntamientoError &&
-        !!this.nuevoAyuntamientoId &&
-        this.nuevoAyuntamientoId !== '';
+      return !this.formErrors['ayuntamiento'] && 
+             !!this.nuevoAyuntamientoId && 
+             this.nuevoAyuntamientoId !== '';
     }
     return true;
   }
 
-  // Métodos para mostrar alertas
-  showSuccessAlert(message: string): void {
-    alert(message);
-  }
-
-  showErrorAlert(message: string): void {
-    alert(message);
-  }
+  showSuccessAlert(message: string): void { alert(message); }
+  showErrorAlert(message: string): void { alert(message); }
 
   cerrarModal(): void {
     const modalElement = document.getElementById('nuevaSolicitudModal');
     if (modalElement) {
       const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) {
-        modal.hide();
-      } else {
-        const bsModal = new bootstrap.Modal(modalElement);
-        bsModal.hide();
-      }
+      if (modal) modal.hide();
+      else new bootstrap.Modal(modalElement).hide();
     }
   }
 
   abrirModal(): void {
-    this.resetForm(); // Resetear formulario al abrir
-    const modalElement = document.getElementById('nuevaSolicitudModal');
-    if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
+    if (this.puedeCrearSolicitudes()) {
+      this.resetForm();
+      const modalElement = document.getElementById('nuevaSolicitudModal');
+      if (modalElement) new bootstrap.Modal(modalElement).show();
     }
   }
 }
