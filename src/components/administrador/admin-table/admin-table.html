@@ -1,11 +1,6 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="titulo-seccion">Gestión de Administradores</h2>
-
-    <button class="btn btn-primary-mr" [routerLink]="['/administradores/nuevo']">
-      <i class="bi bi-shield-plus" style="font-size: 1.2rem"></i>
-      <span>Nuevo Admin</span>
-    </button>
   </div>
 
   <div class="table-responsive shadow-sm">
@@ -17,7 +12,6 @@
           <th scope="col">Contacto</th>
           <th scope="col">Usuario</th>
           <th scope="col" class="text-center">Estado</th>
-          <th scope="col" class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -40,37 +34,9 @@
               {{ a.baneado ? 'Baneado' : 'Activo' }}
             </span>
           </td>
-          <td class="text-center">
-            <div class="btn-group">
-              <button
-                class="btn btn-sm btn-edit"
-                [routerLink]="['/administradores/editar', a.id]"
-                title="Editar"
-              >
-                <i class="bi bi-pencil"></i>
-              </button>
-
-              <button
-                class="btn btn-sm"
-                [ngClass]="a.baneado ? 'btn-unban' : 'btn-ban'"
-                (click)="toggleBaneo(a)"
-                [title]="a.baneado ? 'Desbanear' : 'Banear'"
-              >
-                <i class="bi" [ngClass]="a.baneado ? 'bi-unlock' : 'bi-lock'"></i>
-              </button>
-
-              <button
-                class="btn btn-sm btn-delete-outline"
-                (click)="eliminarAdministrador(a.id)"
-                title="Eliminar"
-              >
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-          </td>
         </tr>
         <tr *ngIf="administradores.length === 0">
-          <td colspan="6" class="text-center py-5 text-muted">
+          <td colspan="5" class="text-center py-5 text-muted">
             <i class="bi bi-shield-exclamation display-4 d-block mb-3 opacity-25"></i>
             <p class="fst-italic">No hay administradores registrados en el sistema.</p>
           </td>

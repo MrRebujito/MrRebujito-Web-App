@@ -82,6 +82,9 @@
             >
             <div class="user-separator"></div>
             <div class="user-actions">
+              <button class="btn-user-icon" (click)="goToCreation()" title="Crear usuarios" *ngIf="isAdmin()">
+                <i class="bi bi-person-circle"></i>
+              </button>
               <button class="btn-user-icon" (click)="goToProfile()" title="Mi Perfil">
                 <i class="bi bi-person-circle"></i>
               </button>

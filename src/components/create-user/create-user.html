@@ -1,0 +1,321 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3>
+        <span class="header-icon"></span>
+        Crear Nuevo Usuario
+      </h3>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        
+        <!-- SELECTOR DE TIPO DE USUARIO -->
+        <div class="row mb-5">
+          <div class="col-md-12">
+            <label class="form-label fw-bold fs-6">Tipo de Usuario *</label>
+            <div class="d-flex gap-4 flex-wrap">
+              <div class="form-check form-check-inline">
+                <input 
+                  class="form-check-input" 
+                  type="radio" 
+                  id="tipoAdmin" 
+                  formControlName="tipo" 
+                  value="ADMIN"
+                  (change)="onTipoChange()">
+                <label class="form-check-label fw-medium" for="tipoAdmin">
+                  <i class="bi bi-shield-lock me-1"></i> Administrador
+                </label>
+              </div>
+              
+              <div class="form-check form-check-inline">
+                <input 
+                  class="form-check-input" 
+                  type="radio" 
+                  id="tipoAyuntamiento" 
+                  formControlName="tipo" 
+                  value="AYUNTAMIENTO"
+                  (change)="onTipoChange()">
+                <label class="form-check-label fw-medium" for="tipoAyuntamiento">
+                  <i class="bi bi-building me-1"></i> Ayuntamiento
+                </label>
+              </div>
+              
+              <div class="form-check form-check-inline">
+                <input 
+                  class="form-check-input" 
+                  type="radio" 
+                  id="tipoCaseta" 
+                  formControlName="tipo" 
+                  value="CASETA"
+                  (change)="onTipoChange()">
+                <label class="form-check-label fw-medium" for="tipoCaseta">
+                  <i class="bi bi-house-door me-1"></i> Caseta
+                </label>
+              </div>
+              
+              <div class="form-check form-check-inline">
+                <input 
+                  class="form-check-input" 
+                  type="radio" 
+                  id="tipoSocio" 
+                  formControlName="tipo" 
+                  value="SOCIO"
+                  (change)="onTipoChange()">
+                <label class="form-check-label fw-medium" for="tipoSocio">
+                  <i class="bi bi-person me-1"></i> Socio
+                </label>
+              </div>
+            </div>
+            <div 
+              *ngIf="submitted && userForm.get('tipo')?.invalid" 
+              class="text-danger mt-2 small fw-bold">
+              <i class="bi bi-exclamation-circle"></i> Debes seleccionar un tipo de usuario
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== SECCIÓN 1: DATOS BÁSICOS (TODOS) ========== -->
+        <div *ngIf="tipoSeleccionado" class="seccion-form">
+          <h5 class="mb-3 text-primary border-bottom pb-2">
+            <i class="bi bi-person-badge me-2"></i> Datos Básicos
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nombre *</label>
+              <input 
+                type="text" 
+                formControlName="nombre" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('nombre')"
+                placeholder="Nombre">
+              <div class="invalid-feedback">El nombre es obligatorio.</div>
+            </div>
+
+            <div *ngIf="mostrarApellidos()" class="col-md-6 mb-3">
+              <label class="form-label">Primer Apellido *</label>
+              <input 
+                type="text" 
+                formControlName="primerApellido" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('primerApellido')"
+                placeholder="Primer apellido">
+              <div class="invalid-feedback">El primer apellido es obligatorio.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div *ngIf="mostrarApellidos()" class="col-md-6 mb-3">
+              <label class="form-label">Segundo Apellido</label>
+              <input 
+                type="text" 
+                formControlName="segundoApellido" 
+                class="form-control"
+                placeholder="Segundo apellido (opcional)">
+            </div>
+
+            <div *ngIf="!mostrarApellidos()" class="col-md-6 mb-3">
+              <!-- Espacio vacío para mantener alineación -->
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Correo Electrónico *</label>
+              <input 
+                type="email" 
+                formControlName="correo" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('correo')"
+                placeholder="ejemplo@correo.com">
+              <div class="invalid-feedback">Debe introducir un email válido.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Teléfono</label>
+              <input 
+                type="text" 
+                formControlName="telefono" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('telefono')"
+                placeholder="612345678">
+              <div class="invalid-feedback">Debe empezar por 6-9 y tener 9 dígitos.</div>
+              <small class="text-muted">Opcional</small>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Dirección</label>
+              <input 
+                type="text" 
+                formControlName="direccion" 
+                class="form-control"
+                placeholder="Calle, número, ciudad...">
+              <small class="text-muted">Opcional</small>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <label class="form-label">URL de Fotografía</label>
+              <input 
+                type="text" 
+                formControlName="foto" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('foto')"
+                placeholder="https://ejemplo.com/imagen.jpg">
+              <div class="invalid-feedback">Debe ser una URL válida (http/https).</div>
+              <small class="text-muted">Opcional. Se permiten enlaces externos.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== SECCIÓN 2: CREDENCIALES (TODOS) ========== -->
+        <div *ngIf="tipoSeleccionado" class="seccion-form mt-4">
+          <h5 class="mb-3 text-primary border-bottom pb-2">
+            <i class="bi bi-key me-2"></i> Credenciales de Acceso
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nombre de Usuario *</label>
+              <input 
+                type="text" 
+                formControlName="username" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('username')"
+                placeholder="usuario_ejemplo">
+              <div class="invalid-feedback">El nombre de usuario es obligatorio.</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Contraseña *</label>
+              <input 
+                type="password" 
+                formControlName="password" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('password')"
+                placeholder="••••••">
+              <div class="invalid-feedback">Mínimo 6 caracteres.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== SECCIÓN 3: CAMPOS ESPECÍFICOS POR TIPO ========== -->
+
+        <!-- AYUNTAMIENTO: licenciaMax -->
+        <div *ngIf="tipoSeleccionado === 'AYUNTAMIENTO'" class="seccion-form mt-4">
+          <h5 class="mb-3 text-primary border-bottom pb-2">
+            <i class="bi bi-building me-2"></i> Configuración de Ayuntamiento
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Límite de Licencias *</label>
+              <input 
+                type="number" 
+                formControlName="licenciaMax" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('licenciaMax')"
+                placeholder="Ej: 50"
+                min="1">
+              <div class="invalid-feedback">Debe ser al menos 1.</div>
+              <small class="text-muted">Número máximo de licencias que puede otorgar</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASETA: campos específicos -->
+        <div *ngIf="tipoSeleccionado === 'CASETA'" class="seccion-form mt-4">
+          <h5 class="mb-3 text-primary border-bottom pb-2">
+            <i class="bi bi-house-door me-2"></i> Configuración de Caseta
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Razón Social *</label>
+              <input 
+                type="text" 
+                formControlName="razonS" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('razonS')"
+                placeholder="Asociación Cultural...">
+              <div class="invalid-feedback">La razón social es obligatoria.</div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+              <label class="form-label">Aforo *</label>
+              <input 
+                type="number" 
+                formControlName="aforo" 
+                class="form-control" 
+                [class.is-invalid]="isInvalid('aforo')"
+                placeholder="Ej: 100"
+                min="1">
+              <div class="invalid-feedback">Debe ser mayor a 0.</div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+              <label class="form-label">Tipo</label>
+              <div class="form-check form-switch mt-2">
+                <input 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  formControlName="publica" 
+                  id="publicaSwitch">
+                <label class="form-check-label" for="publicaSwitch">
+                  {{ userForm.get('publica')?.value ? 'Pública' : 'Privada' }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOCIO: fechaAlta (opcional) -->
+        <div *ngIf="tipoSeleccionado === 'SOCIO'" class="seccion-form mt-4">
+          <h5 class="mb-3 text-primary border-bottom pb-2">
+            <i class="bi bi-person me-2"></i> Datos de Socio
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Fecha de Alta</label>
+              <input 
+                type="date" 
+                formControlName="fechaAlta" 
+                class="form-control">
+              <small class="text-muted">Opcional. Si no se especifica, se usará la fecha actual.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== BOTONES ========== -->
+        <div class="text-end mt-5 pt-3 border-top">
+          <button 
+            type="button" 
+            class="btn btn-secondary me-3" 
+            routerLink="/administradores">
+            <i class="bi bi-x-circle me-1"></i> Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="btn btn-success" 
+            [disabled]="userForm.invalid && submitted">
+            <i class="bi bi-check-circle me-1"></i>
+            Crear Usuario
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Mensaje de error/éxito -->
+<div *ngIf="successMessage" class="alert alert-success position-fixed top-0 end-0 m-4" style="z-index: 9999;">
+  <i class="bi bi-check-circle-fill me-2"></i> {{ successMessage }}
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger position-fixed top-0 end-0 m-4" style="z-index: 9999;">
+  <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ errorMessage }}
+</div>

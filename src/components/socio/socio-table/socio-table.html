@@ -1,11 +1,6 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><span>Tabla de Socios</span></h2>
-
-    <button class="btn btn-success" [routerLink]="['/socios/nuevo']" title="Registrar Nuevo Socio">
-      <span style="font-size: 1.8rem; line-height: 0; margin-bottom: 4px">+</span>
-      <img src="/assets-webp/socio.webp" alt="Icono Socio" style="height: 30px; width: auto" />
-    </button>
   </div>
 
   <div class="table-responsive">
@@ -40,14 +35,6 @@
                 title="Ver detalles"
               >
                 <i class="bi bi-eye text-white"></i>
-              </button>
-
-              <button
-                class="btn btn-warning btn-sm"
-                [routerLink]="['/socios/editar', s.id]"
-                title="Editar socio"
-              >
-                <i class="bi bi-pencil text-white"></i>
               </button>
             </div>
           </td>
