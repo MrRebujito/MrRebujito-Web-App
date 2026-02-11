@@ -1,9 +1,14 @@
 <div class="container mt-4">
-  <!-- Encabezado con botón -->
+  <!-- Encabezado con botón - visible solo para ADMIN y CASETA -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Solicitudes de Licencia</h2>
 
-    <button class="btn btn-primary" (click)="abrirModal()" title="Crear Nueva Solicitud">
+    <!-- Botón visible solo para ADMIN y CASETA -->
+    <button 
+      *ngIf="puedeCrearSolicitudes()" 
+      class="btn btn-primary" 
+      (click)="abrirModal()" 
+      title="Crear Nueva Solicitud">
       <span style="font-size: 1.8rem; line-height: 0; margin-bottom: 4px">+</span>
       <img
         src="/assets-webp/solicitud_licencia.webp"
@@ -13,25 +18,15 @@
     </button>
   </div>
 
-  <!-- Filtros -->
+  <!-- Filtros - SOLO por estado -->
   <div class="row mb-3">
     <div class="col-md-4">
-      <label class="form-label">Estado:</label>
+      <label class="form-label">Filtrar por Estado:</label>
       <select class="form-select" [(ngModel)]="filtroEstado">
-        <option value="">Todos</option>
+        <option value="">Todos los estados</option>
         <option value="PENDIENTE">Pendiente</option>
         <option value="APROBADA">Aprobada</option>
         <option value="RECHAZADA">Rechazada</option>
-      </select>
-    </div>
-
-    <div class="col-md-4">
-      <label class="form-label">Ayuntamiento:</label>
-      <select class="form-select" [(ngModel)]="filtroAyuntamiento">
-        <option value="">Todos</option>
-        <option *ngFor="let ayto of ayuntamientos" [value]="ayto.nombre">
-          {{ ayto.nombre }}
-        </option>
       </select>
     </div>
 
@@ -43,6 +38,19 @@
         <i class="bi bi-x-circle"></i> Limpiar
       </button>
     </div>
+    
+    <!-- Indicador de rol actual -->
+    <div class="col-md-4 text-end">
+      <span class="badge" [ngClass]="getRolBadgeClass()">
+        <i class="bi" [ngClass]="getRolIcon()"></i> {{ getRolNombre() }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Mensaje informativo según rol -->
+  <div class="alert" [ngClass]="getAlertClass()" role="alert">
+    <i class="bi" [ngClass]="getAlertIcon()"></i>
+    {{ getMensajeInformativo() }}
   </div>
 
   <!-- Tabla -->
@@ -66,6 +74,7 @@
           </td>
           <td>{{ getNombreAyuntamiento(solicitud) }}</td>
           <td>
+            <!-- Botón Ver detalles (para todos) -->
             <button
               class="btn btn-sm btn-info me-1"
               title="Ver detalles"
@@ -73,11 +82,48 @@
             >
               <i class="bi bi-eye"></i>
             </button>
+            
+            <!-- ✅ BOTONES PARA AYUNTAMIENTO - Solo visibles para ayuntamientos y solo si está PENDIENTE -->
+            <button
+              *ngIf="esAyuntamiento && solicitud.estadoLicencia === 'PENDIENTE'"
+              class="btn btn-sm btn-success me-1"
+              title="Aprobar solicitud"
+              (click)="aceptarSolicitud(solicitud.id)"
+            >
+              <i class="bi bi-check-circle"></i>
+            </button>
+            
+            <button
+              *ngIf="esAyuntamiento && solicitud.estadoLicencia === 'PENDIENTE'"
+              class="btn btn-sm btn-danger me-1"
+              title="Rechazar solicitud"
+              (click)="rechazarSolicitud(solicitud.id)"
+            >
+              <i class="bi bi-x-circle"></i>
+            </button>
+            
+            <!-- Botón eliminar solo para CASETA y solo si está PENDIENTE -->
+            <button
+              *ngIf="esCaseta && solicitud.estadoLicencia === 'PENDIENTE'"
+              class="btn btn-sm btn-danger"
+              title="Eliminar solicitud (solo pendiente)"
+              (click)="eliminarSolicitud(solicitud.id)"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+            
+            <!-- ✅ Mensaje cuando ya está aprobada/rechazada para ayuntamiento -->
+            <span
+              *ngIf="esAyuntamiento && solicitud.estadoLicencia !== 'PENDIENTE'"
+              class="text-muted small"
+            >
+              <i class="bi bi-lock"></i> No editable
+            </span>
           </td>
         </tr>
         <tr *ngIf="solicitudesFiltradas.length === 0">
           <td colspan="4" class="text-center text-muted">
-            <i class="bi bi-inbox"></i> No hay solicitudes
+            <i class="bi bi-inbox"></i> {{ getMensajeVacio() }}
           </td>
         </tr>
       </tbody>
@@ -92,8 +138,13 @@
   </div>
 </div>
 
-<!-- Modal de Nueva Solicitud -->
-<div class="modal fade" id="nuevaSolicitudModal" tabindex="-1" aria-hidden="true">
+<!-- Modal de Nueva Solicitud - solo visible para ADMIN y CASETA -->
+<div 
+  *ngIf="puedeCrearSolicitudes()" 
+  class="modal fade" 
+  id="nuevaSolicitudModal" 
+  tabindex="-1" 
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -124,17 +175,12 @@
               </option>
             </select>
 
-            <!-- Mensaje de error para ayuntamiento -->
             <div
               *ngIf="formSubmitted && formErrors['ayuntamiento']"
               class="invalid-feedback d-block"
             >
               <i class="bi bi-exclamation-circle"></i> {{ formErrors['ayuntamiento'] }}
             </div>
-
-            <small class="text-muted"
-              >Seleccione el ayuntamiento que gestionará esta solicitud</small
-            >
           </div>
 
           <!-- Información sobre estado -->

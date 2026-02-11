@@ -2,15 +2,34 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Gestión de Casetas</h2>
 
-    <button class="btn btn-success" [routerLink]="['/casetas/nuevo']" title="Nueva Caseta">
-      <span style="font-size: 1.8rem; line-height: 0; margin-bottom: 4px; margin-right: 8px"
-        >+</span
-      >
-      <img
-        src="/assets-webp/caseta.webp"
-        alt="Icono Caseta"
-        style="height: 30px; width: auto; filter: brightness(0) invert(1)"
-      />
+  <div class="row mb-3 align-items-center">
+    
+    <!--Filtro para socios-->
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-text bg-white">
+          <i class="bi bi-search"></i>
+        </span>
+        <input type="text" 
+               class="form-control" 
+               placeholder="Buscar casetas por nombre de socio..." 
+               [(ngModel)]="textoBusqueda" 
+               (input)="filtrar()">
+        
+        <button class="btn btn-outline-secondary" 
+                *ngIf="textoBusqueda" 
+                (click)="textoBusqueda=''; filtrar()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+    </div>
+    </div>
+
+  <!-- Botón para crear nueva caseta -->
+  <div class="mb-3 text-end">
+
+    <button class="btn btn-success" [routerLink]="['/casetas/nuevo']">
+      <i class="bi bi-plus-circle"></i> Nueva Caseta
     </button>
   </div>
 
@@ -27,13 +46,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let caseta of casetas">
-          <td class="text-center fw-bold" style="color: var(--mr-primary)">{{ caseta.id }}</td>
-
-          <td style="font-family: 'Merriweather', serif; font-weight: 700; color: var(--mr-accent)">
-            {{ caseta.razonS }}
-          </td>
-
+        <tr *ngFor="let caseta of casetasFiltradas">
+          <td>{{ caseta.razonS }}</td>
           <td>{{ caseta.direccion || 'No especificada' }}</td>
 
           <td class="text-center">{{ caseta.aforo }}</td>
@@ -72,11 +86,12 @@
             </div>
           </td>
         </tr>
-
-        <tr *ngIf="casetas.length === 0">
-          <td colspan="6" class="text-center py-5 text-muted fst-italic">
-            <i class="bi bi-shop me-2" style="font-size: 1.5rem"></i> No hay casetas registradas en
-            el sistema.
+        
+        <!--Comprobaciones para en caso de que no haya socios-->
+        <tr *ngIf="casetasFiltradas.length === 0">
+          <td colspan="7" class="text-center">
+             <span *ngIf="textoBusqueda">No hay coincidencias con "{{textoBusqueda}}"</span>
+             <span *ngIf="!textoBusqueda">No hay casetas registradas</span>
           </td>
         </tr>
       </tbody>

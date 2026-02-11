@@ -1,49 +1,71 @@
-<footer class="mr-footer mt-5">
+<footer class="mr-footer">
+  <div class="footer-blob blob-1"></div>
+
   <div class="container py-5">
-    <div class="row g-4">
+    <div class="row g-4 position-relative" style="z-index: 2">
       <div class="col-lg-4 col-md-6">
         <img
           src="assets-webp/logo_principal.webp"
           alt="MrRebujito"
-          height="50"
+          height="60"
           class="mb-3 footer-logo"
         />
         <p class="footer-text">
-          La plataforma definitiva para la gestión de licencias, socios y ayuntamientos en el
-          ecosistema de ferias. Tradición y tecnología unidas en un solo lugar.
+          La plataforma definitiva para la gestión de licencias, socios y ayuntamientos. Llevamos la
+          tecnología al corazón de nuestras ferias con el arte que merecen.
         </p>
       </div>
 
-      <div class="col-lg-2 col-md-6 ms-lg-auto">
+      <div class="col-lg-3 col-md-6 ms-lg-auto">
         <h5 class="footer-title">Plataforma</h5>
         <ul class="list-unstyled footer-links">
-          <li><a routerLink="/solicitud-licencia">Gestión de Licencias</a></li>
-          <li><a routerLink="/socio">Panel de Socios</a></li>
-          <li><a routerLink="/ayuntamiento">Ayuntamientos</a></li>
+          <li>
+            <a routerLink="/solicitud-licencia"
+              ><i class="bi bi-chevron-right"></i> Gestión de Licencias</a
+            >
+          </li>
+          <li>
+            <a routerLink="/socio"><i class="bi bi-chevron-right"></i> Panel de Socios</a>
+          </li>
+          <li>
+            <a routerLink="/ayuntamiento"><i class="bi bi-chevron-right"></i> Ayuntamientos</a>
+          </li>
+          <li>
+            <a routerLink="/login" class="text-highlight"
+              ><i class="bi bi-door-open-fill"></i> Acceso Plataforma</a
+            >
+          </li>
         </ul>
       </div>
 
       <div class="col-lg-3 col-md-6">
-        <h5 class="footer-title">Administración</h5>
+        <h5 class="footer-title">Documentación</h5>
         <ul class="list-unstyled footer-links">
-          <li><a routerLink="/login">Acceso Privado</a></li>
-          <li><a href="#">Centro de Ayuda</a></li>
-          <li><a href="#">Términos y Condiciones</a></li>
+          <li>
+            <a routerLink="/help-center"><i class="bi bi-info-circle"></i> Centro de Ayuda</a>
+          </li>
+          <li>
+            <a routerLink="/terms"
+              ><i class="bi bi-file-earmark-text"></i> Términos y Condiciones</a
+            >
+          </li>
         </ul>
       </div>
     </div>
 
     <hr class="footer-divider my-4" />
 
-    <div class="row align-items-center">
+    <div class="row align-items-center position-relative" style="z-index: 2">
       <div class="col-md-6 text-center text-md-start">
-        <p class="copyright mb-0">Un proyecto de DAM para IES Francisco Rodríguez Marín.</p>
+        <p class="copyright mb-0">
+          Proyecto DAM — <strong>IES Francisco Rodríguez Marín</strong> (Osuna)
+        </p>
       </div>
       <div class="col-md-6 text-center text-md-end">
-        <span class="footer-tagline"
-          >Diseñado con <i class="bi bi-heart-fill text-danger mx-1"></i> por MrRebujito &
-          Ecentia.</span
-        >
+        <span class="footer-tagline">
+          Diseñado con <i class="bi bi-heart-fill text-primary mx-1"></i> por
+          <span class="text-white fw-bold">MrRebujito Team</span>
+        </span>
       </div>
     </div>
   </div>

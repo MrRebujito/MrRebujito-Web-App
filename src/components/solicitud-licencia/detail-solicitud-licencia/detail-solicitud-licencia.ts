@@ -27,7 +27,7 @@ export class DetailSolicitudLicencia implements OnInit {
   }
 
   cargarSolicitudLicencia(id: number): void {
-    this.solicitudService.getSolicitudLicenciaById(id).subscribe({
+    this.solicitudService.getSolicitudById(id).subscribe({
       next: (data) => {
         this.solicitudLicencia = data;
         this.cdr.detectChanges();
