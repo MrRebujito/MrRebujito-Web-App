@@ -1,0 +1,127 @@
+<section class="help-center-section">
+  <div class="decor-blob blob-primary"></div>
+  <div class="decor-blob blob-accent"></div>
+
+  <div class="container help-container">
+    <div class="glass-card main-help-card">
+      <header class="help-header">
+        <span class="badge-gala"><i class="bi bi-patch-question"></i> Soporte del Proyecto</span>
+        <h1 class="main-title">Centro de <span class="highlight">Información</span></h1>
+        <p class="subtitle">Guía detallada para el funcionamiento de Mr. Rebujito</p>
+
+        <nav class="help-tabs">
+          <button (click)="setTab('guia')" [class.active]="activeTab === 'guia'">
+            <i class="bi bi-journal-text"></i> Funcionamiento
+          </button>
+          <button (click)="setTab('roles')" [class.active]="activeTab === 'roles'">
+            <i class="bi bi-shield-lock"></i> Roles de Sistema
+          </button>
+          <button (click)="setTab('faq')" [class.active]="activeTab === 'faq'">
+            <i class="bi bi-chat-dots"></i> Preguntas Frecuentes
+          </button>
+        </nav>
+      </header>
+
+      <div class="help-content-area">
+        <div class="tab-pane" *ngIf="activeTab === 'guia'">
+          <div class="guide-content">
+            <div class="text-block">
+              <h3>Gestión Digital de la Tradición</h3>
+              <p>
+                El proyecto centraliza la burocracia de las ferias andaluzas en un entorno seguro.
+                El flujo principal se basa en la comunicación entre
+                <strong>Spring Boot (Backend)</strong> y <strong>Angular (Frontend)</strong> para
+                manejar solicitudes en tiempo real.
+              </p>
+            </div>
+
+            <div class="workflow-visual">
+              <div class="flow-item">
+                <div class="flow-icon">1</div>
+                <h5>Registro</h5>
+                <p>Usuarios se dan de alta según su rol ferial.</p>
+              </div>
+              <div class="flow-sep"></div>
+              <div class="flow-item">
+                <div class="flow-icon">2</div>
+                <h5>Trámite</h5>
+                <p>Las casetas solicitan licencia al Ayuntamiento.</p>
+              </div>
+              <div class="flow-sep"></div>
+              <div class="flow-item">
+                <div class="flow-icon">3</div>
+                <h5>Gestión</h5>
+                <p>Aprobada la licencia, se activan los módulos internos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane" *ngIf="activeTab === 'roles'">
+          <div class="roles-detailed">
+            <div class="role-row">
+              <div class="role-info">
+                <span class="role-tag admin">Administrador</span>
+                <p>
+                  Gestión global de la infraestructura, mantenimiento de APIs y control de usuarios
+                  maestros.
+                </p>
+              </div>
+              <div class="role-info">
+                <span class="role-tag ayto">Ayuntamiento</span>
+                <p>
+                  Autoridad competente para validar licencias, asignar números de caseta y
+                  configurar la feria.
+                </p>
+              </div>
+            </div>
+            <div class="role-row">
+              <div class="role-info">
+                <span class="role-tag titular">Titular</span>
+                <p>
+                  Responsable legal de la caseta. Gestiona socios, compras e inventario y licencias.
+                </p>
+              </div>
+              <div class="role-info">
+                <span class="role-tag socio">Socio</span>
+                <p>
+                  Acceso a tablón de anuncios de su caseta y visualización de productos/precios.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane" *ngIf="activeTab === 'faq'">
+          <div class="faq-accordion">
+            <div
+              class="faq-card"
+              *ngFor="let item of faqData; let i = index"
+              [class.open]="openFaqIndex === i"
+            >
+              <div class="faq-head" (click)="toggleFaq(i)">
+                <span>{{ item.q }}</span>
+                <i
+                  class="bi"
+                  [ngClass]="openFaqIndex === i ? 'bi-chevron-up' : 'bi-chevron-down'"
+                ></i>
+              </div>
+              <div class="faq-body">
+                <p>{{ item.a }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="help-footer">
+        <div class="footer-ies">
+          <img src="/assets-webp/logo_principal.webp" alt="Logo" class="mini-logo" />
+          <p>Proyecto Escolar Final — <strong>IES Francisco Rodríguez Marín</strong></p>
+          <p class="ies-loc">41640 Osuna, Sevilla</p>
+        </div>
+        <button class="btn-primary-gala" routerLink="/">Volver al Real</button>
+      </footer>
+    </div>
+  </div>
+</section>

@@ -1,86 +1,97 @@
+/* =========================================
+   MR. REBUJITO - PREMIUM GALA FOOTER (V2)
+   ========================================= */
+
 .mr-footer {
-  background-color: var(--mr-blue); /* El azul del brand kit */
+  /* Degradado llamativo */
+  background: linear-gradient(135deg, #1a3238 0%, #3b6b76 100%);
   color: #ffffff;
-  border-top: 4px solid var(--mr-accent); /* Línea de acento roja/feria en la parte superior */
+  border-top: 5px solid var(--mr-primary); /* Borde albero */
   position: relative;
   overflow: hidden;
 }
 
-/* Decoración sutil de fondo */
-.mr-footer::before {
-  content: '';
+.footer-blob {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--mr-primary) 0%, transparent 70%);
+  bottom: -200px;
+  right: -100px;
+  opacity: 0.08;
   pointer-events: none;
+  z-index: 1;
 }
 
 .footer-logo {
-  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.4));
   transition: transform 0.3s ease;
 }
 
 .footer-logo:hover {
-  transform: translateY(-3px);
+  transform: scale(1.05);
 }
 
 .footer-text {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .footer-title {
+  /* CAMBIO DE FUENTE: Quitamos Merriweather por Roboto/Sans-serif */
+  font-family: 'Roboto', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.9rem;
-  letter-spacing: 1px;
-  margin-bottom: 1.5rem;
-  color: #fff;
+  letter-spacing: 1.5px;
+  margin-bottom: 2rem;
+  color: var(--mr-primary); /* Contraste en albero */
 }
 
 .footer-links li {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .footer-links a {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   transition: all 0.3s ease;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.footer-links a i {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: #fff;
-  padding-left: 8px; /* Efecto de desplazamiento al pasar el ratón */
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  color: var(--mr-primary);
+  transform: translateX(5px);
 }
 
-/* Iconos Sociales */
-.social-icon {
-  width: 40px;
-  height: 40px;
+/* Botón Acceso destacado */
+.text-highlight {
+  color: #fff !important;
   background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 10px 18px;
+  border-radius: 15px;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.social-icon:hover {
-  background: var(--mr-accent);
-  color: white;
-  transform: scale(1.15) rotate(10deg);
+.text-highlight:hover {
+  background: var(--mr-primary) !important;
+  border-color: var(--mr-primary);
+  transform: translateY(-2px) !important;
 }
 
 .footer-divider {
   border-color: rgba(255, 255, 255, 0.1);
+  opacity: 1;
 }
 
 .copyright,
@@ -89,16 +100,15 @@
   font-size: 0.85rem;
 }
 
-/* Adaptación para móviles */
+/* Responsive */
 @media (max-width: 768px) {
   .mr-footer {
     text-align: center;
   }
-  .footer-links a:hover {
-    padding-left: 0;
-  }
-  .social-links {
+  .footer-links a {
     justify-content: center;
-    margin-bottom: 2rem;
+  }
+  .text-highlight {
+    margin: 0 auto;
   }
 }
