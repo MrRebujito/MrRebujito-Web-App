@@ -3,10 +3,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ActorService } from '../../../service/actor-service';
 import { SocioService } from '../../../service/socio-service';
 import { AyuntamientoService } from '../../../service/ayuntamiento-service';
+import { CasetaService } from '../../../service/caseta-service'; // ✅ IMPORTAR
 import { CommonModule } from '@angular/common';
 import { Actor } from '../../../model/actor';
 import { Socio } from '../../../model/socio';
 import { Ayuntamiento } from '../../../model/ayuntamiento';
+import { Caseta } from '../../../model/caseta'; // ✅ IMPORTAR
 
 @Component({
   selector: 'app-navbar',
@@ -25,12 +27,15 @@ export class Navbar implements OnInit {
   actorId: number | null = null;
   socioId: number | null = null;
   ayuntamientoId: number | null = null;
+  casetaId: number | null = null; 
+  adminId: number | null = null; 
   actor: Actor | null = null;
 
   constructor(
     private actorService: ActorService,
     private socioService: SocioService,
     private ayuntamientoService: AyuntamientoService,
+    private casetaService: CasetaService,
     private router: Router
   ) { }
 
@@ -59,7 +64,9 @@ export class Navbar implements OnInit {
       next: (actor: Actor) => {
         this.actor = actor;
         this.rol = actor.rol;
+        this.actorId = actor.id; 
         sessionStorage.setItem('rol', actor.rol);
+        sessionStorage.setItem('actorId', actor.id.toString()); 
 
         // Obtener ID específico según el rol
         if (actor.rol === 'SOCIO') {
@@ -68,8 +75,9 @@ export class Navbar implements OnInit {
           this.getAyuntamientoIdByUsername(actor.username);
         } else if (actor.rol === 'CASETA') {
           this.getCasetaIdByUsername(actor.username);
+        } else if (actor.rol === 'ADMIN') {
+          this.getAdminId(actor.id); 
         }
-        // ADMIN no necesita ID específico
       },
       error: (error) => {
         console.error('Error obteniendo actor:', error);
@@ -79,7 +87,7 @@ export class Navbar implements OnInit {
 
   getSocioIdByUsername(username: string): void {
     // Primero verifica si el actor ya tiene socioId
-    if (this.actor && 'socioId' in this.actor) {
+    if (this.actor && (this.actor as any).socioId) {
       this.socioId = (this.actor as any).socioId;
       sessionStorage.setItem('socioId', this.socioId!.toString());
       return;
@@ -104,7 +112,7 @@ export class Navbar implements OnInit {
 
   getAyuntamientoIdByUsername(username: string): void {
     // Primero verifica si el actor ya tiene ayuntamientoId
-    if (this.actor && 'ayuntamientoId' in this.actor) {
+    if (this.actor && (this.actor as any).ayuntamientoId) {
       this.ayuntamientoId = (this.actor as any).ayuntamientoId;
       sessionStorage.setItem('ayuntamientoId', this.ayuntamientoId!.toString());
       return;
@@ -128,9 +136,35 @@ export class Navbar implements OnInit {
   }
 
   getCasetaIdByUsername(username: string): void {
-    // Implementa cuando tengas el servicio de casetas
-    console.log('Buscar caseta para:', username);
-    // Similar a los métodos anteriores
+    // Primero verifica si el actor ya tiene casetaId
+    if (this.actor && (this.actor as any).casetaId) {
+      this.casetaId = (this.actor as any).casetaId;
+      sessionStorage.setItem('casetaId', this.casetaId!.toString());
+      return;
+    }
+
+    // Buscar en la lista de casetas
+    this.casetaService.getAllCasetas().subscribe({
+      next: (casetas: Caseta[]) => {
+        const caseta = casetas.find(c => c.username === username);
+        if (caseta) {
+          this.casetaId = caseta.id;
+          sessionStorage.setItem('casetaId', caseta.id.toString());
+          console.log('Caseta encontrada ID:', caseta.id);
+        } else {
+          console.warn('No se encontró caseta para el username:', username);
+        }
+      },
+      error: (error) => {
+        console.error('Error buscando caseta:', error);
+      }
+    });
+  }
+
+  // ✅ NUEVO: Obtener ID de admin
+  getAdminId(id: number): void {
+    this.adminId = id;
+    sessionStorage.setItem('adminId', id.toString());
   }
 
   isLoggedIn(): boolean {
@@ -177,8 +211,7 @@ export class Navbar implements OnInit {
     // Redirección según el rol
     switch (this.rol) {
       case 'ADMIN':
-        // Para admin, redirige a administradores
-        this.router.navigate(['/administradores']);
+        this.navigateToAdminProfile();
         break;
 
       case 'AYUNTAMIENTO':
@@ -198,8 +231,24 @@ export class Navbar implements OnInit {
     }
   }
 
+  private navigateToAdminProfile(): void {
+    const adminId = sessionStorage.getItem('adminId') || this.adminId;
+
+    if (adminId) {
+      // Ruta para editar administrador
+      this.router.navigate(['/administradores/editar', adminId]);
+    } else {
+      // Si no tenemos ID, usar el del actor logueado
+      if (this.actorId) {
+        this.router.navigate(['/administradores/editar', this.actorId]);
+      } else {
+        this.router.navigate(['/administradores']);
+      }
+    }
+  }
+
   private navigateToAyuntamientoProfile(): void {
-    const ayuntamientoId = sessionStorage.getItem('ayuntamientoId');
+    const ayuntamientoId = sessionStorage.getItem('ayuntamientoId') || this.ayuntamientoId;
 
     if (ayuntamientoId) {
       // Ruta correcta según tu app.routes.ts: /ayuntamientos/form/:id
@@ -211,7 +260,7 @@ export class Navbar implements OnInit {
   }
 
   private navigateToSocioProfile(): void {
-    const socioId = sessionStorage.getItem('socioId');
+    const socioId = sessionStorage.getItem('socioId') || this.socioId;
 
     if (socioId) {
       // Ruta correcta según tu app.routes.ts: /socios/editar/:id
@@ -222,13 +271,13 @@ export class Navbar implements OnInit {
   }
 
   private navigateToCasetaProfile(): void {
-    const casetaId = sessionStorage.getItem('casetaId');
+    const casetaId = sessionStorage.getItem('casetaId') || this.casetaId;
 
     if (casetaId) {
       // Ruta: /casetas/editar/:id
       this.router.navigate(['/casetas/editar', casetaId]);
     } else {
-      this.router.navigate(['/casetas']);
+      this.findCasetaAndNavigate();
     }
   }
 
@@ -283,25 +332,76 @@ export class Navbar implements OnInit {
     });
   }
 
+  findCasetaAndNavigate(): void {
+    if (!this.username) {
+      this.router.navigate(['/casetas']);
+      return;
+    }
+
+    this.casetaService.getAllCasetas().subscribe({
+      next: (casetas: Caseta[]) => {
+        const caseta = casetas.find(c => c.username === this.username);
+        if (caseta) {
+          sessionStorage.setItem('casetaId', caseta.id.toString());
+          this.router.navigate(['/casetas/editar', caseta.id]);
+        } else {
+          console.warn('Caseta no encontrada, redirigiendo a lista');
+          this.router.navigate(['/casetas']);
+        }
+      },
+      error: (error) => {
+        console.error('Error buscando caseta:', error);
+        this.router.navigate(['/casetas']);
+      }
+    });
+  }
+
   logout(): void {
     // Limpiar todo el sessionStorage
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('rol');
+    sessionStorage.removeItem('actorId');
     sessionStorage.removeItem('socioId');
     sessionStorage.removeItem('ayuntamientoId');
     sessionStorage.removeItem('casetaId');
+    sessionStorage.removeItem('adminId');
 
     // Limpiar propiedades del componente
     this.username = '';
     this.rol = '';
+    this.actorId = null;
     this.socioId = null;
     this.ayuntamientoId = null;
+    this.casetaId = null;
+    this.adminId = null;
     this.actor = null;
 
     // Redirigir a login y recargar
     this.router.navigate(['/login']).then(() => {
       window.location.reload();
     });
+  }
+
+  // Verificar si puede crear usuarios (solo ADMIN)
+  canCreateUsers(): boolean {
+    return this.isAdmin();
+  }
+
+  // Navegar a creación de usuarios
+  goToCreation(): void {
+    this.router.navigate(['/administradores/crear-usuario']);
+  }
+
+  // Navegar a gestión de administradores
+  goToAdminManagement(): void {
+    this.router.navigate(['/administradores']);
+  }
+
+  // Navegar a solicitudes de licencia según rol
+  goToSolicitudes(): void {
+    if (this.isAdmin() || this.isAyuntamiento() || this.isCaseta()) {
+      this.router.navigate(['/solicitudes']);
+    }
   }
 }

@@ -8,4 +8,5 @@ export class Actor {
     username!: string;
     rol!: string;
     baneado!: boolean;
+    password!: string;
 }

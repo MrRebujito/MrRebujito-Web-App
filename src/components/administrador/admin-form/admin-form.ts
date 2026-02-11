@@ -33,7 +33,7 @@ export class AdminForm implements OnInit {
       foto: ['', [Validators.pattern('https?://.+')]],
       direccion: [''],
       username: ['', Validators.required],
-      password: ['', this.id == null ? [Validators.required, Validators.minLength(6)] : []]
+      password: ['']
     });
   }
 
@@ -42,20 +42,39 @@ export class AdminForm implements OnInit {
 
     if (idParam && !isNaN(Number(idParam))) {
       this.id = Number(idParam);
+      
+      this.formularioAdmin.get('password')?.clearValidators();
+      this.formularioAdmin.get('password')?.updateValueAndValidity();
 
       this.adminService.getAdministrador(this.id).subscribe({
         next: (data: Administrador) => {
           this.administrador = data;
-          this.formularioAdmin.patchValue(this.administrador);
+          
+          this.formularioAdmin.patchValue({
+            nombre: data.nombre || '',
+            primerApellido: data.primerApellido || '',
+            segundoApellido: data.segundoApellido || '',
+            correo: data.correo || '',
+            telefono: data.telefono || '',
+            foto: data.foto || '',
+            direccion: data.direccion || '',
+            username: data.username || ''
+          });
+          
           this.cdr.detectChanges();
         },
         error: (error) => {
           console.error("Error al recuperar el administrador:", error);
+          alert("Error al cargar los datos del administrador");
         }
       });
     } else {
       this.id = null;
-      console.log("Modo registro: No se busca ningún administrador.");
+      
+      this.formularioAdmin.get('password')?.setValidators([Validators.required, Validators.minLength(6)]);
+      this.formularioAdmin.get('password')?.updateValueAndValidity();
+      
+      console.log("Modo registro: Nuevo administrador.");
     }
   }
 
@@ -64,6 +83,7 @@ export class AdminForm implements OnInit {
       const datosAdmin = this.formularioAdmin.value;
 
       if (this.id == null) {
+        // CREAR
         this.adminService.saveAdministrador(datosAdmin).subscribe({
           next: () => {
             alert("Administrador registrado correctamente");
@@ -75,7 +95,10 @@ export class AdminForm implements OnInit {
           }
         });
       } else {
+        // ACTUALIZAR
         datosAdmin.id = this.id;
+        delete datosAdmin.password; 
+        
         this.adminService.updateAdministrador(datosAdmin).subscribe({
           next: () => {
             alert("Datos actualizados correctamente");
@@ -83,17 +106,18 @@ export class AdminForm implements OnInit {
           },
           error: (error) => {
             console.error("Error al actualizar administrador:", error);
+            alert("Error al actualizar los datos");
           }
         });
       }
+    } else {
+      this.formularioAdmin.markAllAsTouched();
+      alert("Por favor, completa todos los campos obligatorios");
     }
   }
 
   esInvalido(nombreCampo: string): boolean {
     const control = this.formularioAdmin.get(nombreCampo);
-    if (control != null) {
-      return control.invalid && control.touched;
-    }
-    return false;
+    return control ? (control.invalid && control.touched) : false;
   }
 }
