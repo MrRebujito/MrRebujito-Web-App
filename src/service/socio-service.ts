@@ -34,6 +34,11 @@ export class SocioService {
   }
 
   getMisCasetas(): Observable<Caseta[]> {
-    return this.http.get<Caseta[]>(`${this.apiUrl}/misCasetas`, { responseType: 'text' });
+    const token = sessionStorage.getItem('token'); 
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<Caseta[]>(`${this.apiUrl}/misCasetas`, { headers: headers });
   }
 }
