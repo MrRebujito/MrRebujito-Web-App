@@ -25,11 +25,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
         
         if (error.status === 404) {
-          console.error('🔍 Recurso no encontrado - 404');
+          console.error('Recurso no encontrado - 404');
         }
         
         if (error.status === 500) {
-          console.error('💥 Error interno del servidor - 500');
+          console.error('Error interno del servidor - 500');
         }
 
         return throwError(() => error);
