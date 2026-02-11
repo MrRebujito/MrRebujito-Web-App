@@ -12,40 +12,50 @@ import { CommonModule } from '@angular/common';
   styleUrl: './socio-detail.css',
 })
 export class SocioDetail implements OnInit {
-  id!: string;
-  socio!: Socio;
+  id: string | null = null;
+  socio!: Socio; // Variable donde guardamos los datos para el HTML
+  
   cdr = inject(ChangeDetectorRef);
 
-  constructor(private route: ActivatedRoute, private socioService: SocioService) {
-    this.id = this.route.snapshot.paramMap.get('id')!;
+  constructor(
+    private route: ActivatedRoute, 
+    private socioService: SocioService
+  ) {
+    // Intentamos capturar el ID de la URL
+    this.id = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    if (this.id != null) {
+    if (this.id) {
+      // Si hay ID en la URL, cargamos ese socio específico
       this.cargarSocio(Number.parseInt(this.id));
+    } else {
+      // Si NO hay ID, es que el socio ha pulsado "Mi Perfil"
+      this.cargarMiPropioPerfil();
     }
   }
 
   cargarSocio(id: number) {
-
-    // Llamamos al método del servicio pasándole el ID que capturamos de la URL
     this.socioService.getSocio(id).subscribe({
-
-      // 'next' se ejecuta cuando el servidor (Spring) responde con éxito (HTTP 200)
       next: (data: Socio) => {
-
-        // 1. Guardamos el JSON que nos envía el backend en nuestra variable local 'socio'
         this.socio = data;
-
-        // 2. CDR (Change Detector Ref) - Forzamos a Angular a revisar la pantalla
         this.cdr.detectChanges();
       },
-
-      // 'error' se ejecuta si algo sale mal
       error: (err) => {
-        console.error('El servidor ha respondido con un error:', err);
+        console.error('Error al cargar socio por ID:', err);
       }
     });
+  }
 
+  cargarMiPropioPerfil() {
+    this.socioService.getPerfilLogueado().subscribe({
+      next: (data: Socio) => {
+        this.socio = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar perfil logueado:', err);
+      }
+    });
   }
 }
