@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { Administrador } from '../../../model/administrador';
 import { AdminService } from '../../../service/administrador-service';
 
 @Component({
   selector: 'app-admin-table',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './admin-table.html',
   styleUrl: './admin-table.css',
 })

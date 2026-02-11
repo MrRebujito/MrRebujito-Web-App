@@ -266,11 +266,11 @@ export class TableSolicitudLicencia implements OnInit {
     return 'No hay solicitudes que coincidan con los filtros';
   }
 
-  getMensajeInformativo(): string {
+  getMensajeInformativo(): any {
     if (this.esAdmin) return '👑 Administrador: Puedes ver y gestionar todas las solicitudes.';
     if (this.esAyuntamiento) return '🏛️ Ayuntamiento: Gestiona las solicitudes recibidas. Puedes ACEPTAR o RECHAZAR.';
     if (this.esCaseta) return '🏠 Caseta: Crea nuevas solicitudes y elimina las pendientes.';
-    if (this.esSocio) return '👤 Socio: No tienes acceso a solicitudes.';
+    if (this.esSocio) return this.router.navigate(["/forbidden"]);
     return '';
   }
 
