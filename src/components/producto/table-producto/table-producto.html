@@ -4,7 +4,7 @@
       <h2 class="titulo-seccion">Gestión de Productos</h2>
     </div>
     <div class="col-md-4 text-end">
-      <button class="btn btn-primary-mr" (click)="crearProducto()">
+      <button *ngIf="rol !== null && rol !== 'SOCIO' && rol !== 'AYUNTAMIENTO' && rol !== 'ADMIN'" class="btn btn-primary-mr" (click)="crearProducto()">
         <i class="bi bi-plus-circle me-2"></i>Nuevo Producto
       </button>
     </div>
@@ -115,6 +115,7 @@
                 <i class="bi bi-eye"></i>
               </button>
               <button
+                *ngIf="rol !== null && rol !== 'SOCIO' && rol !== 'AYUNTAMIENTO' && rol !== 'ADMIN'"
                 class="btn btn-sm btn-edit"
                 [routerLink]="['/producto/edit', producto.id]"
                 title="Editar"
@@ -122,6 +123,7 @@
                 <i class="bi bi-pencil-square"></i>
               </button>
               <button
+                *ngIf="rol !== null && rol !== 'SOCIO' && rol !== 'AYUNTAMIENTO' && rol !== 'ADMIN'"
                 class="btn btn-sm btn-delete"
                 (click)="borrarProducto(producto.id)"
                 title="Eliminar"

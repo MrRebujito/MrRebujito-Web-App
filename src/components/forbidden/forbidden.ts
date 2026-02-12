@@ -9,5 +9,4 @@ import { RouterLink } from '@angular/router';
   styleUrl: './forbidden.css'
 })
 export class Forbidden {
-  // No necesita lógica compleja, solo mostrar el mensaje
 }

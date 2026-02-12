@@ -15,6 +15,7 @@ export class DetailProducto implements OnInit {
   
   id: string | null = null;
   producto: Producto | null = null;
+  rol: string | null = null;
   
   // Inyectamos el detector de cambios para forzar la actualización de la vista
   // solo cuando lleguen los datos, evitando bucles.
@@ -26,6 +27,7 @@ export class DetailProducto implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.rol = sessionStorage.getItem('rol');
     // Obtenemos el ID de la URL
     this.id = this.route.snapshot.paramMap.get('id');
 

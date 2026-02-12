@@ -48,7 +48,7 @@
         <button class="btn btn-volver me-3" routerLink="/productos">
           <i class="bi bi-arrow-left"></i> Volver
         </button>
-        <button class="btn btn-primary-mr" [routerLink]="['/productos/editar', producto.id]">
+        <button *ngIf="rol !== 'ADMIN' && rol !== 'SOCIO'" class="btn btn-primary-mr" [routerLink]="['/productos/editar', producto.id]">
           <i class="bi bi-pencil-square me-2"></i>Editar
         </button>
       </div>

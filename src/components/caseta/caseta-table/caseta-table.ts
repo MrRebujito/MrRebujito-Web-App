@@ -20,10 +20,12 @@ export class CasetaTable implements OnInit {
   textoBusqueda: string = '';      // Aquí se guarda lo que escribe el usuario
 
   cdr = inject(ChangeDetectorRef);
+  rol: string | null = null;
 
   constructor(private casetaService: CasetaService) {}
 
   ngOnInit(): void {
+    this.rol = sessionStorage.getItem('rol');
     this.cargarCasetas();
   }
 
