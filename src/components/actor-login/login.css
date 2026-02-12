@@ -91,7 +91,7 @@
 }
 
 .alert.alert-danger::after {
-  content: '¡AY, MI ALMA!';
+  content: '¡AY, CHURRITA!';
   display: block;
   font-family: 'Merriweather', serif;
   font-weight: 900;

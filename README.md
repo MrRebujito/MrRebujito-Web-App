@@ -11,7 +11,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3+-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
-[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-e38b64?style=for-the-badge)]()
 [![Licencia](https://img.shields.io/badge/Licencia-Académico-3b6b76?style=for-the-badge)]()
 [![IES](https://img.shields.io/badge/IES-Francisco%20Rodríguez%20Marín-9bbf9c?style=for-the-badge)]()
 
